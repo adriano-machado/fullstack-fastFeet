@@ -12,7 +12,6 @@ class Recipient extends Model {
                 number: Sequelize.NUMBER,
                 complement: Sequelize.STRING,
                 cep: Sequelize.NUMBER,
-
             },
             {
                 sequelize,
@@ -20,7 +19,6 @@ class Recipient extends Model {
         );
         return this;
     }
-
 }
 
 export default Recipient;

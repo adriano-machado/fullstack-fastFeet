@@ -1,6 +1,6 @@
-const multer = require('multer');
-const crypto = require('crypto');
-const { extname, resolve } = require('path');
+import multer from 'multer';
+import crypto from 'crypto';
+import { extname, resolve } from 'path';
 
 module.exports = {
     storage: multer.diskStorage({

@@ -8,13 +8,11 @@ class NotificationController {
         //         id: req.userId,
         //     },
         // });
-
         // if (!isProvider) {
         //     return res.status(401).json({
         //         error: 'Only deliverymans can load notifications',
         //     });
         // }
-
         // const notifications = await Notification.find({
         //     user: req.userId,
         // })
