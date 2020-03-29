@@ -19,7 +19,15 @@ class RecipientController {
             return res.status(400).json({ error: 'Validation fails' });
         }
 
-        return res.json();
+        const recipientExists = await Recipient.findOne({
+            where: { cep: req.body.cep },
+        });
+        if (recipientExists) {
+            return res.status(400).json({ error: 'Recipient already exists' });
+        }
+        const recipient = await Recipient.create(req.body);
+
+        return res.json(recipient);
     }
 
     async update(req, res) {
@@ -35,8 +43,24 @@ class RecipientController {
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({ error: 'Validation fails' });
         }
+        const { cep } = req.body;
 
-        return res.json();
+        const recipient = await Recipient.findByPk(req.params.recipientId);
+
+        if (cep && cep !== recipient.cep) {
+            const recipientExists = await Recipient.findOne({
+                where: { cep },
+            });
+            if (recipientExists) {
+                return res
+                    .status(400)
+                    .json({ error: 'Recipient already exists' });
+            }
+        }
+
+        await recipient.update(req.body);
+
+        return res.json(recipient);
     }
 }
 

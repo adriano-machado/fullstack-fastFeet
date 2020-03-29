@@ -1,6 +1,6 @@
 import { Router } from 'express';
 // import multer from 'multer';
-import UserController from './app/controllers/UserController';
+// import UserController from './app/controllers/UserController';
 // import FileController from './app/controllers/FileController';
 
 import SessionController from './app/controllers/SessionController';
@@ -15,7 +15,7 @@ import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 
-routes.post('/users', UserController.store);
+// routes.post('/users', UserController.store);
 
 // AUTH
 routes.post('/session', SessionController.store);
@@ -23,7 +23,7 @@ routes.use(authMiddleware);
 
 // RECIPIENTS
 routes.post('/recipients', RecipientController.store);
-routes.put('/recipients/:providerId', RecipientController.update);
+routes.put('/recipients/:recipientId', RecipientController.update);
 
 // FILES
 // routes.post('/files', upload.single('file'), FileController.store);

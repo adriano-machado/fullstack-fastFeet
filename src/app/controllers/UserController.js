@@ -25,7 +25,7 @@ class UserController {
         }
         const user = await User.create(req.body);
 
-        return res.status(200).json();
+        return res.json(user);
     }
 }
 export default new UserController();
