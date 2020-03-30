@@ -1,7 +1,7 @@
 import { Router } from 'express';
-// import multer from 'multer';
+import multer from 'multer';
 // import UserController from './app/controllers/UserController';
-// import FileController from './app/controllers/FileController';
+import FileController from './app/controllers/FileController';
 
 import SessionController from './app/controllers/SessionController';
 
@@ -9,9 +9,9 @@ import RecipientController from './app/controllers/RecipientController';
 // import NotificationController from './app/controllers/NotificationController';
 
 import authMiddleware from './app/middlewares/auth';
-// import multerConfig from './config/multer';
+import multerConfig from './config/multer';
 
-// const upload = multer(multerConfig);
+const upload = multer(multerConfig);
 
 const routes = new Router();
 
@@ -26,7 +26,7 @@ routes.post('/recipients', RecipientController.store);
 routes.put('/recipients/:recipientId', RecipientController.update);
 
 // FILES
-// routes.post('/files', upload.single('file'), FileController.store);
+routes.post('/files', upload.single('file'), FileController.store);
 
 // NOTIFICATIONS
 // routes.get('/notifications', NotificationController.index);
