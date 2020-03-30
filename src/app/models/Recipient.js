@@ -1,7 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
 
-import { isBefore, subHours } from 'date-fns';
-
 class Recipient extends Model {
     static init(sequelize) {
         super.init(

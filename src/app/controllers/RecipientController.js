@@ -1,6 +1,4 @@
 import * as Yup from 'yup';
-// import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
-// import pt from 'date-fns/locale/pt';
 
 import Recipient from '../models/Recipient';
 
@@ -12,11 +10,9 @@ class RecipientController {
             street: Yup.string().required(),
             number: Yup.number().required(),
             complement: Yup.string().required(),
-            cep: Yup.number().test(
-                'len',
-                'Cep must be exactly 8 characters',
-                val => val.toString().length === 8
-            ),
+            cep: Yup.string()
+                .required()
+                .matches(/^[0-9]{8}$/, 'Must be exactly 8 digits'),
         });
 
         if (!(await schema.isValid(req.body))) {
@@ -43,11 +39,7 @@ class RecipientController {
             street: Yup.string(),
             number: Yup.number(),
             complement: Yup.string(),
-            cep: Yup.number().test(
-                'len',
-                'Cep must be exactly 8 characters',
-                val => val.toString().length === 8
-            ),
+            cep: Yup.string().matches(/^[0-9]{8}$/, 'Must be exactly 8 digits'),
         });
 
         if (!(await schema.isValid(req.body))) {
