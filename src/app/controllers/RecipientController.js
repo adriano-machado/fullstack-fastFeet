@@ -12,7 +12,11 @@ class RecipientController {
             street: Yup.string().required(),
             number: Yup.number().required(),
             complement: Yup.string().required(),
-            cep: Yup.number().required(),
+            cep: Yup.number().test(
+                'len',
+                'Cep must be exactly 8 characters',
+                val => val.toString().length === 8
+            ),
         });
 
         if (!(await schema.isValid(req.body))) {
@@ -26,8 +30,8 @@ class RecipientController {
             return res.status(400).json({ error: 'Recipient already exists' });
         }
         const recipient = await Recipient.create(req.body);
-
-        return res.json(recipient);
+        const { state, city, street, complement, cep, number } = recipient;
+        return res.json({ state, city, street, complement, cep, number });
     }
 
     async update(req, res) {
@@ -37,19 +41,24 @@ class RecipientController {
             street: Yup.string(),
             number: Yup.number(),
             complement: Yup.string(),
-            cep: Yup.number(),
+            cep: Yup.number().test(
+                'len',
+                'Cep must be exactly 8 characters',
+                val => val.toString().length === 8
+            ),
         });
 
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({ error: 'Validation fails' });
         }
-        const { cep } = req.body;
 
         const recipient = await Recipient.findByPk(req.params.recipientId);
-
-        if (cep && cep !== recipient.cep) {
+        if (!recipient) {
+            return res.status(400).json({ error: "Recipient doesn't exists" });
+        }
+        if (req.body.cep && req.body.cep !== recipient.cep) {
             const recipientExists = await Recipient.findOne({
-                where: { cep },
+                where: { cep: req.body.cep },
             });
             if (recipientExists) {
                 return res
@@ -58,9 +67,22 @@ class RecipientController {
             }
         }
 
-        await recipient.update(req.body);
-
-        return res.json(recipient);
+        const {
+            state,
+            city,
+            street,
+            complement,
+            cep,
+            number,
+        } = await recipient.update(req.body);
+        return res.json({
+            state,
+            city,
+            street,
+            complement,
+            cep,
+            number,
+        });
     }
 }
 
