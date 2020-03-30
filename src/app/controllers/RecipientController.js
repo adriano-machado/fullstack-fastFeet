@@ -31,7 +31,9 @@ class RecipientController {
         }
         const recipient = await Recipient.create(req.body);
         const { state, city, street, complement, cep, number, id } = recipient;
-        return res.json({ id, state, city, street, complement, cep, number });
+        return res
+            .status(201)
+            .json({ id, state, city, street, complement, cep, number });
     }
 
     async update(req, res) {
