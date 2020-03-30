@@ -11,7 +11,7 @@ class Delivery extends Model {
                 ocurring: {
                     type: Sequelize.VIRTUAL,
                     get() {
-                        return (
+                        return !!(
                             !this.canceled_at &&
                             !this.end_date &&
                             this.start_date
