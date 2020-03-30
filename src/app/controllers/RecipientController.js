@@ -30,8 +30,8 @@ class RecipientController {
             return res.status(400).json({ error: 'Recipient already exists' });
         }
         const recipient = await Recipient.create(req.body);
-        const { state, city, street, complement, cep, number } = recipient;
-        return res.json({ state, city, street, complement, cep, number });
+        const { state, city, street, complement, cep, number, id } = recipient;
+        return res.json({ id, state, city, street, complement, cep, number });
     }
 
     async update(req, res) {
@@ -74,8 +74,10 @@ class RecipientController {
             complement,
             cep,
             number,
+            id,
         } = await recipient.update(req.body);
         return res.json({
+            id,
             state,
             city,
             street,
