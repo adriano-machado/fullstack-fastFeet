@@ -10,6 +10,8 @@ import DeliverymanController from './app/controllers/DeliverymanController';
 import DeliveryController from './app/controllers/DeliveryController';
 import ScheduleController from './app/controllers/ScheduleController';
 import CompletedDeliveryController from './app/controllers/CompletedDeliveryController';
+import DeliveryProblemController from './app/controllers/DeliveryProblemController';
+
 // import NotificationController from './app/controllers/NotificationController';
 
 import authMiddleware from './app/middlewares/auth';
@@ -34,6 +36,9 @@ routes.post(
     CompletedDeliveryController.store
 );
 
+routes.post('/delivery/:deliveryId/problems', DeliveryProblemController.store);
+routes.get('/delivery/:deliveryId/problems', DeliveryProblemController.index);
+
 // FILES
 routes.post('/files', upload.single('file'), FileController.store);
 
@@ -56,6 +61,12 @@ routes.get('/deliveries', DeliveryController.index);
 routes.post('/deliveries', DeliveryController.store);
 routes.put('/deliveries/:deliveryId', DeliveryController.update);
 routes.delete('/deliveries/:deliveryId', DeliveryController.delete);
+
+// PROBLEMS
+routes.delete(
+    '/problem/:problemId/cancel-delivery',
+    DeliveryProblemController.delete
+);
 
 // FILES
 routes.post('/files', upload.single('file'), FileController.store);
