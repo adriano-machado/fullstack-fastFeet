@@ -3,6 +3,8 @@ import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 import Delivery from '../models/Delivery';
 import Recipient from '../models/Recipient';
+import NewDeliveryMail from '../jobs/NewDeliveryMail';
+import Queue from '../../lib/Queue';
 
 class DeliveryController {
     async index(req, res) {
@@ -73,6 +75,18 @@ class DeliveryController {
             recipient_id,
             deliveryman_id,
         } = await Delivery.create(req.body);
+
+        const delivery = await Delivery.findByPk(id, {
+            include: [
+                { model: Recipient, as: 'recipient' },
+                {
+                    model: Deliveryman,
+                    as: 'deliveryman',
+                    attributes: ['id', 'name', 'email'],
+                },
+            ],
+        });
+        Queue.add(NewDeliveryMail.key, { delivery });
 
         return res
             .status(200)
