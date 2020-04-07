@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 
 import databaseConfig from '../config/database';
 
@@ -8,13 +8,14 @@ import File from '../app/models/File';
 import Recipient from '../app/models/Recipient';
 import Delivery from '../app/models/Delivery';
 import DeliveryProblem from '../app/models/DeliveryProblem';
+import User from '../app/models/User';
 
-const models = [Deliveryman, File, Recipient, Delivery, DeliveryProblem];
+const models = [User, Deliveryman, File, Recipient, Delivery, DeliveryProblem];
 
 class Database {
     constructor() {
         this.init();
-        this.mongo();
+        // this.mongo();
     }
 
     init() {
@@ -28,12 +29,12 @@ class Database {
             );
     }
 
-    mongo() {
-        this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
-            useNewUrlParser: true,
-            useFindAndModify: true,
-            useUnifiedTopology: true,
-        });
-    }
+    // mongo() {
+    //     this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
+    //         useNewUrlParser: true,
+    //         useFindAndModify: true,
+    //         useUnifiedTopology: true,
+    //     });
+    // }
 }
 export default new Database();
