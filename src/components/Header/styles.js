@@ -7,7 +7,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
     height: 64px;
-    max-width: 900px;
+    /* max-width: 900px; */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -21,11 +21,6 @@ export const Content = styled.div`
             margin-right: 20px;
             padding-right: 20px;
             border-right: 1px solid #eee;
-        }
-
-        a {
-            font-weight: bold;
-            color: #7159c1;
         }
     }
 
@@ -46,19 +41,22 @@ export const Profile = styled.div`
 
         strong {
             display: block;
-            color: #eee;
+            color: #666666;
         }
         a {
             display: block;
             margin-top: 2px;
-            font-size: 12px;
-            color: #999;
+            font-size: 14px;
+            color: #de3b3b;
         }
     }
+`;
 
-    img {
-        height: 32px;
-        width: 32px;
-        border-radius: 50%;
+export const LinkHandle = styled.div`
+    a {
+        text-decoration: none;
+        font-weight: bold;
+        color: ${props => (props.activeRoute ? '#444444' : '#999999')};
+        margin-left: 20px;
     }
 `;

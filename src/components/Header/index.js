@@ -1,21 +1,34 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import history from '../../services/history';
 import logoPurple from '../../assets/fastfeet-logo.png';
-import { Container, Content, Profile } from './styles';
+import { Container, Content, Profile, LinkHandle } from './styles';
 
-export default function Header() {
+export default function Header(props) {
+    console.log(history);
     const profile = useSelector(state => state.user.profile);
+    const activeRoute = history.location.pathname;
+    const routesList = [
+        { routeName: '/deliveries', label: 'ENTREGADORES' },
+        { routeName: '/deliverymans', label: 'ENCOMENDAS' },
+        { routeName: '/recipients', label: 'DESTINATÁRIOS' },
+        { routeName: '/problems', label: 'PROBLEMAS' },
+    ];
     return (
         <Container>
             <Content>
                 <nav>
                     <img src={logoPurple} alt="GoBarber" />
-                    <Link to="/dashboard">ENCOMENDAS</Link>
-                    <Link to="/dashboard">ENTREGADORES</Link>
-                    <Link to="/dashboard">DESTINATÁRIOS</Link>
-                    <Link to="/dashboard">PROBLEMAS</Link>
+
+                    {routesList.map(route => (
+                        <LinkHandle
+                            key={route.routeName}
+                            activeRoute={route.routeName.includes(activeRoute)}
+                        >
+                            <Link to={route.routeName}>{route.label}</Link>
+                        </LinkHandle>
+                    ))}
                 </nav>
 
                 <aside>
