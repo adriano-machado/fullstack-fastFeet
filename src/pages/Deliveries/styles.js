@@ -71,13 +71,13 @@ export const SubHeader = styled.div`
         justify-content: center;
         font-size: 14px;
         border-radius: 4px;
-        padding: 10px;
+        padding: 9px 16px;
         &:hover {
             background: ${darken(0.08, '#7d40e7')};
         }
     }
 
     svg {
-        margin-right: 5px;
+        margin: 0 5px;
     }
 `;
