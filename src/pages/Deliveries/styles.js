@@ -37,7 +37,7 @@ export const SubHeader = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 40px 0;
+    margin: 40px 0 10px;
 
     div {
         svg {

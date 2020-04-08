@@ -6,12 +6,11 @@ import logoPurple from '../../assets/fastfeet-logo.png';
 import { Container, Content, Profile, LinkHandle } from './styles';
 
 export default function Header(props) {
-    console.log(history);
     const profile = useSelector(state => state.user.profile);
     const activeRoute = history.location.pathname;
     const routesList = [
-        { routeName: '/deliveries', label: 'ENTREGADORES' },
-        { routeName: '/deliverymans', label: 'ENCOMENDAS' },
+        { routeName: '/deliveries', label: 'ENCOMENDAS' },
+        { routeName: '/deliverymans', label: 'ENTREGADORES' },
         { routeName: '/recipients', label: 'DESTINATÁRIOS' },
         { routeName: '/problems', label: 'PROBLEMAS' },
     ];
@@ -24,7 +23,7 @@ export default function Header(props) {
                     {routesList.map(route => (
                         <LinkHandle
                             key={route.routeName}
-                            activeRoute={route.routeName.includes(activeRoute)}
+                            activeRoute={activeRoute.includes(route.routeName)}
                         >
                             <Link to={route.routeName}>{route.label}</Link>
                         </LinkHandle>
@@ -35,7 +34,7 @@ export default function Header(props) {
                     <Profile>
                         <div>
                             <strong>{profile.name}</strong>
-                            <Link to="/profile">Meu perfil</Link>
+                            <Link to="/profile">Sair do sistema</Link>
                         </div>
                         {/* <img
                             src={
