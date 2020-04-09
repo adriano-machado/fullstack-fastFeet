@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import MenuOptions from '../../components/MenuOptions';
 import Dialog from '../../components/Dialog';
@@ -9,8 +9,9 @@ import { ROUTES } from '../../consts';
 const list = [
     {
         id: 1,
-        destinatario: 'Adriano ricardo machadoaaaaaaaaaaaaaaaaaaaaaa',
-        entregador: 'adriano ricardo machado',
+        destinatario:
+            'Adriano ricardo machadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaa',
+        entregador: 'adriano ricardo machado333',
         cidade: ' Rio de janeiro',
         estado: 'RJ',
         status: 'pendente',
@@ -18,7 +19,7 @@ const list = [
     {
         id: 2,
         destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
+        entregador: 'adriano ricardo 66',
         cidade: ' Rio de janeiro',
         estado: 'RJ',
         status: 'pendente',
@@ -26,14 +27,14 @@ const list = [
     {
         id: 3,
         destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
+        entregador: 'adriano ricardo machado444',
         cidade: ' Rio de janeiro',
         estado: 'RJ',
         status: 'pendente',
     },
     {
         id: 4,
-        destinatario: 'Adriano ricardo machado',
+        destinatario: 'Adriano ricardo machado555',
         entregador: 'adriano ricardo machado',
         cidade: ' Rio de janeiro',
         estado: 'RJ',
@@ -49,9 +50,22 @@ const list = [
     },
 ];
 export default function Problems() {
+    const [openModal, setOpen] = useState(false);
+    const [modalContent, setModalContent] = useState('');
+    function toogleModal() {
+        setOpen(!openModal);
+    }
+
+    function toogleModalAndChooseText(content) {
+        setOpen(!openModal);
+        setModalContent(content);
+    }
     return (
         <Container>
-            <Dialog />
+            <Dialog toggleModal={toogleModal} open={openModal}>
+                <strong>DESCRIÇÃO PROBLEMA</strong>
+                <span>{modalContent}</span>
+            </Dialog>
             <header>
                 <strong>Problemas na entrega</strong>
             </header>
@@ -80,14 +94,17 @@ export default function Problems() {
                                 </td>
 
                                 <td>
-                                    <span>
-                                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                    </span>
+                                    <span>{product.destinatario}</span>
                                 </td>
 
                                 <td>
                                     <RighterIcon>
                                         <MenuOptions
+                                            visibilityAction={() =>
+                                                toogleModalAndChooseText(
+                                                    product.destinatario
+                                                )
+                                            }
                                             deleteText="Cancelar encomenda"
                                             showEditOption={false}
                                         />

@@ -11,6 +11,7 @@ export default function MenuOptions({
     showEditOption,
     deleteText,
     editOptionRedirectTo,
+    visibilityAction,
 }) {
     const [visible, setVisible] = useState(false);
 
@@ -27,7 +28,7 @@ export default function MenuOptions({
             <FaEllipsisH color="#C6C6C6" size={18} />
             <OptionsList visible={visible}>
                 {showVisibilityOption && (
-                    <Option>
+                    <Option onClick={visibilityAction}>
                         <MdVisibility color="#8E5BE8" size={18} />
 
                         <span>Visualizar</span>
@@ -56,6 +57,7 @@ MenuOptions.propTypes = {
     showEditOption: PropTypes.bool,
     editOptionRedirectTo: PropTypes.string,
     deleteText: PropTypes.string,
+    visibilityAction: PropTypes.func.isRequired,
 };
 
 MenuOptions.defaultProps = {

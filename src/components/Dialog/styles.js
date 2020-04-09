@@ -16,35 +16,49 @@ export const Modal = styled.div`
 `;
 
 export const ModalBody = styled.div`
+    display: flex;
+    flex-direction: column;
     box-shadow: 0px 0px 10px #00000033;
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
+    padding: 25px;
     border: 1px solid #888;
     width: 100%;
     border-radius: 4px;
     max-width: 450px;
-    /* Could be more or less, depending on screen size */
-`;
+    height: auto;
+    word-break: break-all;
 
-export const aeew = styled.div`
-    cursor: pointer;
-
-    color: #999999;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    svg {
-        margin: 0 5px;
+    strong {
+        text-align: left;
+        color: #444444;
+        font-size: 14px !important;
+        margin-bottom: 5px;
     }
-    & + div {
-        margin-top: 15px;
-        padding-top: 15px;
-        border-top: 1px solid #eeeeee;
-    }
-
     span {
-        font-size: 14px;
+        font-size: 16px;
+        color: #666666;
+        margin-top: 5px;
+        strong {
+            color: #666666;
+            font-size: 16px;
+        }
     }
+
+    div {
+        display: flex;
+        flex-direction: column;
+
+        & + div {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        img {
+            height: 50px;
+        }
+    }
+
+    /* Could be more or less, depending on screen size */
 `;

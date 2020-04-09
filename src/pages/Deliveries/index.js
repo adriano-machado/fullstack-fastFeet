@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { utcToZonedTime } from 'date-fns-tz';
 import pt from 'date-fns/locale/pt';
@@ -9,6 +9,8 @@ import history from '../../services/history';
 import { Container, SubHeader, AvatarContainer, CenteredIcon } from './styles';
 import MenuOptions from '../../components/MenuOptions';
 import { ROUTES } from '../../consts';
+
+import Dialog from '../../components/Dialog';
 
 const list = [
     {
@@ -49,15 +51,51 @@ const list = [
         entregador: 'adriano ricardo machado',
         cidade: ' Rio de janeiro',
         estado: 'RJ',
-        status: 'pendente',
+        status: '22/03/24',
     },
 ];
 export default function Deliveries() {
+    const [openModal, setOpen] = useState(false);
+    const [modalContent, setModalContent] = useState({});
+    function toogleModal() {
+        setOpen(!openModal);
+    }
+
+    function toogleModalAndChooseText(delivery) {
+        setOpen(!openModal);
+        setModalContent(delivery);
+    }
     function redirectToCreate() {
         history.push(ROUTES.DELIVERIES_CREATE);
     }
     return (
         <Container>
+            <Dialog toggleModal={toogleModal} open={openModal}>
+                <div>
+                    <strong>Informações da encomenda</strong>
+                    <span>{modalContent.destinatario}</span>
+                    <span>{modalContent.entregador}</span>
+                    <span>{modalContent.id}</span>
+                </div>
+                <div>
+                    <strong>Datas</strong>
+                    <span>
+                        <strong>Retirada: </strong>
+                        {modalContent.status}
+                    </span>
+                    <span>
+                        <strong>Entrega: </strong>
+                        {modalContent.status}
+                    </span>
+                </div>
+                <div>
+                    <strong>Assinatura do destinatário</strong>
+                    <img
+                        src="https://api.adorable.io/avatars/50/abott@adorable.png"
+                        alt="NOME"
+                    />
+                </div>
+            </Dialog>
             <header>
                 <strong>Gerenciando encomendas</strong>
             </header>
@@ -111,11 +149,16 @@ export default function Deliveries() {
                                     <span>RJ</span>
                                 </td>
                                 <td>
-                                    <span>PENDENTE</span>
+                                    <span>{product.status}</span>
                                 </td>
                                 <td>
                                     <CenteredIcon>
                                         <MenuOptions
+                                            visibilityAction={() =>
+                                                toogleModalAndChooseText(
+                                                    product
+                                                )
+                                            }
                                             showVisibilityOption
                                             editOptionRedirectTo={ROUTES.DELIVERIES_EDIT.replace(
                                                 ':deliveryId',
