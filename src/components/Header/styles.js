@@ -45,7 +45,8 @@ export const Profile = styled.div`
             display: block;
             color: #666666;
         }
-        a {
+        button {
+            background: transparent;
             display: block;
             margin-top: 2px;
             font-size: 14px;

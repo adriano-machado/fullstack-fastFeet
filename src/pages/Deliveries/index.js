@@ -4,6 +4,8 @@ import { utcToZonedTime } from 'date-fns-tz';
 import pt from 'date-fns/locale/pt';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import api from '../../services/api';
+import history from '../../services/history';
+
 import { Container, SubHeader, AvatarContainer, CenteredIcon } from './styles';
 import MenuOptions from '../../components/MenuOptions';
 import { ROUTES } from '../../consts';
@@ -51,6 +53,9 @@ const list = [
     },
 ];
 export default function Deliveries() {
+    function redirectToCreate() {
+        history.push(ROUTES.DELIVERIES_CREATE);
+    }
     return (
         <Container>
             <header>
@@ -62,7 +67,7 @@ export default function Deliveries() {
                     <input placeholder="Buscar por encomendas" />
                 </div>
 
-                <button type="button" onClick={() => {}}>
+                <button type="button" onClick={redirectToCreate}>
                     <FaPlus size={16} />
                     CADASTRAR
                 </button>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import MenuOptions from '../../components/MenuOptions';
+import history from '../../services/history';
 
 import { Container, SubHeader, RighterIcon, LastColumn } from './styles';
 import { ROUTES } from '../../consts';
@@ -48,6 +49,9 @@ const list = [
     },
 ];
 export default function Recipients() {
+    function redirectToCreate() {
+        history.push(ROUTES.RECIPIENTS_CREATE);
+    }
     return (
         <Container>
             <header>
@@ -59,7 +63,7 @@ export default function Recipients() {
                     <input placeholder="Buscar por destinatários" />
                 </div>
 
-                <button type="button" onClick={() => {}}>
+                <button type="button" onClick={redirectToCreate}>
                     <FaPlus size={16} />
                     CADASTRAR
                 </button>
