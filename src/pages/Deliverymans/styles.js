@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 
+export const LastColumn = styled.th`
+    text-align: right !important;
+`;
 export const Container = styled.div`
     min-height: 100vh;
     /* margin: 15px auto 0; */
@@ -29,6 +32,13 @@ export const Container = styled.div`
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 15px;
         margin-top: 10px;
+    }
+
+    img {
+        height: 35px;
+        width: 35px;
+        margin-right: 5px;
+        border-radius: 50%;
     }
 `;
 
@@ -79,5 +89,17 @@ export const SubHeader = styled.div`
 
     svg {
         margin: 0 5px;
+    }
+`;
+
+export const RighterIcon = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 20px;
+
+    svg {
+        cursor: pointer;
     }
 `;

@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 
+export const LastColumn = styled.th`
+    text-align: right !important;
+`;
 export const Container = styled.div`
     min-height: 100vh;
     /* margin: 15px auto 0; */
@@ -29,5 +32,74 @@ export const Container = styled.div`
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 15px;
         margin-top: 10px;
+    }
+
+    img {
+        height: 35px;
+        width: 35px;
+        margin-right: 5px;
+        border-radius: 50%;
+    }
+`;
+
+export const SubHeader = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0 10px;
+
+    div {
+        svg {
+            margin-right: 8px;
+        }
+        border: 1px solid #dddddd;
+        background: #ffffff;
+        border-radius: 4px;
+        height: 36px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+    }
+    input {
+        background: #ffffff;
+        border: 0;
+        color: #999999;
+
+        &::placeholder {
+            color: #999999;
+        }
+    }
+    button {
+        height: 36px;
+        background: #7d40e7;
+        color: #ffffff;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        border-radius: 4px;
+        padding: 9px 16px;
+        &:hover {
+            background: ${darken(0.08, '#7d40e7')};
+        }
+    }
+
+    svg {
+        margin: 0 5px;
+    }
+`;
+
+export const RighterIcon = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 20px;
+
+    svg {
+        cursor: pointer;
     }
 `;
