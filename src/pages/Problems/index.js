@@ -53,9 +53,12 @@ export default function Problems() {
             <header>
                 <strong>Problemas na entrega</strong>
             </header>
-            <br />
-            <br />
-            <br />
+            <SubHeader>
+                <div>
+                    <FaSearch size={16} color="#DDDDDD" />
+                    <input placeholder="Buscar por encomendas" />
+                </div>
+            </SubHeader>
 
             <table cellSpacing="0">
                 <thead>

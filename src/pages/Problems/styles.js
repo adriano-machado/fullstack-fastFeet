@@ -45,7 +45,7 @@ export const Container = styled.div`
 export const SubHeader = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     margin: 40px 0 10px;
 
