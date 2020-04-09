@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import MenuOptions from '../../components/MenuOptions';
+import Dialog from '../../components/Dialog';
 
 import { Container, SubHeader, RighterIcon, LastColumn } from './styles';
 import { ROUTES } from '../../consts';
@@ -50,6 +51,7 @@ const list = [
 export default function Problems() {
     return (
         <Container>
+            <Dialog />
             <header>
                 <strong>Problemas na entrega</strong>
             </header>

@@ -5,7 +5,6 @@ export const LastColumn = styled.th`
     text-align: right !important;
 `;
 export const Container = styled.div`
-    min-height: 100vh;
     /* margin: 15px auto 0; */
     width: 100%;
     display: flex;

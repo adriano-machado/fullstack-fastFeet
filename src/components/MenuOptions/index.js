@@ -4,6 +4,7 @@ import { MdVisibility, MdEdit, MdDeleteForever } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import { Container, OptionsList, Option } from './styles';
 import history from '../../services/history';
+import Dialog from '../Dialog';
 
 export default function MenuOptions({
     showVisibilityOption,
