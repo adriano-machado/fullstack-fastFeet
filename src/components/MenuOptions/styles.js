@@ -11,11 +11,11 @@ export const OptionsList = styled.div`
     box-shadow: 0px 0px 2px #00000026;
     display: ${props => (props.visible ? 'block' : 'none')};
     position: absolute;
-    width: 150px;
-    left: calc(50% - 75px);
+    width: 180px;
+    left: calc(50% - 90px);
     background: #ffffff;
     border-radius: 4px;
-    padding: 10px;
+    padding: 10px 5px;
 
     &::before {
         content: '';
@@ -48,6 +48,6 @@ export const Option = styled.div`
     }
 
     span {
-        font-size: 16px;
+        font-size: 14px;
     }
 `;

@@ -27,7 +27,7 @@ export default function MenuOptions({
             <OptionsList visible={visible}>
                 {showVisibilityOption && (
                     <Option>
-                        <MdVisibility color="#8E5BE8" size={16} />
+                        <MdVisibility color="#8E5BE8" size={18} />
 
                         <span>Visualizar</span>
                     </Option>
@@ -35,13 +35,13 @@ export default function MenuOptions({
 
                 {showEditOption && (
                     <Option onClick={handleEditActon}>
-                        <MdEdit color="#4D85EE" size={16} />
+                        <MdEdit color="#4D85EE" size={18} />
 
                         <span>Editar</span>
                     </Option>
                 )}
                 <Option>
-                    <MdDeleteForever color="#DE3B3B" size={16} />
+                    <MdDeleteForever color="#DE3B3B" size={18} />
 
                     <span>{deleteText}</span>
                 </Option>

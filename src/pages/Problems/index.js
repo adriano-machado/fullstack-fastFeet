@@ -85,7 +85,10 @@ export default function Problems() {
 
                                 <td>
                                     <RighterIcon>
-                                        <MenuOptions showEditOption={false} />
+                                        <MenuOptions
+                                            deleteText="Cancelar encomenda"
+                                            showEditOption={false}
+                                        />
                                     </RighterIcon>
                                 </td>
                             </tr>
