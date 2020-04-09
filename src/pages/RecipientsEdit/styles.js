@@ -67,7 +67,7 @@ export const FormContent = styled.div`
     width: 100%;
     text-align: center;
     background: rgba(255, 255, 255);
-    padding: 30px;
+    padding: 0px 30px 30px;
     border-radius: 4px;
 
     form {
