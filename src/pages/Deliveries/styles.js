@@ -81,3 +81,28 @@ export const SubHeader = styled.div`
         margin: 0 5px;
     }
 `;
+
+export const AvatarContainer = styled.div`
+    align-self: flex-start;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    img {
+        height: 35px;
+        width: 35px;
+        margin-right: 5px;
+        border-radius: 50%;
+    }
+`;
+
+export const CenteredIcon = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        cursor: pointer;
+    }
+`;

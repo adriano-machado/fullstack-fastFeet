@@ -4,7 +4,9 @@ import { utcToZonedTime } from 'date-fns-tz';
 import pt from 'date-fns/locale/pt';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import api from '../../services/api';
-import { Container, SubHeader } from './styles';
+import { Container, SubHeader, AvatarContainer, CenteredIcon } from './styles';
+import MenuOptions from '../../components/MenuOptions';
+import { ROUTES } from '../../consts';
 
 const list = [
     {
@@ -16,7 +18,7 @@ const list = [
         status: 'pendente',
     },
     {
-        id: 1,
+        id: 2,
         destinatario: 'Adriano ricardo machado',
         entregador: 'adriano ricardo machado',
         cidade: ' Rio de janeiro',
@@ -24,7 +26,7 @@ const list = [
         status: 'pendente',
     },
     {
-        id: 1,
+        id: 3,
         destinatario: 'Adriano ricardo machado',
         entregador: 'adriano ricardo machado',
         cidade: ' Rio de janeiro',
@@ -32,7 +34,7 @@ const list = [
         status: 'pendente',
     },
     {
-        id: 1,
+        id: 4,
         destinatario: 'Adriano ricardo machado',
         entregador: 'adriano ricardo machado',
         cidade: ' Rio de janeiro',
@@ -89,13 +91,13 @@ export default function Deliveries() {
                                     <span>{product.destinatario}</span>
                                 </td>
                                 <td>
-                                    <div>
+                                    <AvatarContainer>
                                         <img
                                             src="https://api.adorable.io/avatars/50/abott@adorable.png"
                                             alt="NOME"
                                         />
                                         <span>{product.entregador}</span>
-                                    </div>
+                                    </AvatarContainer>
                                 </td>
                                 <td>
                                     <span>{product.cidade}</span>
@@ -107,7 +109,15 @@ export default function Deliveries() {
                                     <span>PENDENTE</span>
                                 </td>
                                 <td>
-                                    <span>...</span>
+                                    <CenteredIcon>
+                                        <MenuOptions
+                                            showVisibilityOption
+                                            editOptionRedirectTo={ROUTES.DELIVERIES_EDIT.replace(
+                                                ':deliveryId',
+                                                product.id
+                                            )}
+                                        />
+                                    </CenteredIcon>
                                 </td>
                             </tr>
                             <br />

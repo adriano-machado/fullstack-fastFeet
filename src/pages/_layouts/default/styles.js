@@ -35,22 +35,8 @@ export const Content = styled.div`
             color: #666666;
             background: #fff;
             text-align: left;
-            padding-left: 10px;
+            padding: 0 10px;
             border-radius: 4px;
-            div {
-                align-self: flex-start;
-                display: flex;
-                /* background-color: red; */
-                justify-content: flex-start;
-                align-items: center;
-
-                img {
-                    height: 35px;
-                    width: 35px;
-                    margin-right: 5px;
-                    border-radius: 50%;
-                }
-            }
         }
     }
 `;
