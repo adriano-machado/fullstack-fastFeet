@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { darken } from 'polished';
+import { darken, lighten } from 'polished';
 
 export const Container = styled.div`
     /* margin: 15px auto 0; */
@@ -94,6 +94,15 @@ export const FormContent = styled.div`
             font-weight: bold;
             text-align: left;
             margin-bottom: 5px;
+        }
+        span {
+            color: ${lighten(0.1, '#de3b3b')};
+            font-size: 12px;
+            margin-top: -10px;
+            text-align: start;
+            margin-bottom: 5px;
+            margin-left: 5px;
+            font-weight: bold;
         }
     }
 `;

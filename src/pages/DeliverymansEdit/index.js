@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { FaChevronLeft, FaCheck } from 'react-icons/fa';
 import { FormContent, Header, Container, Button } from './styles';
 import history from '../../services/history';
+import AvatarInput from '../../components/AvatarInput';
 
 const schema = Yup.object().shape({
     email: Yup.string()
@@ -12,6 +13,8 @@ const schema = Yup.object().shape({
         .required('O e-mail é obrigatório'),
     password: Yup.string().required('A senha é obrigatória'),
 });
+
+const deliveryman = {};
 export default function DeliverymansEdit() {
     function handleSubmit({ email, password }) {
         console.log('clicquei');
@@ -25,27 +28,26 @@ export default function DeliverymansEdit() {
                         <FaChevronLeft size={16} />
                         VOLTAR
                     </Button>
-                    <Button type="button" onClick={handleSubmit}>
+                    <Button form="my-form" type="button" onClick={handleSubmit}>
                         <FaCheck size={16} />
                         SALVAR
                     </Button>
                 </div>
             </Header>
             <FormContent>
-                <Form schema={schema} onSubmit={handleSubmit}>
-                    <label htmlFor="email">SEU E-MAIL</label>
-                    <Input
-                        name="email"
-                        type="email"
-                        placeholder="exemplo@email.com"
-                    />
-                    <label htmlFor="password">SUA SENHA</label>
+                <Form
+                    id="my-form"
+                    schema={schema}
+                    onSubmit={handleSubmit}
+                    initialData={deliveryman}
+                >
+                    <AvatarInput name="avatar_id" />
 
-                    <Input
-                        name="password"
-                        type="password"
-                        placeholder="Sua senha secreta"
-                    />
+                    <label htmlFor="name">Nome</label>
+                    <Input name="name" placeholder="John Doe" />
+                    <label htmlFor="email">Email</label>
+
+                    <Input name="email" placeholder="exemplo@email.com.br" />
                 </Form>
             </FormContent>
         </Container>
