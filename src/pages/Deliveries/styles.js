@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { darken } from 'polished';
+import { darken, lighten } from 'polished';
 
 export const Container = styled.div`
     /* margin: 15px auto 0; */
@@ -103,5 +103,32 @@ export const CenteredIcon = styled.div`
 
     svg {
         cursor: pointer;
+    }
+`;
+
+export const Badge = styled.div`
+    span {
+        border: 0;
+        background: ${props => lighten(0.3, props.color)} padding-box;
+        border-radius: 12px;
+        position: relative;
+        font-size: 14px;
+        padding: 3px 2px;
+        text-transform: uppercase;
+        color: ${props => props.color};
+        padding-left: 20px;
+        text-align: center;
+        font-weight: bold;
+        &::before {
+            position: absolute;
+            left: 0px;
+            top: 7px;
+            width: 10px;
+            height: 10px;
+            background: ${props => props.color} padding-box;
+            content: '';
+            border-radius: 50%;
+            margin: 0 5px;
+        }
     }
 `;

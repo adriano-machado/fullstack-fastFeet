@@ -12,10 +12,19 @@ export const Content = styled.div`
     max-width: 1200px;
     margin: 30px auto;
 
+    td:first-child {
+        border-left-style: solid;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+    td:last-child {
+        border-right-style: solid;
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px;
+    }
     table {
         font-size: 16px;
         width: 100%;
-        /* background: #f5f5f5; */
 
         thead th {
             background: #f5f5f5;
@@ -36,7 +45,6 @@ export const Content = styled.div`
             background: #fff;
             text-align: left;
             padding: 0 10px;
-            border-radius: 4px;
 
             span {
                 white-space: nowrap;

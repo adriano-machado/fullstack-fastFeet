@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 
 import { utcToZonedTime } from 'date-fns-tz';
 import pt from 'date-fns/locale/pt';
@@ -6,12 +6,24 @@ import { FaPlus, FaSearch } from 'react-icons/fa';
 import api from '../../services/api';
 import history from '../../services/history';
 
-import { Container, SubHeader, AvatarContainer, CenteredIcon } from './styles';
+import {
+    Container,
+    SubHeader,
+    AvatarContainer,
+    CenteredIcon,
+    Badge,
+} from './styles';
 import MenuOptions from '../../components/MenuOptions';
 import { ROUTES } from '../../consts';
 
 import Dialog from '../../components/Dialog';
 
+const mapObjToColor = {
+    pendente: '#C1BC35',
+    cancelada: '#DE3B3B',
+    retirada: '#4D85EE',
+    entregue: '#2CA42B',
+};
 const list = [
     {
         id: 1,
@@ -19,7 +31,7 @@ const list = [
         entregador: 'adriano ricardo machado',
         cidade: ' Rio de janeiro',
         estado: 'RJ',
-        status: 'pendente',
+        status: 'entregue',
     },
     {
         id: 2,
@@ -27,7 +39,7 @@ const list = [
         entregador: 'adriano ricardo machado',
         cidade: ' Rio de janeiro',
         estado: 'RJ',
-        status: 'pendente',
+        status: 'retirada',
     },
     {
         id: 3,
@@ -35,7 +47,7 @@ const list = [
         entregador: 'adriano ricardo machado',
         cidade: ' Rio de janeiro',
         estado: 'RJ',
-        status: 'pendente',
+        status: 'entregue',
     },
     {
         id: 4,
@@ -46,12 +58,20 @@ const list = [
         status: 'pendente',
     },
     {
-        id: 1,
+        id: 5,
         destinatario: 'Adriano ricardo machado',
         entregador: 'adriano ricardo machado',
         cidade: ' Rio de janeiro',
         estado: 'RJ',
-        status: '22/03/24',
+        status: 'cancelada',
+    },
+    {
+        id: 6,
+        destinatario: 'Adriano ricardo machado',
+        entregador: 'adriano ricardo machado',
+        cidade: ' Rio de janeiro',
+        estado: 'RJ',
+        status: 'cancelada',
     },
 ];
 export default function Deliveries() {
@@ -71,30 +91,32 @@ export default function Deliveries() {
     return (
         <Container>
             <Dialog toggleModal={toogleModal} open={openModal}>
-                <div>
-                    <strong>Informações da encomenda</strong>
-                    <span>{modalContent.destinatario}</span>
-                    <span>{modalContent.entregador}</span>
-                    <span>{modalContent.id}</span>
-                </div>
-                <div>
-                    <strong>Datas</strong>
-                    <span>
-                        <strong>Retirada: </strong>
-                        {modalContent.status}
-                    </span>
-                    <span>
-                        <strong>Entrega: </strong>
-                        {modalContent.status}
-                    </span>
-                </div>
-                <div>
-                    <strong>Assinatura do destinatário</strong>
-                    <img
-                        src="https://api.adorable.io/avatars/50/abott@adorable.png"
-                        alt="NOME"
-                    />
-                </div>
+                <>
+                    <div>
+                        <strong>Informações da encomenda</strong>
+                        <span>{modalContent.destinatario}</span>
+                        <span>{modalContent.entregador}</span>
+                        <span>{modalContent.id}</span>
+                    </div>
+                    <div>
+                        <strong>Datas</strong>
+                        <span>
+                            <strong>Retirada: </strong>
+                            {modalContent.status}
+                        </span>
+                        <span>
+                            <strong>Entrega: </strong>
+                            {modalContent.status}
+                        </span>
+                    </div>
+                    <div>
+                        <strong>Assinatura do destinatário</strong>
+                        <img
+                            src="https://api.adorable.io/avatars/50/abott@adorable.png"
+                            alt="NOME"
+                        />
+                    </div>
+                </>
             </Dialog>
             <header>
                 <strong>Gerenciando encomendas</strong>
@@ -124,8 +146,8 @@ export default function Deliveries() {
                 </thead>
                 <tbody>
                     {list.map(product => (
-                        <>
-                            <tr key={product.id}>
+                        <Fragment key={product.id}>
+                            <tr>
                                 <td>
                                     {product.id}
                                     {/* <img src={product.image} alt={product.title} /> */}
@@ -149,7 +171,11 @@ export default function Deliveries() {
                                     <span>RJ</span>
                                 </td>
                                 <td>
-                                    <span>{product.status}</span>
+                                    <Badge
+                                        color={mapObjToColor[product.status]}
+                                    >
+                                        <span>{product.status}</span>
+                                    </Badge>
                                 </td>
                                 <td>
                                     <CenteredIcon>
@@ -169,7 +195,7 @@ export default function Deliveries() {
                                 </td>
                             </tr>
                             <br />
-                        </>
+                        </Fragment>
                     ))}
                 </tbody>
             </table>
