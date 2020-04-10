@@ -86,6 +86,7 @@ export const FormContent = styled.div`
 
             &::placeholder {
                 color: #999999;
+                opacity: 0.4;
             }
         }
 

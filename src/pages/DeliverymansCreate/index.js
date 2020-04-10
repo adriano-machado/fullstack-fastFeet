@@ -11,7 +11,8 @@ const schema = Yup.object().shape({
     email: Yup.string()
         .email('Insira um email válido')
         .required('O e-mail é obrigatório'),
-    password: Yup.string().required('A senha é obrigatória'),
+    name: Yup.string().required('A senha é obrigatória'),
+    avatar_id: Yup.string().required('A senha é obrigatória'),
 });
 export default function DeliverymansCreate() {
     function handleSubmit({ email, password }) {
@@ -26,7 +27,7 @@ export default function DeliverymansCreate() {
                         <FaChevronLeft size={16} />
                         VOLTAR
                     </Button>
-                    <Button form="my-form" type="button" onClick={handleSubmit}>
+                    <Button form="my-form" type="submit" onClick={handleSubmit}>
                         <FaCheck size={16} />
                         SALVAR
                     </Button>

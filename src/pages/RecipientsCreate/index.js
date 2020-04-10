@@ -67,13 +67,10 @@ export default function RecipientsCreate() {
                         </div>
                         <div>
                             <label htmlFor="cep">Cep</label>
-                            <InputMask
-                                name="cep"
-                                placeholder="09960-580"
-                                mask="99999-99"
-                                maskChar=""
-                            >
-                                {() => <Input name="cep" />}
+                            <InputMask name="cep" mask="99999-99" maskChar="">
+                                {() => (
+                                    <Input placeholder="09960-580" name="cep" />
+                                )}
                             </InputMask>
                         </div>
                     </Row2>

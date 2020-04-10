@@ -28,7 +28,7 @@ export default function DeliverymansEdit() {
                         <FaChevronLeft size={16} />
                         VOLTAR
                     </Button>
-                    <Button form="my-form" type="button" onClick={handleSubmit}>
+                    <Button form="my-form" type="submit" onClick={handleSubmit}>
                         <FaCheck size={16} />
                         SALVAR
                     </Button>

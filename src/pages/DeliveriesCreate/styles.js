@@ -86,6 +86,7 @@ export const FormContent = styled.div`
 
             &::placeholder {
                 color: #999999;
+                opacity: 0.4;
             }
         }
 
@@ -103,6 +104,26 @@ export const FormContent = styled.div`
             margin-bottom: 5px;
             margin-left: 5px;
             font-weight: bold;
+        }
+    }
+`;
+
+export const Row1 = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        input {
+            min-width: 100%;
+        }
+
+        & + div {
+            margin: 0px 0px 0px 18px;
         }
     }
 `;
