@@ -1,8 +1,37 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 
 import Recipient from '../models/Recipient';
 
 class RecipientController {
+    async index(req, res) {
+        const { page = 1, q } = req.query;
+        const query = {
+            attributes: [
+                'id',
+                'state',
+                'city',
+                'street',
+                'number',
+                'cep',
+                'complement',
+                'name',
+            ],
+            limit: 20,
+            offset: (page - 1) * 20,
+        };
+
+        if (q) {
+            query.where = {
+                name: {
+                    [Op.iLike]: `%${q}%`,
+                },
+            };
+        }
+        const recipients = await Recipient.findAll(query);
+        return res.json(recipients);
+    }
+
     async store(req, res) {
         const schema = Yup.object().shape({
             state: Yup.string().required(),
@@ -93,6 +122,17 @@ class RecipientController {
             number,
             name,
         });
+    }
+
+    async delete(req, res) {
+        const recipient = await Recipient.findByPk(req.params.recipientId);
+
+        if (!recipient) {
+            return res.status(400).json({ error: "recipient doesn't exists" });
+        }
+        await recipient.destroy();
+
+        return res.status(204).json();
     }
 }
 

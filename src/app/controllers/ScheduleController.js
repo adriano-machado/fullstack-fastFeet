@@ -17,7 +17,7 @@ class ScheduleController {
                 canceled_at: null,
                 end_date: null,
             },
-            attributes: ['id', 'product', 'ocurring', 'start_date'],
+            attributes: ['id', 'product', 'status', 'start_date'],
             limit: 20,
             offset: (page - 1) * 20,
             include: [

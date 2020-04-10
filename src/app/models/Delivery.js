@@ -8,14 +8,14 @@ class Delivery extends Model {
                 canceled_at: Sequelize.DATE,
                 start_date: Sequelize.DATE,
                 end_date: Sequelize.DATE,
-                ocurring: {
+                status: {
                     type: Sequelize.VIRTUAL,
                     get() {
-                        return !!(
-                            !this.canceled_at &&
-                            !this.end_date &&
-                            this.start_date
-                        );
+                        if (this.canceled_at) return 'cancelada';
+
+                        if (this.end_date) return 'entregue';
+                        if (this.start_date) return 'retirada';
+                        return 'pendente';
                     },
                 },
             },

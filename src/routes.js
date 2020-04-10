@@ -47,8 +47,10 @@ routes.post('/session', SessionController.store);
 routes.use(authMiddleware);
 
 // RECIPIENTS
+routes.get('/recipients', RecipientController.index);
 routes.post('/recipients', RecipientController.store);
 routes.put('/recipients/:recipientId', RecipientController.update);
+routes.delete('/recipients/:recipientId', RecipientController.delete);
 
 // DELIVERYMANS
 routes.get('/deliverymans', DeliverymanController.index);

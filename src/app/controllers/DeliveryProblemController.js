@@ -21,7 +21,7 @@ class DeliveryProblemController {
                 {
                     model: Delivery,
                     as: 'delivery',
-                    attributes: ['id', 'product', 'ocurring', 'recipient_id'],
+                    attributes: ['id', 'product', 'status', 'recipient_id'],
                 },
             ],
         });
