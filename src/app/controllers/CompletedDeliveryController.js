@@ -39,6 +39,7 @@ class CompletedDeliveryController {
                         'number',
                         'complement',
                         'cep',
+                        'name',
                     ],
                 },
                 {

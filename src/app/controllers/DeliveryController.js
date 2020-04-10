@@ -51,6 +51,7 @@ class DeliveryController {
                         'number',
                         'complement',
                         'cep',
+                        'name',
                     ],
                 },
             ],
