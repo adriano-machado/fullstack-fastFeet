@@ -75,7 +75,7 @@ export const FormContent = styled.div`
         flex-direction: column;
         margin-top: 30px;
 
-        input {
+        /* input {
             background: #ffffff;
             border: 1px solid #dddddd;
             border-radius: 4px;
@@ -88,7 +88,7 @@ export const FormContent = styled.div`
                 color: #999999;
                 opacity: 0.4;
             }
-        }
+        } */
 
         label {
             color: #444444;
@@ -96,7 +96,7 @@ export const FormContent = styled.div`
             text-align: left;
             margin-bottom: 5px;
         }
-        span {
+        /* span {
             color: ${lighten(0.1, '#de3b3b')};
             font-size: 12px;
             margin-top: -10px;
@@ -104,6 +104,50 @@ export const FormContent = styled.div`
             margin-bottom: 5px;
             margin-left: 5px;
             font-weight: bold;
+        } */
+    }
+`;
+
+export const Row1 = styled.div`
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    div {
+        color: #999999;
+
+        label {
+            display: flex;
+            /* margin-right: 5px; */
+            /* align-self: flex-start !important; */
         }
+    }
+`;
+
+export const CustomInput = styled.div`
+    input {
+        background: #ffffff;
+        border: 1px solid #dddddd;
+        border-radius: 4px;
+        height: 44px;
+        padding: 0 15px;
+        color: #999999;
+        margin: 0 0 10px;
+        width: 100%;
+
+        &::placeholder {
+            color: #999999;
+            opacity: 0.4;
+        }
+    }
+    span {
+        color: ${lighten(0.1, '#de3b3b')};
+        font-size: 12px;
+        margin-top: -10px;
+        text-align: start;
+        margin-bottom: 5px;
+        margin-left: 5px;
+        font-weight: bold;
     }
 `;
