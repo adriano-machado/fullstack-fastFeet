@@ -10,6 +10,8 @@ class RecipientController {
             street: Yup.string().required(),
             number: Yup.number().required(),
             complement: Yup.string().required(),
+            name: Yup.string().required(),
+
             cep: Yup.string()
                 .required()
                 .matches(/^[0-9]{8}$/, 'Must be exactly 8 digits'),
@@ -26,10 +28,19 @@ class RecipientController {
             return res.status(400).json({ error: 'Recipient already exists' });
         }
         const recipient = await Recipient.create(req.body);
-        const { state, city, street, complement, cep, number, id } = recipient;
+        const {
+            state,
+            city,
+            street,
+            complement,
+            cep,
+            number,
+            id,
+            name,
+        } = recipient;
         return res
             .status(201)
-            .json({ id, state, city, street, complement, cep, number });
+            .json({ id, state, city, street, complement, cep, number, name });
     }
 
     async update(req, res) {
@@ -39,6 +50,7 @@ class RecipientController {
             street: Yup.string(),
             number: Yup.number(),
             complement: Yup.string(),
+            name: Yup.string(),
             cep: Yup.string().matches(/^[0-9]{8}$/, 'Must be exactly 8 digits'),
         });
 
@@ -69,6 +81,7 @@ class RecipientController {
             cep,
             number,
             id,
+            name,
         } = await recipient.update(req.body);
         return res.json({
             id,
@@ -78,6 +91,7 @@ class RecipientController {
             complement,
             cep,
             number,
+            name,
         });
     }
 }
