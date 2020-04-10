@@ -1,8 +1,9 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 
-import { utcToZonedTime } from 'date-fns-tz';
-import pt from 'date-fns/locale/pt';
+import { useDebounce } from 'use-lodash-debounce';
 import { FaPlus, FaSearch } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import { format, parseISO } from 'date-fns';
 import api from '../../services/api';
 import history from '../../services/history';
 
@@ -15,7 +16,6 @@ import {
 } from './styles';
 import MenuOptions from '../../components/MenuOptions';
 import { ROUTES } from '../../consts';
-
 import Dialog from '../../components/Dialog';
 
 const mapObjToColor = {
@@ -24,99 +24,93 @@ const mapObjToColor = {
     retirada: '#4D85EE',
     entregue: '#2CA42B',
 };
-const list = [
-    {
-        id: 1,
-        destinatario: 'Adriano ricardo machadoaaaaaaaaaaaaaaaaaaaaaa',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'entregue',
-    },
-    {
-        id: 2,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'retirada',
-    },
-    {
-        id: 3,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'entregue',
-    },
-    {
-        id: 4,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'pendente',
-    },
-    {
-        id: 5,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'cancelada',
-    },
-    {
-        id: 6,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'cancelada',
-    },
-];
 export default function Deliveries() {
+    const [deliveries, setDeliveries] = useState([]);
+    const [searchProduct, setSearchProduct] = useState('');
+    const debouncedValue = useDebounce(searchProduct, 600);
     const [openModal, setOpen] = useState(false);
-    const [modalContent, setModalContent] = useState({});
+    const [modalContent, setModalContent] = useState(null);
+    const [atualPage, setPage] = useState(1);
+
     function toogleModal() {
         setOpen(!openModal);
     }
 
-    function toogleModalAndChooseText(delivery) {
+    function toogleModalAndSetContent(delivery) {
         setOpen(!openModal);
         setModalContent(delivery);
     }
     function redirectToCreate() {
         history.push(ROUTES.DELIVERIES_CREATE);
     }
+
+    useEffect(() => {
+        async function getDeliveries(page, q) {
+            try {
+                const response = await api.get(
+                    `/deliveries?page=${page}&q=${q}`
+                );
+
+                setDeliveries(
+                    response.data.map(delivery => ({
+                        ...delivery,
+                        formattedEndDate:
+                            delivery.end_date &&
+                            format(
+                                parseISO(delivery.end_date),
+                                "d'/'MM'/'yyyy"
+                            ),
+                        formattedStartDate:
+                            delivery.start_date &&
+                            format(
+                                parseISO(delivery.start_date),
+                                "d'/'MM'/'yyyy"
+                            ),
+                    }))
+                );
+                return response.data;
+            } catch (err) {
+                console.log(err);
+                toast.error('Problemas para buscar as encomendas');
+                return null;
+            }
+        }
+        getDeliveries(atualPage, debouncedValue);
+    }, [atualPage, debouncedValue]);
     return (
         <Container>
             <Dialog toggleModal={toogleModal} open={openModal}>
-                <>
-                    <div>
-                        <strong>Informações da encomenda</strong>
-                        <span>{modalContent.destinatario}</span>
-                        <span>{modalContent.entregador}</span>
-                        <span>{modalContent.id}</span>
-                    </div>
-                    <div>
-                        <strong>Datas</strong>
-                        <span>
-                            <strong>Retirada: </strong>
-                            {modalContent.status}
-                        </span>
-                        <span>
-                            <strong>Entrega: </strong>
-                            {modalContent.status}
-                        </span>
-                    </div>
-                    <div>
-                        <strong>Assinatura do destinatário</strong>
-                        <img
-                            src="https://api.adorable.io/avatars/50/abott@adorable.png"
-                            alt="NOME"
-                        />
-                    </div>
-                </>
+                {modalContent && (
+                    <>
+                        <div>
+                            <strong>Informações da encomenda</strong>
+                            <span>{modalContent.recipient.name}</span>
+                            <span>{modalContent.deliveryman.name}</span>
+                            <span>{modalContent.recipient.cep}</span>
+                        </div>
+                        <div>
+                            <strong>Datas</strong>
+                            <span>
+                                <strong>Retirada: </strong>
+                                {modalContent.formattedStartDate}
+                            </span>
+                            <span>
+                                <strong>Entrega: </strong>
+                                {modalContent.formattedEndDate}
+                            </span>
+                        </div>
+                        <div>
+                            <strong>Assinatura do destinatário</strong>
+
+                            {modalContent.signature && (
+                                <img
+                                    src={modalContent.signature.url}
+                                    alt="Assinatura"
+                                />
+                            )}
+                        </div>
+                    </>
+                )}
             </Dialog>
             <header>
                 <strong>Gerenciando encomendas</strong>
@@ -124,7 +118,13 @@ export default function Deliveries() {
             <SubHeader>
                 <div>
                     <FaSearch size={16} color="#DDDDDD" />
-                    <input placeholder="Buscar por encomendas" />
+                    <input
+                        placeholder="Nome do produto"
+                        value={searchProduct}
+                        onChange={e => {
+                            setSearchProduct(e.target.value);
+                        }}
+                    />
                 </div>
 
                 <button type="button" onClick={redirectToCreate}>
@@ -137,6 +137,8 @@ export default function Deliveries() {
                     <tr>
                         <th>ID</th>
                         <th>Destinatário</th>
+                        <th>Produto</th>
+
                         <th>Entregador</th>
                         <th>Cidade</th>
                         <th>Estado</th>
@@ -145,50 +147,58 @@ export default function Deliveries() {
                     </tr>
                 </thead>
                 <tbody>
-                    {list.map(product => (
-                        <Fragment key={product.id}>
+                    {deliveries.map(delivery => (
+                        <Fragment key={delivery.id}>
                             <tr>
                                 <td>
-                                    {product.id}
+                                    #{delivery.id}
                                     {/* <img src={product.image} alt={product.title} /> */}
                                 </td>
                                 <td>
-                                    <span>{product.destinatario}</span>
+                                    <span>{delivery.recipient.name}</span>
+                                </td>
+                                <td>
+                                    <span>{delivery.product}</span>
                                 </td>
                                 <td>
                                     <AvatarContainer>
                                         <img
-                                            src="https://api.adorable.io/avatars/50/abott@adorable.png"
-                                            alt="NOME"
+                                            src={
+                                                (delivery.deliveryman.avatar &&
+                                                    delivery.deliveryman.avatar
+                                                        .url) ||
+                                                'https://api.adorable.io/avatars/50/abott@adorable.png'
+                                            }
+                                            alt={delivery.deliveryman.name}
                                         />
-                                        <span>{product.entregador}</span>
+                                        <span>{delivery.deliveryman.name}</span>
                                     </AvatarContainer>
                                 </td>
                                 <td>
-                                    <span>{product.cidade}</span>
+                                    <span>{delivery.recipient.city}</span>
                                 </td>
                                 <td>
-                                    <span>RJ</span>
+                                    <span>{delivery.recipient.state}</span>
                                 </td>
                                 <td>
                                     <Badge
-                                        color={mapObjToColor[product.status]}
+                                        color={mapObjToColor[delivery.status]}
                                     >
-                                        <span>{product.status}</span>
+                                        <span>{delivery.status}</span>
                                     </Badge>
                                 </td>
                                 <td>
                                     <CenteredIcon>
                                         <MenuOptions
                                             visibilityAction={() =>
-                                                toogleModalAndChooseText(
-                                                    product
+                                                toogleModalAndSetContent(
+                                                    delivery
                                                 )
                                             }
                                             showVisibilityOption
                                             editOptionRedirectTo={ROUTES.DELIVERIES_EDIT.replace(
                                                 ':deliveryId',
-                                                product.id
+                                                delivery.id
                                             )}
                                         />
                                     </CenteredIcon>

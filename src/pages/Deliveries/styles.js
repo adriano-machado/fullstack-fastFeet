@@ -119,6 +119,7 @@ export const Badge = styled.div`
         padding-left: 20px;
         text-align: center;
         font-weight: bold;
+        max-width: 140px;
         &::before {
             position: absolute;
             left: 0px;

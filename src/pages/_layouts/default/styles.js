@@ -22,6 +22,10 @@ export const Content = styled.div`
         border-bottom-right-radius: 4px;
         border-top-right-radius: 4px;
     }
+
+    th:last-child {
+        text-align: center;
+    }
     table {
         font-size: 16px;
         width: 100%;
