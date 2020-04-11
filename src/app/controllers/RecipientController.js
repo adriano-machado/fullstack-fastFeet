@@ -39,12 +39,10 @@ class RecipientController {
             city: Yup.string().required(),
             street: Yup.string().required(),
             number: Yup.number().required(),
-            complement: Yup.string().required(),
+            complement: Yup.string(),
             name: Yup.string().required(),
 
-            cep: Yup.string()
-                .required()
-                .matches(/^[0-9]{8}$/, 'Must be exactly 8 digits'),
+            cep: Yup.string().required(),
         });
 
         if (!(await schema.isValid(req.body))) {
@@ -81,7 +79,7 @@ class RecipientController {
             number: Yup.number(),
             complement: Yup.string(),
             name: Yup.string(),
-            cep: Yup.string().matches(/^[0-9]{8}$/, 'Must be exactly 8 digits'),
+            cep: Yup.string(),
         });
 
         if (!(await schema.isValid(req.body))) {
@@ -134,6 +132,14 @@ class RecipientController {
         await recipient.destroy();
 
         return res.status(204).json();
+    }
+
+    async show(req, res) {
+        const recipient = await Recipient.findByPk(req.params.recipientId);
+        if (!recipient) {
+            return res.status(400).json({ error: "Recipient doesn't exists" });
+        }
+        return res.json(recipient);
     }
 }
 
