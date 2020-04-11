@@ -9,7 +9,6 @@ import addPhoto from '../../assets/addPhoto.png';
 export default function AvatarInput() {
     const { defaultValue, registerField } = useField('avatar');
     const [file, setFile] = useState(defaultValue && defaultValue.id);
-
     const [preview, setPreview] = useState(defaultValue && defaultValue.url);
 
     const ref = useRef();
@@ -22,6 +21,12 @@ export default function AvatarInput() {
             });
         }
     }, [ref, registerField]);
+
+    useEffect(() => {
+        if (defaultValue && defaultValue.id) {
+            setPreview(defaultValue.url);
+        }
+    }, [defaultValue]);
     async function handleChange(e) {
         const data = new FormData();
         data.append('file', e.target.files[0]);
