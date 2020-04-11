@@ -8,7 +8,7 @@ class DeliverymanController {
         const { page = 1, q } = req.query;
         const query = {
             attributes: ['id', 'email', 'name', 'created_at'],
-            order: [['created_at', 'DESC']],
+            order: [['created_at', 'ASC']],
             limit: 20,
             offset: (page - 1) * 20,
             include: [

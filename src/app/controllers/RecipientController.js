@@ -17,6 +17,7 @@ class RecipientController {
                 'complement',
                 'name',
             ],
+            order: [['created_at', 'ASC']],
             limit: 20,
             offset: (page - 1) * 20,
         };

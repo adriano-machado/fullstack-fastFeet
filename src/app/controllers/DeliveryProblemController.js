@@ -11,9 +11,6 @@ class DeliveryProblemController {
     async index(req, res) {
         const { page = 1 } = req.query;
         const problemsDelivery = await DeliveryProblem.findAll({
-            where: {
-                delivery_id: req.params.deliveryId,
-            },
             attributes: ['id', 'description'],
             limit: 20,
             offset: (page - 1) * 20,
@@ -80,6 +77,26 @@ class DeliveryProblemController {
         Queue.add(CancelationMail.key, { delivery, problem });
 
         return res.json(delivery);
+    }
+
+    async show(req, res) {
+        const { page = 1 } = req.query;
+        const problemsDelivery = await DeliveryProblem.findAll({
+            where: {
+                delivery_id: req.params.deliveryId,
+            },
+            attributes: ['id', 'description'],
+            limit: 20,
+            offset: (page - 1) * 20,
+            include: [
+                {
+                    model: Delivery,
+                    as: 'delivery',
+                    attributes: ['id', 'product', 'status', 'recipient_id'],
+                },
+            ],
+        });
+        return res.json(problemsDelivery);
     }
 }
 export default new DeliveryProblemController();
