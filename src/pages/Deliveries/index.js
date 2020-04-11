@@ -85,8 +85,13 @@ export default function Deliveries() {
                     <>
                         <div>
                             <strong>Informações da encomenda</strong>
-                            <span>{modalContent.recipient.name}</span>
-                            <span>{modalContent.deliveryman.name}</span>
+                            <span>
+                                {`${modalContent.recipient.street}, ${modalContent.recipient.number}`}
+                            </span>
+                            <span>
+                                {`${modalContent.recipient.city} -
+                                ${modalContent.recipient.state}`}
+                            </span>
                             <span>{modalContent.recipient.cep}</span>
                         </div>
                         <div>
