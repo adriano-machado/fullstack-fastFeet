@@ -1,57 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPlus, FaSearch } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import { useDebounce } from 'use-lodash-debounce';
 import MenuOptions from '../../components/MenuOptions';
 import history from '../../services/history';
+import api from '../../services/api';
+import noAvatar from '../../assets/no-avatar.jpg';
 
 import { Container, SubHeader, RighterIcon, LastColumn } from './styles';
 import { ROUTES } from '../../consts';
 
-const list = [
-    {
-        id: 1,
-        destinatario: 'Adriano ricardo machadoaaaaaaaaaaaaaaaaaaaaaa',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'pendente',
-    },
-    {
-        id: 2,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'pendente',
-    },
-    {
-        id: 3,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'pendente',
-    },
-    {
-        id: 4,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'pendente',
-    },
-    {
-        id: 1,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'pendente',
-    },
-];
 export default function Deliverymans() {
+    const [deliverymans, setDeliverymans] = useState([]);
+    const [searchName, setSearchName] = useState('');
+    const debouncedValue = useDebounce(searchName, 600);
+    const [atualPage, setPage] = useState(1);
     function redirectToCreate() {
         history.push(ROUTES.DELIVERYMANS_CREATE);
     }
+
+    useEffect(() => {
+        async function getDeliverymans(page, q) {
+            try {
+                const response = await api.get(
+                    `/deliverymans?page=${page}&q=${q}`
+                );
+
+                setDeliverymans(response.data);
+                return response.data;
+            } catch (err) {
+                console.log(err);
+                toast.error('Problemas para buscar entregadores');
+                return null;
+            }
+        }
+        getDeliverymans(atualPage, debouncedValue);
+    }, [atualPage, debouncedValue]);
     return (
         <Container>
             <header>
@@ -60,7 +44,11 @@ export default function Deliverymans() {
             <SubHeader>
                 <div>
                     <FaSearch size={16} color="#DDDDDD" />
-                    <input placeholder="Buscar por entregadores" />
+                    <input
+                        placeholder="Buscar por nome"
+                        value={searchName}
+                        onChange={e => setSearchName(e.target.value)}
+                    />
                 </div>
 
                 <button type="button" onClick={redirectToCreate}>
@@ -79,26 +67,27 @@ export default function Deliverymans() {
                     </tr>
                 </thead>
                 <tbody>
-                    {list.map(product => (
+                    {deliverymans.map(deliveryman => (
                         <>
-                            <tr key={product.id}>
-                                <td>
-                                    {product.id}
-                                    {/* <img src={product.image} alt={product.title} /> */}
-                                </td>
+                            <tr key={deliveryman.id}>
+                                <td>#{deliveryman.id}</td>
 
                                 <td>
                                     <img
-                                        src="https://api.adorable.io/avatars/50/abott@adorable.png"
-                                        alt="NOME"
+                                        src={
+                                            (deliveryman.avatar &&
+                                                deliveryman.avatar.url) ||
+                                            noAvatar
+                                        }
+                                        alt={deliveryman.name}
                                     />
                                 </td>
                                 <td>
-                                    <span>{product.cidade}</span>
+                                    <span>{deliveryman.name}</span>
                                 </td>
 
                                 <td>
-                                    <span>PENDENTE</span>
+                                    <span>{deliveryman.email}</span>
                                 </td>
                                 <td>
                                     <RighterIcon>
@@ -106,7 +95,7 @@ export default function Deliverymans() {
                                             showVisibilityOption={false}
                                             editOptionRedirectTo={ROUTES.DELIVERYMANS_EDIT.replace(
                                                 ':deliverymanId',
-                                                product.id
+                                                deliveryman.id
                                             )}
                                         />
                                     </RighterIcon>

@@ -1,57 +1,40 @@
-import React, { useState } from 'react';
-import { FaPlus, FaSearch } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import { useDebounce } from 'use-lodash-debounce';
+import { toast } from 'react-toastify';
 import MenuOptions from '../../components/MenuOptions';
 import Dialog from '../../components/Dialog';
 
-import { Container, SubHeader, RighterIcon, LastColumn } from './styles';
-import { ROUTES } from '../../consts';
+import api from '../../services/api';
 
-const list = [
-    {
-        id: 1,
-        destinatario:
-            'Adriano ricardo machadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaamachadoaaaaaaaaaaaaaaaaaaaaaa',
-        entregador: 'adriano ricardo machado333',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'pendente',
-    },
-    {
-        id: 2,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo 66',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'pendente',
-    },
-    {
-        id: 3,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado444',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'pendente',
-    },
-    {
-        id: 4,
-        destinatario: 'Adriano ricardo machado555',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'pendente',
-    },
-    {
-        id: 1,
-        destinatario: 'Adriano ricardo machado',
-        entregador: 'adriano ricardo machado',
-        cidade: ' Rio de janeiro',
-        estado: 'RJ',
-        status: 'pendente',
-    },
-];
+import { Container, SubHeader, RighterIcon, LastColumn } from './styles';
+
 export default function Problems() {
     const [openModal, setOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
+
+    const [problems, setProblems] = useState([]);
+    const [idToSearch, setIdToSearch] = useState('');
+    const debouncedValue = useDebounce(idToSearch, 600);
+    const [atualPage, setPage] = useState(1);
+
+    useEffect(() => {
+        async function getProblems(page, id) {
+            try {
+                const response = await api.get(
+                    `/delivery/problems${id && `/${id}`}?page=${page}`
+                );
+
+                setProblems(response.data);
+                return response.data;
+            } catch (err) {
+                console.tron.log(err);
+                toast.error('Problemas para buscar destinatários');
+                return null;
+            }
+        }
+        getProblems(atualPage, debouncedValue);
+    }, [atualPage, debouncedValue]);
     function toogleModal() {
         setOpen(!openModal);
     }
@@ -72,7 +55,13 @@ export default function Problems() {
             <SubHeader>
                 <div>
                     <FaSearch size={16} color="#DDDDDD" />
-                    <input placeholder="Buscar por encomendas" />
+                    <input
+                        placeholder="ID da encomenda"
+                        value={idToSearch}
+                        onChange={e => {
+                            setIdToSearch(e.target.value);
+                        }}
+                    />
                 </div>
             </SubHeader>
 
@@ -85,16 +74,13 @@ export default function Problems() {
                     </tr>
                 </thead>
                 <tbody>
-                    {list.map(product => (
+                    {problems.map(problem => (
                         <>
-                            <tr key={product.id}>
-                                <td>
-                                    {product.id}
-                                    {/* <img src={product.image} alt={product.title} /> */}
-                                </td>
+                            <tr key={problem.id}>
+                                <td>#{problem.delivery.id}</td>
 
                                 <td>
-                                    <span>{product.destinatario}</span>
+                                    <span>{problem.description}</span>
                                 </td>
 
                                 <td>
@@ -102,7 +88,7 @@ export default function Problems() {
                                         <MenuOptions
                                             visibilityAction={() =>
                                                 toogleModalAndChooseText(
-                                                    product.destinatario
+                                                    problem.description
                                                 )
                                             }
                                             deleteText="Cancelar encomenda"

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { format, parseISO } from 'date-fns';
 import api from '../../services/api';
 import history from '../../services/history';
+import noAvatar from '../../assets/no-avatar.jpg';
 
 import {
     Container,
@@ -167,7 +168,7 @@ export default function Deliveries() {
                                                 (delivery.deliveryman.avatar &&
                                                     delivery.deliveryman.avatar
                                                         .url) ||
-                                                'https://api.adorable.io/avatars/50/abott@adorable.png'
+                                                noAvatar
                                             }
                                             alt={delivery.deliveryman.name}
                                         />
