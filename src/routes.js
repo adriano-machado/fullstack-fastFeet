@@ -37,7 +37,7 @@ routes.post(
 );
 
 routes.post('/delivery/:deliveryId/problems', DeliveryProblemController.store);
-routes.get('/delivery/:deliveryId/problems', DeliveryProblemController.show);
+routes.get('/delivery/problems/:deliveryId', DeliveryProblemController.show);
 routes.get('/delivery/problems', DeliveryProblemController.index);
 
 // FILES
