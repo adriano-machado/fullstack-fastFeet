@@ -3,7 +3,7 @@ import React, { useState, Fragment } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 import { FaChevronLeft, FaCheck } from 'react-icons/fa';
-import SelectAsync from '../../components/SelectAsync';
+import SelectAsync from '../../../components/SelectAsync';
 import {
     FormContent,
     Header,
@@ -12,7 +12,7 @@ import {
     Row1,
     CustomInput,
 } from './styles';
-import history from '../../services/history';
+import history from '../../../services/history';
 
 const schema = Yup.object().shape({
     recipient_id: Yup.string().required('O e-mail é obrigatório'),

@@ -5,10 +5,10 @@ import * as Yup from 'yup';
 import { FaChevronLeft, FaCheck } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import InputMask from '../../components/InputMask';
+import InputMask from '../../../components/InputMask';
 import { FormContent, Header, Container, Button, Row1, Row2 } from './styles';
-import history from '../../services/history';
-import api from '../../services/api';
+import history from '../../../services/history';
+import api from '../../../services/api';
 
 const schema = Yup.object().shape({
     name: Yup.string().required('O nome é obrigatório'),

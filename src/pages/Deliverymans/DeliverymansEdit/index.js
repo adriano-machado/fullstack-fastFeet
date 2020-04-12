@@ -6,10 +6,10 @@ import { FaChevronLeft, FaCheck } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { FormContent, Header, Container, Button } from './styles';
-import history from '../../services/history';
-import api from '../../services/api';
+import history from '../../../services/history';
+import api from '../../../services/api';
 
-import AvatarInput from '../../components/AvatarInput';
+import AvatarInput from '../../../components/AvatarInput';
 
 const schema = Yup.object().shape({
     email: Yup.string()

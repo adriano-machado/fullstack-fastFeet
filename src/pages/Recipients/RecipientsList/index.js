@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useDebounce } from 'use-lodash-debounce';
-import MenuOptions from '../../components/MenuOptions';
-import history from '../../services/history';
-import api from '../../services/api';
-import noAvatar from '../../assets/no-avatar.jpg';
+import MenuOptions from '../../../components/MenuOptions';
+import history from '../../../services/history';
+import api from '../../../services/api';
+import noAvatar from '../../../assets/no-avatar.jpg';
 
 import { Container, SubHeader, RighterIcon, LastColumn } from './styles';
-import { ROUTES } from '../../consts';
+import { ROUTES } from '../../../consts';
 
 export default function Recipients() {
     const [recipients, setRecipients] = useState([]);

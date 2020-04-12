@@ -5,17 +5,17 @@ import { Switch } from 'react-router-dom';
 import Route from './Route';
 import SignIn from '../pages/SignIn';
 
-import Deliverymans from '../pages/Deliverymans';
-import DeliverymansCreate from '../pages/DeliverymansCreate';
-import DeliverymansEdit from '../pages/DeliverymansEdit';
+import Deliverymans from '../pages/Deliverymans/DeliverymansList';
+import DeliverymansCreate from '../pages/Deliverymans/DeliverymansCreate';
+import DeliverymansEdit from '../pages/Deliverymans/DeliverymansEdit';
 
-import Deliveries from '../pages/Deliveries';
-import DeliveriesCreate from '../pages/DeliveriesCreate';
-import DeliveriesEdit from '../pages/DeliveriesEdit';
+import Deliveries from '../pages/Deliveries/DeliveriesList';
+import DeliveriesCreate from '../pages/Deliveries/DeliveriesCreate';
+import DeliveriesEdit from '../pages/Deliveries/DeliveriesEdit';
 
-import Recipients from '../pages/Recipients';
-import RecipientsCreate from '../pages/RecipientsCreate';
-import RecipientsEdit from '../pages/RecipientsEdit';
+import Recipients from '../pages/Recipients/RecipientsList';
+import RecipientsCreate from '../pages/Recipients/RecipientsCreate';
+import RecipientsEdit from '../pages/Recipients/RecipientsEdit';
 
 import Problems from '../pages/Problems';
 import { ROUTES } from '../consts';
