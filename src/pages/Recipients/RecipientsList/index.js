@@ -106,10 +106,14 @@ export default function Recipients() {
                                                 )
                                             }
                                             showVisibilityOption={false}
-                                            editOptionRedirectTo={ROUTES.RECIPIENTS_EDIT.replace(
-                                                ':recipientId',
-                                                recipient.id
-                                            )}
+                                            handleEditAction={() =>
+                                                history.push(
+                                                    ROUTES.RECIPIENTS_EDIT.replace(
+                                                        ':recipientId',
+                                                        recipient.id
+                                                    )
+                                                )
+                                            }
                                         />
                                     </RighterIcon>
                                 </td>

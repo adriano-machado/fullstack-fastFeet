@@ -10,18 +10,14 @@ export default function MenuOptions({
     showVisibilityOption,
     showEditOption,
     deleteText,
-    editOptionRedirectTo,
     visibilityAction,
     deleteButtonAction,
+    handleEditAction,
 }) {
     const [visible, setVisible] = useState(false);
 
     function handleToggleVisible() {
         setVisible(!visible);
-    }
-
-    function handleEditActon() {
-        history.push(editOptionRedirectTo);
     }
 
     return (
@@ -37,7 +33,7 @@ export default function MenuOptions({
                 )}
 
                 {showEditOption && (
-                    <Option onClick={handleEditActon}>
+                    <Option onClick={handleEditAction}>
                         <MdEdit color="#4D85EE" size={18} />
 
                         <span>Editar</span>
@@ -56,7 +52,7 @@ export default function MenuOptions({
 MenuOptions.propTypes = {
     showVisibilityOption: PropTypes.bool,
     showEditOption: PropTypes.bool,
-    editOptionRedirectTo: PropTypes.string,
+    handleEditAction: PropTypes.func,
     deleteText: PropTypes.string,
     visibilityAction: PropTypes.func,
     deleteButtonAction: PropTypes.func,
@@ -65,7 +61,7 @@ MenuOptions.propTypes = {
 MenuOptions.defaultProps = {
     showVisibilityOption: true,
     showEditOption: true,
-    editOptionRedirectTo: '',
+    handleEditAction: null,
     deleteText: 'Excluir',
     visibilityAction: null,
     deleteButtonAction: null,

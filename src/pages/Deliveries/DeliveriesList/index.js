@@ -225,10 +225,14 @@ export default function Deliveries() {
                                                 )
                                             }
                                             showVisibilityOption
-                                            editOptionRedirectTo={ROUTES.DELIVERIES_EDIT.replace(
-                                                ':deliveryId',
-                                                delivery.id
-                                            )}
+                                            handleEditAction={() =>
+                                                history.push(
+                                                    ROUTES.DELIVERIES_EDIT.replace(
+                                                        ':deliveryId',
+                                                        delivery.id
+                                                    )
+                                                )
+                                            }
                                         />
                                     </CenteredIcon>
                                 </td>

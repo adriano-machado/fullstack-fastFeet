@@ -116,10 +116,14 @@ export default function Deliverymans() {
                                                 )
                                             }
                                             showVisibilityOption={false}
-                                            editOptionRedirectTo={ROUTES.DELIVERYMANS_EDIT.replace(
-                                                ':deliverymanId',
-                                                deliveryman.id
-                                            )}
+                                            handleEditAction={() =>
+                                                history.push(
+                                                    ROUTES.DELIVERYMANS_EDIT.replace(
+                                                        ':deliverymanId',
+                                                        deliveryman.id
+                                                    )
+                                                )
+                                            }
                                         />
                                     </RighterIcon>
                                 </td>
