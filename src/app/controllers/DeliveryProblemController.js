@@ -58,6 +58,7 @@ class DeliveryProblemController {
 
     async delete(req, res) {
         const problem = await DeliveryProblem.findByPk(req.params.problemId);
+
         const delivery = await Delivery.findByPk(problem.delivery_id, {
             include: [
                 {
@@ -70,7 +71,11 @@ class DeliveryProblemController {
                 },
             ],
         });
-
+        if (delivery.end_date) {
+            return res
+                .status(401)
+                .json({ error: "Can't delete a finished delivery" });
+        }
         delivery.canceled_at = new Date();
         await delivery.save();
 
