@@ -58,6 +58,7 @@ export default function Deliveriesreate() {
                         <div style={{ width: '420px', marginRight: '18px' }}>
                             <label htmlFor="recipient_id">Destinatário</label>
                             <SelectAsync
+                                URLtoFetch="/recipients"
                                 placeholder="Escolha o destinatário"
                                 onChange={handleRecipientSelect}
                                 name="recipient_id"
@@ -66,6 +67,7 @@ export default function Deliveriesreate() {
                         <div style={{ width: '420px' }}>
                             <label htmlFor="deliveryman_id">Entregador</label>
                             <SelectAsync
+                                URLtoFetch="/deliverymans"
                                 placeholder="Escolha o entregador"
                                 onChange={handleDeliverymanSelect}
                                 name="deliveryman_id"

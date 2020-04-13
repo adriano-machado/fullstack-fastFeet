@@ -1,34 +1,48 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import AsyncSelect from 'react-select/async';
+import { useDebounce } from 'use-lodash-debounce';
+import PropTypes from 'prop-types';
+import api from '../../services/api';
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
-
-export default function WithCallbacks({ name, onChange, placeholder }) {
+export default function SelectAsync({
+    name,
+    onChange,
+    placeholder,
+    URLtoFetch,
+}) {
     const [inputValue, setInputValue] = useState('');
-    const [value, setValue] = useState({});
+    // const [value, setValue] = useState({});
+    const debouncedValue = useDebounce(inputValue, 200);
+
+    const [options, setOptions] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            const response = await api.get(
+                `${URLtoFetch}?page=${1}&q=${debouncedValue}`
+            );
+            const newOptions = response.data.map(data => ({
+                value: data.id,
+                label: data.name,
+            }));
+
+            setOptions(newOptions);
+            return newOptions;
+        }
+        fetchData(debouncedValue);
+    }, [debouncedValue, URLtoFetch]);
 
     function handleInputChange(newValue) {
-        console.log(newValue);
-
         const valueToSet = newValue.replace(/\W/g, '');
         setInputValue(valueToSet);
         return valueToSet;
     }
-    function filterColors(valueInput) {
+    function filterOptions(valueInput) {
         return options.filter(i =>
             i.label.toLowerCase().includes(valueInput.toLowerCase())
         );
     }
-    function loadOptions(options, callback) {
-        setTimeout(() => {
-            //   return options
-            callback(filterColors(options));
-        }, 1000);
+    function loadOptions(handleOptions, callback) {
+        callback(filterOptions(handleOptions));
     }
 
     return (
@@ -39,7 +53,14 @@ export default function WithCallbacks({ name, onChange, placeholder }) {
             onInputChange={handleInputChange}
             onChange={e => onChange(e.value)}
             placeholder={placeholder}
-            //   value={this.props.value.value}
+            defaultOptions={options}
         />
     );
 }
+
+SelectAsync.propTypes = {
+    URLtoFetch: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+};
