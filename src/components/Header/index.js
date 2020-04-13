@@ -5,16 +5,17 @@ import history from '../../services/history';
 import logoPurple from '../../assets/fastfeet-logo.png';
 import { Container, Content, Profile, LinkHandle } from './styles';
 import { signOut } from '../../store/modules/auth/actions';
+import { ROUTES } from '../../consts';
 
-export default function Header(props) {
+export default function Header() {
     const profile = useSelector(state => state.user.profile);
     const dispatch = useDispatch();
     const activeRoute = history.location.pathname;
     const routesList = [
-        { routeName: '/deliveries', label: 'ENCOMENDAS' },
-        { routeName: '/deliverymans', label: 'ENTREGADORES' },
-        { routeName: '/recipients', label: 'DESTINATÁRIOS' },
-        { routeName: '/problems', label: 'PROBLEMAS' },
+        { routeName: ROUTES.DELIVERIES, label: 'ENCOMENDAS' },
+        { routeName: ROUTES.DELIVERYMANS, label: 'ENTREGADORES' },
+        { routeName: ROUTES.RECIPIENTS, label: 'DESTINATÁRIOS' },
+        { routeName: ROUTES.PROBLEMS, label: 'PROBLEMAS' },
     ];
 
     function handleLogout() {

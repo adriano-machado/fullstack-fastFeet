@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useDebounce } from 'use-lodash-debounce';
@@ -33,7 +33,7 @@ export default function Deliverymans() {
                 toast.success('Entregador deletado!');
             } catch (err) {
                 toast.error(
-                    'Problemas para deletar o entregador.\n Verfique se ele não tem nenhuma entrega atribuída a ele'
+                    'Problemas para deletar o entregador.\n Verfique se ele não tem nenhuma entrega atribuída à ele'
                 );
             }
         }
@@ -86,8 +86,8 @@ export default function Deliverymans() {
                 </thead>
                 <tbody>
                     {deliverymans.map(deliveryman => (
-                        <>
-                            <tr key={deliveryman.id}>
+                        <Fragment key={deliveryman.id}>
+                            <tr>
                                 <td>#{deliveryman.id}</td>
 
                                 <td>
@@ -128,7 +128,7 @@ export default function Deliverymans() {
                                 </td>
                             </tr>
                             <br />
-                        </>
+                        </Fragment>
                     ))}
                 </tbody>
             </table>

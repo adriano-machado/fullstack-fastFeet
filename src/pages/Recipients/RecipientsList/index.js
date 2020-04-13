@@ -51,7 +51,7 @@ export default function Recipients() {
                 toast.success('Destinatário deletado!');
             } catch (err) {
                 toast.error(
-                    'Problemas para deletar o destinatário.\n Verfique se ele não tem nenhuma entrega atribuída a ele'
+                    'Problemas para deletar o destinatário.\n Verfique se ele não tem nenhuma entrega atribuída à ele'
                 );
             }
         }
