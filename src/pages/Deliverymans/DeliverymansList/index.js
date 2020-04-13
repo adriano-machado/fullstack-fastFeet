@@ -39,10 +39,10 @@ export default function Deliverymans() {
         }
     }
     useEffect(() => {
-        async function getDeliverymans(page, q) {
+        async function getDeliverymans() {
             try {
                 const response = await api.get(
-                    `/deliverymans?page=${page}&q=${q}`
+                    `/deliverymans?page=${atualPage}&q=${debouncedValue}`
                 );
 
                 setDeliverymans(response.data);
@@ -52,7 +52,7 @@ export default function Deliverymans() {
                 return null;
             }
         }
-        getDeliverymans(atualPage, debouncedValue);
+        getDeliverymans();
     }, [atualPage, debouncedValue]);
     return (
         <Container>
