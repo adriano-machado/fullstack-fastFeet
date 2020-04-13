@@ -24,7 +24,7 @@ const schema = Yup.object().shape({
 });
 export default function RecipientsEdit({ match }) {
     const [recipient, setRecipient] = useState({});
-    const [cep, setCep] = useState(null);
+    const [cep, setCep] = useState('');
 
     useEffect(() => {
         async function getRecipient() {

@@ -17,8 +17,8 @@ import history from '../../../services/history';
 import api from '../../../services/api';
 
 export default function DeliveriesEdit({ match }) {
-    const [deliverymanOption, setDeliverymanOption] = useState('');
-    const [recipientOption, setRecipientOption] = useState('');
+    const [deliverymanOption, setDeliverymanOption] = useState({});
+    const [recipientOption, setRecipientOption] = useState({});
     const [product, setProduct] = useState('');
     useEffect(() => {
         async function loadDelivery() {
@@ -62,7 +62,9 @@ export default function DeliveriesEdit({ match }) {
             toast.success('Encomenda editada com sucesso');
             return history.goBack();
         } catch (err) {
-            return toast.error('Problemas para editar encomenda');
+            return toast.error(
+                'Problemas para editar encomenda\nVerifique o status, apenas encomendas "pendentes" podem ser editadas'
+            );
         }
     }
 

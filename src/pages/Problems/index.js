@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useDebounce } from 'use-lodash-debounce';
 import { toast } from 'react-toastify';
@@ -71,8 +71,10 @@ export default function Problems() {
     return (
         <Container>
             <Dialog toggleModal={toogleModal} open={openModal}>
-                <strong>DESCRIÇÃO PROBLEMA</strong>
-                <span>{modalContent}</span>
+                <>
+                    <strong>DESCRIÇÃO PROBLEMA</strong>
+                    <span>{modalContent}</span>
+                </>
             </Dialog>
             <header>
                 <strong>Problemas na entrega</strong>
@@ -100,8 +102,8 @@ export default function Problems() {
                 </thead>
                 <tbody>
                     {problems.map(problem => (
-                        <>
-                            <tr key={problem.id}>
+                        <Fragment key={problem.id}>
+                            <tr>
                                 <td>#{problem.delivery.id}</td>
 
                                 <td>
@@ -125,7 +127,7 @@ export default function Problems() {
                                 </td>
                             </tr>
                             <br />
-                        </>
+                        </Fragment>
                     ))}
                 </tbody>
             </table>
