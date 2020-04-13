@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import multer from 'multer';
-// import UserController from './app/controllers/UserController';
 import FileController from './app/controllers/FileController';
 
 import SessionController from './app/controllers/SessionController';
@@ -12,16 +11,12 @@ import ScheduleController from './app/controllers/ScheduleController';
 import CompletedDeliveryController from './app/controllers/CompletedDeliveryController';
 import DeliveryProblemController from './app/controllers/DeliveryProblemController';
 
-// import NotificationController from './app/controllers/NotificationController';
-
 import authMiddleware from './app/middlewares/auth';
 import multerConfig from './config/multer';
 
 const upload = multer(multerConfig);
 
 const routes = new Router();
-
-// routes.post('/users', UserController.store);
 
 // DELIVERYMAN ACTIONS
 routes.get('/deliveryman/:deliverymanId/deliveries', ScheduleController.index);
@@ -50,7 +45,6 @@ routes.use(authMiddleware);
 // RECIPIENTS
 routes.get('/recipients', RecipientController.index);
 routes.get('/recipients/:recipientId', RecipientController.show);
-
 routes.post('/recipients', RecipientController.store);
 routes.put('/recipients/:recipientId', RecipientController.update);
 routes.delete('/recipients/:recipientId', RecipientController.delete);
@@ -58,7 +52,6 @@ routes.delete('/recipients/:recipientId', RecipientController.delete);
 // DELIVERYMANS
 routes.get('/deliverymans', DeliverymanController.index);
 routes.get('/deliverymans/:deliverymanId', DeliverymanController.show);
-
 routes.post('/deliverymans', DeliverymanController.store);
 routes.put('/deliverymans/:deliverymanId', DeliverymanController.update);
 routes.delete('/deliverymans/:deliverymanId', DeliverymanController.delete);
@@ -66,7 +59,6 @@ routes.delete('/deliverymans/:deliverymanId', DeliverymanController.delete);
 // DELIVERIES
 routes.get('/deliveries', DeliveryController.index);
 routes.get('/deliveries/:deliveryId', DeliveryController.show);
-
 routes.post('/deliveries', DeliveryController.store);
 routes.put('/deliveries/:deliveryId', DeliveryController.update);
 routes.delete('/deliveries/:deliveryId', DeliveryController.delete);
