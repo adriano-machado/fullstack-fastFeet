@@ -43,6 +43,31 @@ export default function Problems() {
         setOpen(!openModal);
         setModalContent(content);
     }
+    async function handleCancelDelivery(problemToDelete) {
+        if (
+            window.confirm(
+                `Tem certeza que deseja cancelar a encomenda #${problemToDelete.delivery.id}?`
+            )
+        ) {
+            try {
+                await api.delete(
+                    `problem/${problemToDelete.id}/cancel-delivery`
+                );
+
+                // setProblems(
+                //     problems.filter(
+                //         problem => problem.id !== problemToDelete.id
+                //     )
+                // );
+                toast.success('Encomenda cancelada!');
+            } catch (err) {
+                toast.error(
+                    'Problemas para cancelar encomenda.\nEncomendas que já foram entregues não podem ser canceladas'
+                );
+            }
+        }
+    }
+
     return (
         <Container>
             <Dialog toggleModal={toogleModal} open={openModal}>
@@ -86,6 +111,9 @@ export default function Problems() {
                                 <td>
                                     <RighterIcon>
                                         <MenuOptions
+                                            deleteButtonAction={() =>
+                                                handleCancelDelivery(problem)
+                                            }
                                             visibilityAction={() =>
                                                 toogleModalAndChooseText(
                                                     problem.description

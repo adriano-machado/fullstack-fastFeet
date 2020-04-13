@@ -42,7 +42,6 @@ export default function RecipientsCreate() {
             toast.success('Destinatário cadastrado com sucesso');
             history.goBack();
         } catch (err) {
-            console.log(err.response);
             if (err.response.data.error && err.response.status !== 500) {
                 toast.error(`${err.response.data.error}`);
             } else {

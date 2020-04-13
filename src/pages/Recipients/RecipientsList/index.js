@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useDebounce } from 'use-lodash-debounce';
@@ -36,6 +36,27 @@ export default function Recipients() {
     function redirectToCreate() {
         history.push(ROUTES.RECIPIENTS_CREATE);
     }
+
+    async function handleDeleteRecipient(id) {
+        if (
+            window.confirm(
+                `Tem certeza que deseja deletar o destinatário #${id}?`
+            )
+        ) {
+            try {
+                await api.delete(`recipients/${id}`);
+
+                setRecipients(
+                    recipients.filter(recipient => recipient.id !== id)
+                );
+                toast.success('Destinatário deletado!');
+            } catch (err) {
+                toast.error(
+                    'Problemas para deletar o destinatário.\n Verfique se ele não tem nenhuma entrega atribuída a ele'
+                );
+            }
+        }
+    }
     return (
         <Container>
             <header>
@@ -67,12 +88,9 @@ export default function Recipients() {
                 </thead>
                 <tbody>
                     {recipients.map(recipient => (
-                        <>
-                            <tr key={recipient.id}>
-                                <td>
-                                    #{recipient.id}
-                                    {/* <img src={recipient.image} alt={recipient.title} /> */}
-                                </td>
+                        <Fragment key={recipient.id}>
+                            <tr>
+                                <td>#{recipient.id}</td>
 
                                 <td>{recipient.name}</td>
                                 <td>
@@ -82,6 +100,11 @@ export default function Recipients() {
                                 <td>
                                     <RighterIcon>
                                         <MenuOptions
+                                            deleteButtonAction={() =>
+                                                handleDeleteRecipient(
+                                                    recipient.id
+                                                )
+                                            }
                                             showVisibilityOption={false}
                                             editOptionRedirectTo={ROUTES.RECIPIENTS_EDIT.replace(
                                                 ':recipientId',
@@ -92,7 +115,7 @@ export default function Recipients() {
                                 </td>
                             </tr>
                             <br />
-                        </>
+                        </Fragment>
                     ))}
                 </tbody>
             </table>

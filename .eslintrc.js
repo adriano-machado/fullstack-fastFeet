@@ -43,6 +43,7 @@ module.exports = {
         "required": {
           "some": [ "nesting", "id"  ]
         }
-      }]
+      }],
+      "no-alert": "off"
   }
 };

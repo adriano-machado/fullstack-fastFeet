@@ -12,6 +12,7 @@ export default function MenuOptions({
     deleteText,
     editOptionRedirectTo,
     visibilityAction,
+    deleteButtonAction,
 }) {
     const [visible, setVisible] = useState(false);
 
@@ -42,7 +43,7 @@ export default function MenuOptions({
                         <span>Editar</span>
                     </Option>
                 )}
-                <Option>
+                <Option onClick={deleteButtonAction}>
                     <MdDeleteForever color="#DE3B3B" size={18} />
 
                     <span>{deleteText}</span>
@@ -57,7 +58,8 @@ MenuOptions.propTypes = {
     showEditOption: PropTypes.bool,
     editOptionRedirectTo: PropTypes.string,
     deleteText: PropTypes.string,
-    visibilityAction: PropTypes.func.isRequired,
+    visibilityAction: PropTypes.func,
+    deleteButtonAction: PropTypes.func,
 };
 
 MenuOptions.defaultProps = {
@@ -65,4 +67,6 @@ MenuOptions.defaultProps = {
     showEditOption: true,
     editOptionRedirectTo: '',
     deleteText: 'Excluir',
+    visibilityAction: null,
+    deleteButtonAction: null,
 };

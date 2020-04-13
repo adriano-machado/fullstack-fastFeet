@@ -71,13 +71,31 @@ export default function Deliveries() {
                 );
                 return response.data;
             } catch (err) {
-                console.log(err);
                 toast.error('Problemas para buscar as encomendas');
                 return null;
             }
         }
         getDeliveries(atualPage, debouncedValue);
     }, [atualPage, debouncedValue]);
+
+    async function handleDeleteDelivery(id) {
+        if (
+            window.confirm(`Tem certeza que deseja deletar a encomenda #${id}?`)
+        ) {
+            try {
+                await api.delete(`deliveries/${id}`);
+
+                setDeliveries(
+                    deliveries.filter(delivery => delivery.id !== id)
+                );
+                toast.success('Encomenda deletada!');
+            } catch (err) {
+                toast.error(
+                    'Problemas para deletar a encomenda.\nApenas encomendas com status "pendente" podem ser deletadas '
+                );
+            }
+        }
+    }
     return (
         <Container>
             <Dialog toggleModal={toogleModal} open={openModal}>
@@ -196,6 +214,11 @@ export default function Deliveries() {
                                 <td>
                                     <CenteredIcon>
                                         <MenuOptions
+                                            deleteButtonAction={() =>
+                                                handleDeleteDelivery(
+                                                    delivery.id
+                                                )
+                                            }
                                             visibilityAction={() =>
                                                 toogleModalAndSetContent(
                                                     delivery

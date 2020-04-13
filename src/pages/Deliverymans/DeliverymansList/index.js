@@ -18,7 +18,26 @@ export default function Deliverymans() {
     function redirectToCreate() {
         history.push(ROUTES.DELIVERYMANS_CREATE);
     }
+    async function handleDeleteDeliveryman(id) {
+        if (
+            window.confirm(
+                `Tem certeza que deseja deletar o entregador #${id}?`
+            )
+        ) {
+            try {
+                await api.delete(`deliverymans/${id}`);
 
+                setDeliverymans(
+                    deliverymans.filter(deliveryman => deliveryman.id !== id)
+                );
+                toast.success('Entregador deletado!');
+            } catch (err) {
+                toast.error(
+                    'Problemas para deletar o entregador.\n Verfique se ele não tem nenhuma entrega atribuída a ele'
+                );
+            }
+        }
+    }
     useEffect(() => {
         async function getDeliverymans(page, q) {
             try {
@@ -29,7 +48,6 @@ export default function Deliverymans() {
                 setDeliverymans(response.data);
                 return response.data;
             } catch (err) {
-                console.log(err);
                 toast.error('Problemas para buscar entregadores');
                 return null;
             }
@@ -92,6 +110,11 @@ export default function Deliverymans() {
                                 <td>
                                     <RighterIcon>
                                         <MenuOptions
+                                            deleteButtonAction={() =>
+                                                handleDeleteDeliveryman(
+                                                    deliveryman.id
+                                                )
+                                            }
                                             showVisibilityOption={false}
                                             editOptionRedirectTo={ROUTES.DELIVERYMANS_EDIT.replace(
                                                 ':deliverymanId',

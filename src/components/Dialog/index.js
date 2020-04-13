@@ -12,11 +12,11 @@ export default function Dialog({ open, children, toggleModal }) {
 
 Dialog.propTypes = {
     open: PropTypes.bool,
-    children: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
-        .isRequired,
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     toggleModal: PropTypes.func.isRequired,
 };
 
 Dialog.defaultProps = {
     open: false,
+    children: null,
 };
