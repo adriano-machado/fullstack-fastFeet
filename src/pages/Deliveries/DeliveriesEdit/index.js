@@ -1,8 +1,9 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Form, Input } from '@rocketseat/unform';
+import { Form, Input, Scope } from '@rocketseat/unform';
 import * as Yup from 'yup';
 import { FaChevronLeft, FaCheck } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import SelectAsync from '../../../components/SelectAsync';
 import {
     FormContent,
@@ -13,48 +14,81 @@ import {
     CustomInput,
 } from './styles';
 import history from '../../../services/history';
+import api from '../../../services/api';
 
-const schema = Yup.object().shape({
-    recipient_id: Yup.string().required('O e-mail é obrigatório'),
-    deliveryman_id: Yup.string().required('testa'),
-    product: Yup.string().required('testa'),
-});
-export default function DeliveriesEdit() {
-    const [deliveryman_id, setDeliveryman] = useState('');
-    const [recipient_id, setRecipient] = useState('');
+export default function DeliveriesEdit({ match }) {
+    const [deliverymanOption, setDeliverymanOption] = useState('');
+    const [recipientOption, setRecipientOption] = useState('');
     const [product, setProduct] = useState('');
+    useEffect(() => {
+        async function loadDelivery() {
+            try {
+                const response = await api.get(
+                    `/deliveries/${match.params.deliveryId}`
+                );
+                const { deliveryman, recipient } = response.data;
+                setDeliverymanOption({
+                    label: deliveryman.name,
+                    value: deliveryman.id,
+                });
+                setRecipientOption({
+                    label: recipient.name,
+                    value: recipient.id,
+                });
+                setProduct(response.data.product);
+            } catch (err) {
+                toast.error('Problemas para buscar informações da encomenda');
+            }
+        }
 
+        loadDelivery();
+    }, [match.params.deliveryId]);
     function handleDeliverymanSelect(value) {
-        setDeliveryman(value);
+        setDeliverymanOption(value);
     }
     function handleRecipientSelect(value) {
-        setRecipient(value);
+        setRecipientOption(value);
     }
-    function handleSubmit() {
-        console.log({ recipient_id, deliveryman_id, product });
+    async function handleSubmit() {
+        if (!deliverymanOption || !recipientOption || !product) {
+            return toast.error('Todos os campos precisam estar preenchidos');
+        }
+        try {
+            await api.put(`/deliveries/${match.params.deliveryId}`, {
+                deliveryman_id: deliverymanOption.value,
+                recipient_id: recipientOption.value,
+                product,
+            });
+            toast.success('Encomenda editada com sucesso');
+            return history.goBack();
+        } catch (err) {
+            return toast.error('Problemas para editar encomenda');
+        }
     }
 
     return (
         <Container>
             <Header>
-                <strong>Cadastro de encomendas</strong>
+                <strong>Edição de encomendas</strong>
                 <div>
                     <Button type="button" onClick={() => history.goBack()} grey>
                         <FaChevronLeft size={16} />
                         VOLTAR
                     </Button>
-                    <Button form="my-form" type="submit" onClick={handleSubmit}>
+                    <Button form="my-form" type="submit">
                         <FaCheck size={16} />
                         SALVAR
                     </Button>
                 </div>
             </Header>
             <FormContent>
-                <Form schema={schema} onSubmit={handleSubmit} id="my-form">
+                <Form onSubmit={handleSubmit} id="my-form">
                     <Row1>
                         <div style={{ width: '420px', marginRight: '18px' }}>
                             <label htmlFor="recipient_id">Destinatário</label>
                             <SelectAsync
+                                URLtoFetch="/recipients"
+                                value={recipientOption}
                                 placeholder="Escolha o destinatário"
                                 onChange={handleRecipientSelect}
                                 name="recipient_id"
@@ -63,6 +97,8 @@ export default function DeliveriesEdit() {
                         <div style={{ width: '420px' }}>
                             <label htmlFor="deliveryman_id">Entregador</label>
                             <SelectAsync
+                                value={deliverymanOption}
+                                URLtoFetch="/deliverymans"
                                 placeholder="Escolha o entregador"
                                 onChange={handleDeliverymanSelect}
                                 name="deliveryman_id"

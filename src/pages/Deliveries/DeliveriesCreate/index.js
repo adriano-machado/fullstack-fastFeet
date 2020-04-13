@@ -16,38 +16,32 @@ import {
 import history from '../../../services/history';
 import api from '../../../services/api';
 
-const schema = Yup.object().shape({
-    recipient_id: Yup.string().required('O e-mail é obrigatório'),
-    deliveryman_id: Yup.string().required('testa'),
-    product: Yup.string().required('testa'),
-});
 export default function DeliveriesCreate() {
-    const [deliveryman_id, setDeliveryman] = useState('');
-    const [recipient_id, setRecipient] = useState('');
+    const [deliverymanOption, setDeliverymanOption] = useState(null);
+    const [recipientOption, setRecipientOption] = useState(null);
     const [product, setProduct] = useState('');
 
     function handleDeliverymanSelect(value) {
-        console.log(value);
-        setDeliveryman(value);
+        setDeliverymanOption(value);
     }
     function handleRecipientSelect(value) {
-        console.log(value);
-
-        setRecipient(value);
+        setRecipientOption(value);
     }
     async function handleSubmit() {
+        if (!deliverymanOption || !recipientOption || !product) {
+            return toast.error('Todos os campos precisam estar preenchidos');
+        }
         try {
             await api.post('/deliveries', {
-                deliveryman_id,
-                recipient_id,
+                deliveryman_id: deliverymanOption.value,
+                recipient_id: recipientOption.value,
                 product,
             });
-            toast.success('Entregador cadastrado com sucesso');
-            history.goBack();
+            toast.success('Encomenda cadastrada com sucesso');
+            return history.goBack();
         } catch (err) {
-            toast.error('Problemas para cadastrar encomenda');
+            return toast.error('Problemas para cadastrar encomenda');
         }
-        console.log({ recipient_id, deliveryman_id, product });
     }
 
     return (
@@ -59,19 +53,20 @@ export default function DeliveriesCreate() {
                         <FaChevronLeft size={16} />
                         VOLTAR
                     </Button>
-                    <Button form="my-form" type="submit" onClick={handleSubmit}>
+                    <Button form="my-form" type="submit">
                         <FaCheck size={16} />
                         SALVAR
                     </Button>
                 </div>
             </Header>
             <FormContent>
-                <Form schema={schema} onSubmit={handleSubmit} id="my-form">
+                <Form onSubmit={handleSubmit} id="my-form">
                     <Row1>
                         <div style={{ width: '420px', marginRight: '18px' }}>
                             <label htmlFor="recipient_id">Destinatário</label>
                             <SelectAsync
                                 URLtoFetch="/recipients"
+                                value={recipientOption}
                                 placeholder="Escolha o destinatário"
                                 onChange={handleRecipientSelect}
                                 name="recipient_id"
@@ -81,6 +76,7 @@ export default function DeliveriesCreate() {
                             <label htmlFor="deliveryman_id">Entregador</label>
                             <SelectAsync
                                 URLtoFetch="/deliverymans"
+                                value={deliverymanOption}
                                 placeholder="Escolha o entregador"
                                 onChange={handleDeliverymanSelect}
                                 name="deliveryman_id"

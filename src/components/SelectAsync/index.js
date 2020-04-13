@@ -9,14 +9,16 @@ export default function SelectAsync({
     onChange,
     placeholder,
     URLtoFetch,
+    value,
 }) {
     const [inputValue, setInputValue] = useState('');
-    // const [value, setValue] = useState({});
+    const [loading, setLoading] = useState(false);
     const debouncedValue = useDebounce(inputValue, 200);
 
     const [options, setOptions] = useState([]);
     useEffect(() => {
         async function fetchData() {
+            setLoading(true);
             const response = await api.get(
                 `${URLtoFetch}?page=${1}&q=${debouncedValue}`
             );
@@ -26,6 +28,8 @@ export default function SelectAsync({
             }));
 
             setOptions(newOptions);
+            setLoading(false);
+
             return newOptions;
         }
         fetchData(debouncedValue);
@@ -47,13 +51,15 @@ export default function SelectAsync({
 
     return (
         <AsyncSelect
+            isLoading={loading}
             inputId={name}
             loadOptions={loadOptions}
             options={options}
             onInputChange={handleInputChange}
-            onChange={e => onChange(e.value)}
+            onChange={e => onChange(e)}
             placeholder={placeholder}
             defaultOptions={options}
+            value={value}
         />
     );
 }
@@ -63,4 +69,12 @@ SelectAsync.propTypes = {
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    value: PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.number,
+    }),
+};
+
+SelectAsync.defaultProps = {
+    value: null,
 };
