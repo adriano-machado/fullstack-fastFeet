@@ -1,14 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState } from 'react';
 import { FaEllipsisH } from 'react-icons/fa';
 import { MdVisibility, MdEdit, MdDeleteForever } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import { Container, OptionsList, Option } from './styles';
-import history from '../../services/history';
-import Dialog from '../Dialog';
 
 export default function MenuOptions({
-    showVisibilityOption,
-    showEditOption,
     deleteText,
     visibilityAction,
     deleteButtonAction,
@@ -24,7 +20,7 @@ export default function MenuOptions({
         <Container onClick={handleToggleVisible}>
             <FaEllipsisH color="#C6C6C6" size={18} />
             <OptionsList visible={visible}>
-                {showVisibilityOption && (
+                {visibilityAction && (
                     <Option onClick={visibilityAction}>
                         <MdVisibility color="#8E5BE8" size={18} />
 
@@ -32,7 +28,7 @@ export default function MenuOptions({
                     </Option>
                 )}
 
-                {showEditOption && (
+                {handleEditAction && (
                     <Option onClick={handleEditAction}>
                         <MdEdit color="#4D85EE" size={18} />
 
@@ -50,8 +46,6 @@ export default function MenuOptions({
 }
 
 MenuOptions.propTypes = {
-    showVisibilityOption: PropTypes.bool,
-    showEditOption: PropTypes.bool,
     handleEditAction: PropTypes.func,
     deleteText: PropTypes.string,
     visibilityAction: PropTypes.func,
@@ -59,8 +53,6 @@ MenuOptions.propTypes = {
 };
 
 MenuOptions.defaultProps = {
-    showVisibilityOption: true,
-    showEditOption: true,
     handleEditAction: null,
     deleteText: 'Excluir',
     visibilityAction: null,

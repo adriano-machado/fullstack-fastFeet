@@ -115,7 +115,6 @@ export default function Deliverymans() {
                                                     deliveryman.id
                                                 )
                                             }
-                                            showVisibilityOption={false}
                                             handleEditAction={() =>
                                                 history.push(
                                                     ROUTES.DELIVERYMANS_EDIT.replace(

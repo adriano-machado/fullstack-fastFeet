@@ -224,7 +224,6 @@ export default function Deliveries() {
                                                     delivery
                                                 )
                                             }
-                                            showVisibilityOption
                                             handleEditAction={() =>
                                                 history.push(
                                                     ROUTES.DELIVERIES_EDIT.replace(

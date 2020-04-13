@@ -5,7 +5,6 @@ import { useDebounce } from 'use-lodash-debounce';
 import MenuOptions from '../../../components/MenuOptions';
 import history from '../../../services/history';
 import api from '../../../services/api';
-import noAvatar from '../../../assets/no-avatar.jpg';
 
 import { Container, SubHeader, RighterIcon, LastColumn } from './styles';
 import { ROUTES } from '../../../consts';
@@ -105,7 +104,6 @@ export default function Recipients() {
                                                     recipient.id
                                                 )
                                             }
-                                            showVisibilityOption={false}
                                             handleEditAction={() =>
                                                 history.push(
                                                     ROUTES.RECIPIENTS_EDIT.replace(

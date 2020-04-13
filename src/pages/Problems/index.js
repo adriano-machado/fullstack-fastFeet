@@ -120,7 +120,6 @@ export default function Problems() {
                                                 )
                                             }
                                             deleteText="Cancelar encomenda"
-                                            showEditOption={false}
                                         />
                                     </RighterIcon>
                                 </td>
