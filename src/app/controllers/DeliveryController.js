@@ -173,5 +173,49 @@ class DeliveryController {
         await delivery.destroy();
         return res.status(204).json();
     }
+
+    async show(req, res) {
+        const { page = 1 } = req.query;
+
+        const delivery = await Delivery.findByPk(req.params.deliveryId, {
+            order: ['created_at'],
+            limit: 20,
+            offset: (page - 1) * 20,
+            include: [
+                {
+                    model: File,
+                    as: 'signature',
+                    attributes: ['id', 'url', 'path'],
+                },
+                {
+                    model: Deliveryman,
+                    as: 'deliveryman',
+                    attributes: ['id', 'name', 'email'],
+                    include: [
+                        {
+                            model: File,
+                            as: 'avatar',
+                            attributes: ['id', 'url', 'path'],
+                        },
+                    ],
+                },
+                {
+                    model: Recipient,
+                    as: 'recipient',
+                    attributes: [
+                        'id',
+                        'state',
+                        'city',
+                        'street',
+                        'number',
+                        'complement',
+                        'cep',
+                        'name',
+                    ],
+                },
+            ],
+        });
+        return res.json(delivery);
+    }
 }
 export default new DeliveryController();

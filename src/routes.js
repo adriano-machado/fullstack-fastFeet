@@ -65,6 +65,8 @@ routes.delete('/deliverymans/:deliverymanId', DeliverymanController.delete);
 
 // DELIVERIES
 routes.get('/deliveries', DeliveryController.index);
+routes.get('/deliveries/:deliveryId', DeliveryController.show);
+
 routes.post('/deliveries', DeliveryController.store);
 routes.put('/deliveries/:deliveryId', DeliveryController.update);
 routes.delete('/deliveries/:deliveryId', DeliveryController.delete);
