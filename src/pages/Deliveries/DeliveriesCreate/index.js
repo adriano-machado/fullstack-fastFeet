@@ -3,6 +3,7 @@ import React, { useState, Fragment } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 import { FaChevronLeft, FaCheck } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import SelectAsync from '../../../components/SelectAsync';
 import {
     FormContent,
@@ -13,13 +14,14 @@ import {
     CustomInput,
 } from './styles';
 import history from '../../../services/history';
+import api from '../../../services/api';
 
 const schema = Yup.object().shape({
     recipient_id: Yup.string().required('O e-mail é obrigatório'),
     deliveryman_id: Yup.string().required('testa'),
     product: Yup.string().required('testa'),
 });
-export default function Deliveriesreate() {
+export default function DeliveriesCreate() {
     const [deliveryman_id, setDeliveryman] = useState('');
     const [recipient_id, setRecipient] = useState('');
     const [product, setProduct] = useState('');
@@ -33,7 +35,18 @@ export default function Deliveriesreate() {
 
         setRecipient(value);
     }
-    function handleSubmit() {
+    async function handleSubmit() {
+        try {
+            await api.post('/deliveries', {
+                deliveryman_id,
+                recipient_id,
+                product,
+            });
+            toast.success('Entregador cadastrado com sucesso');
+            history.goBack();
+        } catch (err) {
+            toast.error('Problemas para cadastrar encomenda');
+        }
         console.log({ recipient_id, deliveryman_id, product });
     }
 
