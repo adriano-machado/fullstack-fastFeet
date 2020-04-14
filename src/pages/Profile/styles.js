@@ -7,41 +7,36 @@ import Button from '~/components/Button';
 export const Container = styled.SafeAreaView`
   flex: 1;
   background: #fff;
+  padding-top: 60px;
+  padding: 60px 30px 0px;
+`;
+
+export const Profile = styled.View`
+  margin-top: 20px;
+`;
+
+export const Avatar = styled.Image`
+  align-self: center;
+  height: 120px;
+  width: 120px;
+  border-radius: 60px;
+  margin-bottom: 25px;
 `;
 
 export const Title = styled.Text`
-  font-size: 20px;
-  color: #fff;
-  font-weight: bold;
-  align-self: center;
-  margin-top: 30px;
+  color: #666666;
+  margin-top: 15px;
+  font-size: 12px;
+  text-align: left;
 `;
 
-export const Form = styled.ScrollView.attrs({
-  showsVerticalScrollIndicator: false,
-
-  contentContainerStyle: {
-    padding: 30,
-  },
-})`
-  align-self: stretch;
-`;
-
-export const FormInput = styled(Input)`
-  margin-bottom: 10px;
-`;
-
-export const SubmitButton = styled(Button)`
-  margin-top: 5px;
-`;
-
-export const Separator = styled.View`
-  height: 1px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 20px 0 30px;
+export const Info = styled.Text`
+  color: #444444;
+  font-size: 22px;
+  text-align: left;
 `;
 
 export const LogoutButton = styled(Button)`
-  margin-top: 10px;
-  background: #f64c75;
+  margin-top: 30px;
+  background: #e74040;
 `;
