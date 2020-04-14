@@ -1,12 +1,10 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 import SignIn from './pages/SignIn';
-// import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 
 import Dashboard from './pages/Delivery/Dashboard';
