@@ -17,7 +17,7 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const DeliveryStack = createStackNavigator();
 
-function DeliveryStackNavigator({ navigation }) {
+function DeliveryStackNavigator() {
   return (
     <DeliveryStack.Navigator
       screenOptions={{
@@ -26,7 +26,7 @@ function DeliveryStackNavigator({ navigation }) {
         headerLeftContainerStyle: {
           marginLeft: 20,
         },
-
+        headerBackTitle: false,
         headerStyle: {
           shadowColor: 'transparent',
           elevation: 0,
@@ -49,7 +49,6 @@ function DeliveryStackNavigator({ navigation }) {
           headerBackImage: () => (
             <Icon name="chevron-left" size={24} color="#FFF" />
           ),
-          headerBackTitleVisible: false,
         }}
       />
       <DeliveryStack.Screen
@@ -60,7 +59,6 @@ function DeliveryStackNavigator({ navigation }) {
           headerBackImage: () => (
             <Icon name="chevron-left" size={24} color="#FFF" />
           ),
-          headerBackTitleVisible: false,
         }}
       />
       <DeliveryStack.Screen
@@ -71,7 +69,6 @@ function DeliveryStackNavigator({ navigation }) {
           headerBackImage: () => (
             <Icon name="chevron-left" size={24} color="#FFF" />
           ),
-          headerBackTitleVisible: false,
         }}
       />
       <DeliveryStack.Screen
@@ -82,7 +79,6 @@ function DeliveryStackNavigator({ navigation }) {
           headerBackImage: () => (
             <Icon name="chevron-left" size={24} color="#FFF" />
           ),
-          headerBackTitleVisible: false,
         }}
       />
     </DeliveryStack.Navigator>
