@@ -1,9 +1,7 @@
 import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StatusBar, Dimensions } from 'react-native';
+import { StatusBar } from 'react-native';
 import { parseISO, format } from 'date-fns';
-import Background from '~/components/Background';
-import { updateProfileRequest } from '~/store/modules/user/actions';
 import { signOut } from '~/store/modules/auth/actions';
 import noAvatarImage from '~/assets/no-avatar.jpg';
 
@@ -15,10 +13,6 @@ export default function Profile() {
   async function handleLogout() {
     dispatch(signOut());
   }
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
-  console.tron.log(windowHeight, windowWidth);
-  console.tron.log(noAvatarImage);
 
   const registerDate = useMemo(() => {
     return format(parseISO(profile.created_at), 'dd/MM/yyyy');

@@ -8,7 +8,7 @@ export const Container = styled.SafeAreaView`
   flex: 1;
   background: #fff;
   padding-top: 60px;
-  padding: 60px 30px 0px;
+  padding: 0px 30px;
 `;
 
 export const Profile = styled.View`
@@ -20,7 +20,7 @@ export const Avatar = styled.Image`
   height: 120px;
   width: 120px;
   border-radius: 60px;
-  margin-bottom: 25px;
+  margin: 60px 0px 25px;
 `;
 
 export const Title = styled.Text`
