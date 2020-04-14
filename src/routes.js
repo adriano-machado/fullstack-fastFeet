@@ -19,6 +19,9 @@ const upload = multer(multerConfig);
 const routes = new Router();
 
 // DELIVERYMAN ACTIONS
+
+routes.get('/deliverymans/:deliverymanId', DeliverymanController.show);
+
 routes.get('/deliveryman/:deliverymanId/deliveries', ScheduleController.index);
 routes.put('/delivery/:deliveryId/start-delivery', ScheduleController.update);
 
@@ -51,7 +54,6 @@ routes.delete('/recipients/:recipientId', RecipientController.delete);
 
 // DELIVERYMANS
 routes.get('/deliverymans', DeliverymanController.index);
-routes.get('/deliverymans/:deliverymanId', DeliverymanController.show);
 routes.post('/deliverymans', DeliverymanController.store);
 routes.put('/deliverymans/:deliverymanId', DeliverymanController.update);
 routes.delete('/deliverymans/:deliverymanId', DeliverymanController.delete);

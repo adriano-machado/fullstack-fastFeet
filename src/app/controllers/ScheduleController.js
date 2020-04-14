@@ -120,13 +120,20 @@ class ScheduleController {
         }
 
         delivery.start_date = new Date();
-        const { id, product, start_date, recipient } = await delivery.save();
+        const {
+            id,
+            product,
+            start_date,
+            recipient,
+            status,
+        } = await delivery.save();
         return res.json({
             id,
             product,
             start_date,
             recipient,
             deliveryman_id,
+            status,
         });
     }
 }
