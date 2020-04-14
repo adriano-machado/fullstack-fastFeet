@@ -2,12 +2,11 @@ import styled from 'styled-components/native';
 
 import Button from '~/components/Button';
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView`
   flex: 1;
-  padding: 0 30px;
-  justify-content: center;
-  align-items: center;
+  margin-top: 40px;
 `;
+
 export const Avatar = styled.Image`
   width: 120px;
   height: 120px;

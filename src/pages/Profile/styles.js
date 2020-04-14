@@ -6,6 +6,7 @@ import Button from '~/components/Button';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
+  background: #fff;
 `;
 
 export const Title = styled.Text`

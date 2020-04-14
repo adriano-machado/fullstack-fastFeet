@@ -6,64 +6,88 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 import SignIn from './pages/SignIn';
-import Dashboard from './pages/Dashboard';
+// import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 
-import SelectProvider from './pages/New/SelectProvider';
-import SelectDateTime from './pages/New/SelectDateTime';
-import Confirm from './pages/New/Confirm';
+import Dashboard from './pages/Delivery/Dashboard';
+import Details from './pages/Delivery/Details';
+import Confirm from './pages/Delivery/Confirm';
+import CreateProblem from './pages/Delivery/CreateProblem';
+import ViewProblem from './pages/Delivery/ViewProblem';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const NewAppointmentStack = createStackNavigator();
+const DeliveryStack = createStackNavigator();
 
-function NewStackNavigator({ navigation }) {
+function DeliveryStackNavigator({ navigation }) {
   return (
-    <NewAppointmentStack.Navigator
+    <DeliveryStack.Navigator
       screenOptions={{
         headerTitleAlign: 'center',
-        headerTransparent: true,
         headerTintColor: '#fff',
         headerLeftContainerStyle: {
           marginLeft: 20,
         },
+
+        headerStyle: {
+          shadowColor: 'transparent',
+          elevation: 0,
+          backgroundColor: '#7D40E7',
+        },
       }}
     >
-      <NewAppointmentStack.Screen
+      <DeliveryStack.Screen
         options={{
-          title: 'Selecione o prestador',
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
-              <Icon name="chevron-left" size={20} color="#FFF" />
-            </TouchableOpacity>
-          ),
+          headerShown: false,
         }}
-        name="SelectProvider"
-        component={SelectProvider}
+        name="Dashboard"
+        component={Dashboard}
       />
-      <NewAppointmentStack.Screen
-        name="SelectDateTime"
-        component={SelectDateTime}
+      <DeliveryStack.Screen
+        name="Details"
+        component={Details}
         options={{
-          title: 'Selecione o horário',
+          title: 'Detalhes da encomenda',
           headerBackImage: () => (
-            <Icon name="chevron-left" size={20} color="#FFF" />
+            <Icon name="chevron-left" size={24} color="#FFF" />
           ),
           headerBackTitleVisible: false,
         }}
       />
-      <NewAppointmentStack.Screen
+      <DeliveryStack.Screen
         name="Confirm"
         component={Confirm}
         options={{
-          title: 'Confirmar agendamento',
+          title: 'Confirmar entrega',
           headerBackImage: () => (
-            <Icon name="chevron-left" size={20} color="#FFF" />
+            <Icon name="chevron-left" size={24} color="#FFF" />
           ),
           headerBackTitleVisible: false,
         }}
       />
-    </NewAppointmentStack.Navigator>
+      <DeliveryStack.Screen
+        name="CreateProblem"
+        component={CreateProblem}
+        options={{
+          title: 'Informar problema',
+          headerBackImage: () => (
+            <Icon name="chevron-left" size={24} color="#FFF" />
+          ),
+          headerBackTitleVisible: false,
+        }}
+      />
+      <DeliveryStack.Screen
+        name="ViewProblem"
+        component={ViewProblem}
+        options={{
+          title: 'Visualizar problemas',
+          headerBackImage: () => (
+            <Icon name="chevron-left" size={24} color="#FFF" />
+          ),
+          headerBackTitleVisible: false,
+        }}
+      />
+    </DeliveryStack.Navigator>
   );
 }
 
@@ -75,30 +99,28 @@ export default function Routes({ signed }) {
           initialRouteName="Dashboard"
           tabBarOptions={{
             keyboardHidesTabBar: true,
-            activeTintColor: '#FFF',
-            style: { backgroundColor: '#8d41a8' },
-            inactiveTintColor: 'rgba(255,255,255,0.4)',
+            activeTintColor: '#7D40E7',
+            style: {
+              backgroundColor: '#FFFFFF',
+              height: 70,
+              paddingVertical: 10,
+            },
+            inactiveTintColor: '#999999',
+            labelStyle: {
+              fontWeight: 'bold',
+              paddingBottom: 10,
+              fontSize: 14,
+            },
           }}
         >
           <Stack.Screen
             name="Dashboard"
-            component={Dashboard}
-            options={{
-              tabBarLabel: 'Agendamentos',
-              tabBarIcon: ({ color }) => (
-                <Icon name="event" size={20} color={color} />
-              ),
-            }}
-          />
-          <Stack.Screen
-            name="SelectProvider"
-            component={NewStackNavigator}
+            component={DeliveryStackNavigator}
             options={{
               unmountOnBlur: true,
-              tabBarVisible: false,
-              tabBarLabel: 'Agendar',
+              tabBarLabel: 'Entregas',
               tabBarIcon: ({ color }) => (
-                <Icon name="add-circle-outline" size={20} color={color} />
+                <Icon name="menu" size={26} color={color} />
               ),
             }}
           />
@@ -106,9 +128,10 @@ export default function Routes({ signed }) {
             name="Profile"
             component={Profile}
             options={{
+              headerShown: false,
               tabBarLabel: 'Meu Perfil',
               tabBarIcon: ({ color }) => (
-                <Icon name="person" size={20} color={color} />
+                <Icon name="account-circle" size={26} color={color} />
               ),
             }}
           />
@@ -131,7 +154,7 @@ Routes.propTypes = {
   signed: PropTypes.bool.isRequired,
 };
 
-NewStackNavigator.propTypes = {
+DeliveryStackNavigator.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     goBack: PropTypes.func,
