@@ -1,4 +1,4 @@
-import { all, takeLatest, call, put } from 'redux-saga/effects';
+import { all, takeLatest } from 'redux-saga/effects';
 import * as RootNavigation from '~/services/RootNavigation';
 
 export function redirectToActiveDelivery() {

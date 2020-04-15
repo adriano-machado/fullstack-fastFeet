@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
-import { StatusBar, View } from 'react-native';
+import { StatusBar, View, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { format, parseISO } from 'date-fns';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import Background from '~/components/Background';
+import api from '~/services/api';
 
 import {
   Container,
@@ -22,6 +23,8 @@ import {
 } from './styles';
 
 export default function Details({ navigation }) {
+  const profile = useSelector((state) => state.user.profile);
+
   const delivery = useSelector((state) => state.delivery.delivery);
   const address = useMemo(() => {
     const { recipient } = delivery;
@@ -42,30 +45,49 @@ export default function Details({ navigation }) {
     return '-- / -- / --  ';
   }, [delivery.end_date]);
 
+  async function startDelivery() {
+    try {
+      await api.put(`/delivery/${delivery.id}/start-delivery`, {
+        deliveryman_id: profile.id,
+      });
+      navigation.navigate('Dashboard');
+    } catch (err) {
+      if (err.response.status === 401) {
+        Alert.alert(
+          'Sentimos muito',
+          'Parece que você ja atingiu o máximo de 5 retiras por dia.\n Tente novamente amanhã!'
+        );
+      }
+    }
+  }
   function renderOptions() {
     if (delivery.end_date) {
       return null;
     }
     if (!delivery.start_date) {
-      return <ConfirmButton>Retirar entrega</ConfirmButton>;
+      return (
+        <ConfirmButton onPress={startDelivery}>Retirar entrega</ConfirmButton>
+      );
     }
     return (
       <ButtonsContainer>
-        <Button onPress={() => navigation.navigate('CreateProblem')}>
-          <Icon name="close-circle-outline" size={22} color="#E74040" />
-          <ButtonText>Informar Problema</ButtonText>
-        </Button>
-        <VerticalDivider />
-        <Button onPress={() => navigation.navigate('ViewProblem')}>
-          <Icon name="information-outline" size={22} color="#E7BA40" />
-          <ButtonText>Visualizar Problemas</ButtonText>
-        </Button>
-        <VerticalDivider />
+        <>
+          <Button onPress={() => navigation.navigate('CreateProblem')}>
+            <Icon name="close-circle-outline" size={22} color="#E74040" />
+            <ButtonText>Informar Problema</ButtonText>
+          </Button>
+          <VerticalDivider />
+          <Button onPress={() => navigation.navigate('ViewProblem')}>
+            <Icon name="information-outline" size={22} color="#E7BA40" />
+            <ButtonText>Visualizar Problemas</ButtonText>
+          </Button>
+          <VerticalDivider />
 
-        <Button onPress={() => navigation.navigate('Confirm')}>
-          <Icon name="check-circle-outline" size={22} color="#7D40E7" />
-          <ButtonText>Confirmar Entrega</ButtonText>
-        </Button>
+          <Button onPress={() => navigation.navigate('Confirm')}>
+            <Icon name="check-circle-outline" size={22} color="#7D40E7" />
+            <ButtonText>Confirmar Entrega</ButtonText>
+          </Button>
+        </>
       </ButtonsContainer>
     );
   }
@@ -75,8 +97,8 @@ export default function Details({ navigation }) {
       <StatusBar barStyle="light-content" backgroundColor="#7D40E7" />
 
       <Container>
-        <>
-          <InfoCard>
+        <InfoCard>
+          <>
             <CardTitle>
               <Icon color="#7D40E7" name="truck" size={22} />
               <Title>Informações da entrega </Title>
@@ -87,8 +109,10 @@ export default function Details({ navigation }) {
             <InfoValue>{address}</InfoValue>
             <InfoLabel>Produto</InfoLabel>
             <InfoValue>{delivery.product}</InfoValue>
-          </InfoCard>
-          <InfoCard>
+          </>
+        </InfoCard>
+        <InfoCard>
+          <>
             <CardTitle>
               <Icon color="#7D40E7" name="calendar" size={22} />
               <Title>Situação da entrega </Title>
@@ -105,9 +129,9 @@ export default function Details({ navigation }) {
                 <InfoValue>{endDateFormated}</InfoValue>
               </View>
             </DatesInfoContainer>
-          </InfoCard>
-          {renderOptions()}
-        </>
+          </>
+        </InfoCard>
+        {renderOptions()}
       </Container>
     </Background>
   );

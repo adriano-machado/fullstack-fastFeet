@@ -40,44 +40,46 @@ export default function DeliveryItem({ data: delivery, index }) {
 
   return (
     <Container>
-      <Title>
-        <Icon name="truck" size={22} color="#7D40E7" />
-        <DeliveryNumber>Encomenda #{deliveryNumber}</DeliveryNumber>
-      </Title>
-      <Status>
-        <Line />
-        <DotContainer>
-          <DotItem alignLeft>
-            <Dot filled />
-            <DotText teste>Aguardando retirada</DotText>
-          </DotItem>
-          <DotItem>
-            <Dot filled={!!delivery.start_date} />
-            <DotText>Retirada</DotText>
-          </DotItem>
-          <DotItem alignRight>
-            <Dot filled={!!delivery.end_date} />
-            <DotText>Entregue</DotText>
-          </DotItem>
-        </DotContainer>
-      </Status>
-      <InfoContainer>
-        <Info>
-          <Label>Data</Label>
-          <Value>{formattedDate}</Value>
-        </Info>
-        <Info>
-          <Label>Cidade</Label>
-          <Value>{delivery.recipient.city}</Value>
-        </Info>
-        <TouchableOpacity
-          onPress={() => {
-            dispatch(setActiveDelivery(delivery, deliveryNumber));
-          }}
-        >
-          <DetailsLink>Ver detalhes</DetailsLink>
-        </TouchableOpacity>
-      </InfoContainer>
+      <>
+        <Title>
+          <Icon name="truck" size={22} color="#7D40E7" />
+          <DeliveryNumber>Encomenda #{deliveryNumber}</DeliveryNumber>
+        </Title>
+        <Status>
+          <Line />
+          <DotContainer>
+            <DotItem alignLeft>
+              <Dot filled />
+              <DotText teste>Aguardando retirada</DotText>
+            </DotItem>
+            <DotItem>
+              <Dot filled={!!delivery.start_date} />
+              <DotText>Retirada</DotText>
+            </DotItem>
+            <DotItem alignRight>
+              <Dot filled={!!delivery.end_date} />
+              <DotText>Entregue</DotText>
+            </DotItem>
+          </DotContainer>
+        </Status>
+        <InfoContainer>
+          <Info>
+            <Label>Data</Label>
+            <Value>{formattedDate}</Value>
+          </Info>
+          <Info>
+            <Label>Cidade</Label>
+            <Value>{delivery.recipient.city}</Value>
+          </Info>
+          <TouchableOpacity
+            onPress={() => {
+              dispatch(setActiveDelivery(delivery, deliveryNumber));
+            }}
+          >
+            <DetailsLink>Ver detalhes</DetailsLink>
+          </TouchableOpacity>
+        </InfoContainer>
+      </>
     </Container>
   );
 }
@@ -85,12 +87,12 @@ export default function DeliveryItem({ data: delivery, index }) {
 DeliveryItem.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.number,
-    created_at: PropTypes.instanceOf(Date),
+    created_at: PropTypes.string,
     recipient: PropTypes.shape({
       city: PropTypes.string,
     }),
-    start_date: PropTypes.instanceOf(Date),
-    end_date: PropTypes.instanceOf(Date),
+    start_date: PropTypes.string,
+    end_date: PropTypes.string,
   }).isRequired,
   index: PropTypes.number.isRequired,
 };
