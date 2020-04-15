@@ -2,9 +2,10 @@ import React, { useState, useCallback } from 'react';
 import { StatusBar, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { signOut } from '~/store/modules/auth/actions';
 import DeliveryItem from '~/components/DeliveryItem';
 import {
   Container,
@@ -24,6 +25,7 @@ import api from '~/services/api';
 import noAvatarImage from '~/assets/no-avatar.jpg';
 
 export default function Dashboard({ navigation }) {
+  const dispatch = useDispatch();
   const [deliveries, setDeliveries] = useState([]);
   const profile = useSelector((state) => state.user.profile);
   const [showStartedDeliveries, setShowStartDelivery] = useState(true);
@@ -32,6 +34,9 @@ export default function Dashboard({ navigation }) {
     setShowStartDelivery(option);
   }
 
+  function handleLogout() {
+    dispatch(signOut());
+  }
   useFocusEffect(
     useCallback(() => {
       async function loadDeliveries() {
@@ -64,7 +69,12 @@ export default function Dashboard({ navigation }) {
           <Title>Bem vindo de volta,</Title>
           <Name>{profile.name}</Name>
         </NameContainer>
-        <Icon name="exit-to-app" size={24} color="#E74040" />
+        <Icon
+          name="exit-to-app"
+          size={24}
+          color="#E74040"
+          onPress={handleLogout}
+        />
       </Profile>
       <LabelContainer>
         <Label>Entregas</Label>

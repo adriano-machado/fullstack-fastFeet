@@ -10,7 +10,7 @@ import { Container, Avatar, Title, Info, LogoutButton } from './styles';
 export default function Profile() {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.user.profile);
-  async function handleLogout() {
+  function handleLogout() {
     dispatch(signOut());
   }
 

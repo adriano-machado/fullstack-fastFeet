@@ -22,7 +22,6 @@ import {
 
 export default function Details({ route, navigation }) {
   const { delivery } = route.params;
-  console.tron.log(delivery);
   const address = useMemo(() => {
     const { recipient } = delivery;
     return `${recipient.street}, ${recipient.number}, ${recipient.city} - ${recipient.state}, ${recipient.cep}`;
