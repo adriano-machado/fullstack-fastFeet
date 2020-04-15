@@ -56,3 +56,36 @@ export const DotText = styled.Text`
   color: #999999;
   text-align: center;
 `;
+
+export const InfoContainer = styled.View`
+  flex-direction: row;
+  background: #f8f9fd;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px;
+`;
+
+export const Info = styled.View`
+  justify-content: center;
+`;
+
+export const Label = styled.Text`
+  color: #999999;
+  font-size: 10px;
+  text-align: left;
+  font-weight: bold;
+`;
+export const Value = styled.Text`
+  color: #444444;
+  font-size: 12px;
+  text-align: left;
+  font-weight: bold;
+`;
+
+export const DetailsLink = styled.Text`
+  font-size: 12px;
+  font-weight: bold;
+
+  color: #7d40e7;
+`;

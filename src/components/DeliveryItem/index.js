@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { parseISO, formatRelative } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,6 +15,11 @@ import {
   DotContainer,
   DotItem,
   DotText,
+  InfoContainer,
+  Info,
+  Label,
+  Value,
+  DetailsLink,
 } from './styles';
 
 export default function DeliveryItem({ data, onCancel }) {
@@ -41,6 +46,19 @@ export default function DeliveryItem({ data, onCancel }) {
           </DotItem>
         </DotContainer>
       </Status>
+      <InfoContainer>
+        <Info>
+          <Label>Data</Label>
+          <Value>15/01/22</Value>
+        </Info>
+        <Info>
+          <Label>Cidade</Label>
+          <Value>Rio de janeiro</Value>
+        </Info>
+        <TouchableOpacity>
+          <DetailsLink>Ver detalhes</DetailsLink>
+        </TouchableOpacity>
+      </InfoContainer>
     </Container>
   );
 }
