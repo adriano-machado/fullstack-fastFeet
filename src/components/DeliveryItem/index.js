@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import { parseISO, formatRelative } from 'date-fns';
-import pt from 'date-fns/locale/pt';
+import { TouchableOpacity } from 'react-native';
+import { parseISO, format } from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Card from '~/components/Card';
+import PropTypes from 'prop-types';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   Container,
@@ -22,12 +22,26 @@ import {
   DetailsLink,
 } from './styles';
 
-export default function DeliveryItem({ data, onCancel }) {
+export default function DeliveryItem({ data: delivery, index }) {
+  const navigation = useNavigation();
+  const formattedDate = useMemo(
+    () => format(parseISO(delivery.created_at), 'dd/MM/yyyy'),
+    [delivery]
+  );
+
+  const deliveryNumber = useMemo(() => {
+    const number = index + 1;
+    if (number < 10) {
+      return `0${number}`;
+    }
+    return number;
+  }, [index]);
+
   return (
     <Container>
       <Title>
         <Icon name="truck" size={22} color="#7D40E7" />
-        <DeliveryNumber>Encomenda #{data}</DeliveryNumber>
+        <DeliveryNumber>Encomenda #{deliveryNumber}</DeliveryNumber>
       </Title>
       <Status>
         <Line />
@@ -37,11 +51,11 @@ export default function DeliveryItem({ data, onCancel }) {
             <DotText teste>Aguardando retirada</DotText>
           </DotItem>
           <DotItem>
-            <Dot filled />
+            <Dot filled={!!delivery.start_date} />
             <DotText>Retirada</DotText>
           </DotItem>
           <DotItem alignRight>
-            <Dot />
+            <Dot filled={!!delivery.end_date} />
             <DotText>Entregue</DotText>
           </DotItem>
         </DotContainer>
@@ -49,16 +63,31 @@ export default function DeliveryItem({ data, onCancel }) {
       <InfoContainer>
         <Info>
           <Label>Data</Label>
-          <Value>15/01/22</Value>
+          <Value>{formattedDate}</Value>
         </Info>
         <Info>
           <Label>Cidade</Label>
-          <Value>Rio de janeiro</Value>
+          <Value>{delivery.recipient.city}</Value>
         </Info>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Details', { delivery })}
+        >
           <DetailsLink>Ver detalhes</DetailsLink>
         </TouchableOpacity>
       </InfoContainer>
     </Container>
   );
 }
+
+DeliveryItem.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.number,
+    created_at: PropTypes.instanceOf(Date),
+    recipient: PropTypes.shape({
+      city: PropTypes.string,
+    }),
+    start_date: PropTypes.instanceOf(Date),
+    end_date: PropTypes.instanceOf(Date),
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+};

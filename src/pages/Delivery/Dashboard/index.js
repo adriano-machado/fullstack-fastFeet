@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { StatusBar, TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -21,21 +23,29 @@ import api from '~/services/api';
 
 import noAvatarImage from '~/assets/no-avatar.jpg';
 
-export default function SelectProvider({ navigation }) {
-  const [providers, setProviders] = useState([]);
+export default function Dashboard({ navigation }) {
+  const [deliveries, setDeliveries] = useState([]);
   const profile = useSelector((state) => state.user.profile);
   const [showStartedDeliveries, setShowStartDelivery] = useState(true);
+  const [atualPage, setPage] = useState(1);
   function handleToggleOption(option) {
     setShowStartDelivery(option);
   }
-  // useEffect(() => {
-  //   async function loadProviders() {
-  //     const response = await api.get('/providers');
-  //     setProviders(response.data);
-  //   }
 
-  //   loadProviders();
-  // }, []);
+  useFocusEffect(
+    useCallback(() => {
+      async function loadDeliveries() {
+        const response = await api.get(
+          `deliveryman/${profile.id}/${
+            showStartedDeliveries ? 'deliveries' : 'completed-deliveries'
+          }?page=${atualPage}`
+        );
+        setDeliveries(response.data);
+      }
+
+      loadDeliveries();
+    }, [atualPage, profile.id, showStartedDeliveries])
+  );
   return (
     <Container>
       <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
@@ -68,15 +78,17 @@ export default function SelectProvider({ navigation }) {
         </Options>
       </LabelContainer>
       <DeliveriesList
-        data={[1, 2, 3]}
-        keyExtractor={(item) => String(item)}
-        renderItem={({ item }) => <DeliveryItem data={item} />}
+        data={deliveries}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({ item, index }) => (
+          <DeliveryItem data={item} index={index} />
+        )}
       />
     </Container>
   );
 }
 
-SelectProvider.propTypes = {
+Dashboard.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,

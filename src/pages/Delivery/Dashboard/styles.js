@@ -12,7 +12,7 @@ export const DeliveriesList = styled.FlatList.attrs({
 })``;
 
 export const Profile = styled.View`
-  margin-top: 40px;
+  margin-top: 20px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -41,7 +41,7 @@ export const Name = styled.Text`
 `;
 
 export const LabelContainer = styled.View`
-  margin-top: 30px;
+  margin-top: 20px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
