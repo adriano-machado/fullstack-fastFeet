@@ -97,12 +97,11 @@ export default function Routes({ signed }) {
             style: {
               backgroundColor: '#FFFFFF',
               height: 70,
-              paddingVertical: 10,
+              paddingTop: 10,
             },
             inactiveTintColor: '#999999',
             labelStyle: {
-              fontWeight: 'bold',
-              paddingBottom: 10,
+              marginBottom: 12,
               fontSize: 14,
             },
           }}

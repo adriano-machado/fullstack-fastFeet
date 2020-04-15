@@ -4,35 +4,66 @@ import { RectButton } from 'react-native-gesture-handler';
 export const Container = styled.SafeAreaView`
   flex: 1;
   background: #fff;
+  padding: 0 30px;
 `;
 
-export const ProvidersList = styled.FlatList.attrs({
+export const DeliveriesList = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
-  numColumns: 2,
-})`
-  margin-top: 60px;
-  padding: 0 20px;
-`;
+})``;
 
-export const Provider = styled(RectButton)`
-  background: #fff;
-  border-radius: 4px;
-  padding: 20px;
-  flex: 1;
+export const Profile = styled.View`
+  margin-top: 40px;
+  flex-direction: row;
   align-items: center;
-  margin: 0 10px 20px;
+  justify-content: space-between;
 `;
 
 export const Avatar = styled.Image`
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+`;
+
+export const NameContainer = styled.View`
+  margin-left: -30px;
+`;
+
+export const Title = styled.Text`
+  font-size: 12px;
+  color: #666666;
+  text-align: left;
 `;
 
 export const Name = styled.Text`
-  margin-top: 15px;
-  font-size: 14px;
+  font-size: 22px;
+  color: #444444;
+  text-align: left;
+`;
+
+export const LabelContainer = styled.View`
+  margin-top: 30px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Label = styled.Text`
+  color: #444444;
+  font-size: 22px;
+  text-align: left;
   font-weight: bold;
-  color: #333;
-  text-align: center;
+`;
+
+export const Options = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const Option = styled.Text`
+  color: ${(props) => (props.active ? '#7D40E7' : '#999999')};
+  font-weight: bold;
+  font-size: 14px;
+  margin-left: 15px;
+  border-color: #7d40e7;
+  border-bottom-width: ${(props) => (props.active ? '2px' : '0px')};
 `;
