@@ -17,7 +17,14 @@ class ScheduleController {
                 canceled_at: null,
                 end_date: null,
             },
-            attributes: ['id', 'product', 'status', 'start_date', 'created_at'],
+            attributes: [
+                'id',
+                'product',
+                'status',
+                'start_date',
+                'created_at',
+                'end_date',
+            ],
             limit: 20,
             offset: (page - 1) * 20,
             include: [
@@ -55,7 +62,6 @@ class ScheduleController {
     async update(req, res) {
         const schema = Yup.object().shape({
             deliveryman_id: Yup.number().required(),
-            date: Yup.date().required(),
         });
 
         if (!(await schema.isValid(req.body))) {
@@ -85,7 +91,7 @@ class ScheduleController {
             return res.status(400).json({ error: "Delivery doesn't exists" });
         }
 
-        const { deliveryman_id, date } = req.body;
+        const { deliveryman_id } = req.body;
 
         if (deliveryman_id !== delivery.deliveryman_id) {
             return res.status(401).json({
@@ -99,7 +105,7 @@ class ScheduleController {
             });
         }
 
-        const parsedDate = parseISO(date);
+        const parsedDate = new Date();
         const deliveries = await Delivery.findAll({
             where: {
                 deliveryman_id,
