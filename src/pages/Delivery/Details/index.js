@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { StatusBar, View, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { format, parseISO } from 'date-fns';
@@ -24,7 +24,7 @@ import {
 
 export default function Details({ navigation }) {
   const profile = useSelector((state) => state.user.profile);
-
+  const [loading, setLoading] = useState(false);
   const delivery = useSelector((state) => state.delivery.delivery);
   const address = useMemo(() => {
     const { recipient } = delivery;
@@ -47,11 +47,15 @@ export default function Details({ navigation }) {
 
   async function startDelivery() {
     try {
+      setLoading(true);
       await api.put(`/delivery/${delivery.id}/start-delivery`, {
         deliveryman_id: profile.id,
       });
       navigation.navigate('Dashboard');
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
+
       if (err.response.status === 401) {
         Alert.alert(
           'Sentimos muito',
@@ -66,7 +70,9 @@ export default function Details({ navigation }) {
     }
     if (!delivery.start_date) {
       return (
-        <ConfirmButton onPress={startDelivery}>Retirar entrega</ConfirmButton>
+        <ConfirmButton loading={loading} onPress={startDelivery}>
+          Retirar entrega
+        </ConfirmButton>
       );
     }
     return (
