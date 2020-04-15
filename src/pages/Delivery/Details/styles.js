@@ -63,7 +63,7 @@ export const Button = styled(RectButton)`
 `;
 
 export const ConfirmButton = styled(MyButton)`
-  background: #82bf18;
+  background: #7d40e7;
   margin-top: 15px;
 `;
 
