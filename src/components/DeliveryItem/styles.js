@@ -3,6 +3,7 @@ import Card from '~/components/Card';
 
 export const Container = styled(Card)`
   margin: 10px 2px;
+  flex: 1;
 `;
 
 export const Title = styled.View`
