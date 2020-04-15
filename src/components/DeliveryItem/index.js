@@ -3,7 +3,8 @@ import { TouchableOpacity } from 'react-native';
 import { parseISO, format } from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
-import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setActiveDelivery } from '~/store/modules/delivery/actions';
 
 import {
   Container,
@@ -23,7 +24,7 @@ import {
 } from './styles';
 
 export default function DeliveryItem({ data: delivery, index }) {
-  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const formattedDate = useMemo(
     () => format(parseISO(delivery.created_at), 'dd/MM/yyyy'),
     [delivery]
@@ -70,7 +71,9 @@ export default function DeliveryItem({ data: delivery, index }) {
           <Value>{delivery.recipient.city}</Value>
         </Info>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Details', { delivery })}
+          onPress={() => {
+            dispatch(setActiveDelivery(delivery, deliveryNumber));
+          }}
         >
           <DetailsLink>Ver detalhes</DetailsLink>
         </TouchableOpacity>

@@ -12,6 +12,7 @@ import Details from './pages/Delivery/Details';
 import Confirm from './pages/Delivery/Confirm';
 import CreateProblem from './pages/Delivery/CreateProblem';
 import ViewProblem from './pages/Delivery/ViewProblem';
+import { navigationRef } from '~/services/RootNavigation';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -87,7 +88,7 @@ function DeliveryStackNavigator() {
 
 export default function Routes({ signed }) {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       {signed ? (
         <Tab.Navigator
           initialRouteName="Dashboard"

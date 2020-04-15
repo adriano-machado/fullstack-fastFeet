@@ -3,6 +3,7 @@ import { StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { format, parseISO } from 'date-fns';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import Background from '~/components/Background';
 
 import {
@@ -20,8 +21,8 @@ import {
   ConfirmButton,
 } from './styles';
 
-export default function Details({ route, navigation }) {
-  const { delivery } = route.params;
+export default function Details({ navigation }) {
+  const delivery = useSelector((state) => state.delivery.delivery);
   const address = useMemo(() => {
     const { recipient } = delivery;
     return `${recipient.street}, ${recipient.number}, ${recipient.city} - ${recipient.state}, ${recipient.cep}`;
@@ -74,37 +75,39 @@ export default function Details({ route, navigation }) {
       <StatusBar barStyle="light-content" backgroundColor="#7D40E7" />
 
       <Container>
-        <InfoCard>
-          <CardTitle>
-            <Icon color="#7D40E7" name="truck" size={22} />
-            <Title>Informações da entrega </Title>
-          </CardTitle>
-          <InfoLabel>Destinatário</InfoLabel>
-          <InfoValue>{delivery.recipient.name}</InfoValue>
-          <InfoLabel>Endereço de entrega</InfoLabel>
-          <InfoValue>{address}</InfoValue>
-          <InfoLabel>Produto</InfoLabel>
-          <InfoValue>{delivery.product}</InfoValue>
-        </InfoCard>
-        <InfoCard>
-          <CardTitle>
-            <Icon color="#7D40E7" name="calendar" size={22} />
-            <Title>Situação da entrega </Title>
-          </CardTitle>
-          <InfoLabel>Status</InfoLabel>
-          <InfoValue capitalize>{delivery.status}</InfoValue>
-          <DatesInfoContainer>
-            <View>
-              <InfoLabel>Data de retirada</InfoLabel>
-              <InfoValue>{startDateFormated}</InfoValue>
-            </View>
-            <View>
-              <InfoLabel>Data de entrega</InfoLabel>
-              <InfoValue>{endDateFormated}</InfoValue>
-            </View>
-          </DatesInfoContainer>
-        </InfoCard>
-        {renderOptions()}
+        <>
+          <InfoCard>
+            <CardTitle>
+              <Icon color="#7D40E7" name="truck" size={22} />
+              <Title>Informações da entrega </Title>
+            </CardTitle>
+            <InfoLabel>Destinatário</InfoLabel>
+            <InfoValue>{delivery.recipient.name}</InfoValue>
+            <InfoLabel>Endereço de entrega</InfoLabel>
+            <InfoValue>{address}</InfoValue>
+            <InfoLabel>Produto</InfoLabel>
+            <InfoValue>{delivery.product}</InfoValue>
+          </InfoCard>
+          <InfoCard>
+            <CardTitle>
+              <Icon color="#7D40E7" name="calendar" size={22} />
+              <Title>Situação da entrega </Title>
+            </CardTitle>
+            <InfoLabel>Status</InfoLabel>
+            <InfoValue capitalize>{delivery.status}</InfoValue>
+            <DatesInfoContainer>
+              <View>
+                <InfoLabel>Data de retirada</InfoLabel>
+                <InfoValue>{startDateFormated}</InfoValue>
+              </View>
+              <View>
+                <InfoLabel>Data de entrega</InfoLabel>
+                <InfoValue>{endDateFormated}</InfoValue>
+              </View>
+            </DatesInfoContainer>
+          </InfoCard>
+          {renderOptions()}
+        </>
       </Container>
     </Background>
   );
@@ -113,23 +116,5 @@ export default function Details({ route, navigation }) {
 Details.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
-  }).isRequired,
-  route: PropTypes.shape({
-    params: PropTypes.shape({
-      delivery: PropTypes.shape({
-        product: PropTypes.string,
-        status: PropTypes.string,
-        start_date: PropTypes.instanceOf(Date),
-        end_date: PropTypes.instanceOf(Date),
-        recipient: PropTypes.shape({
-          name: PropTypes.string,
-          number: PropTypes.string,
-          street: PropTypes.string,
-          state: PropTypes.string,
-          city: PropTypes.string,
-          cep: PropTypes.string,
-        }),
-      }),
-    }),
   }).isRequired,
 };

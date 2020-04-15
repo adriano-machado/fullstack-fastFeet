@@ -56,7 +56,7 @@ export default function Dashboard() {
       <Profile>
         <Avatar
           source={
-            !profile.avatar
+            profile.avatar
               ? {
                   uri: profile.avatar.url,
                 }

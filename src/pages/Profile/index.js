@@ -23,7 +23,7 @@ export default function Profile() {
 
       <Avatar
         source={
-          !profile.avatar
+          profile.avatar
             ? {
                 uri: profile.avatar.url,
               }
