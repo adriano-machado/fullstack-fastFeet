@@ -1,11 +1,13 @@
 import React, { useState, useCallback } from 'react';
-import { StatusBar, TouchableOpacity } from 'react-native';
+import { StatusBar, TouchableOpacity, Text } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { signOut } from '~/store/modules/auth/actions';
 import DeliveryItem from '~/components/DeliveryItem';
+import Loading from '~/components/Loading';
+import EmptyListMessage from '~/components/EmptyListMessage';
 import {
   Container,
   Profile,
@@ -29,22 +31,44 @@ export default function Dashboard() {
   const profile = useSelector((state) => state.user.profile);
   const [showStartedDeliveries, setShowStartDelivery] = useState(true);
   const [atualPage, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   function handleToggleOption(option) {
+    setLoading(true);
     setShowStartDelivery(option);
   }
 
   function handleLogout() {
     dispatch(signOut());
   }
+
+  function handleDisplayEmptyList() {
+    if (loading) {
+      return <Loading />;
+    }
+    if (showStartedDeliveries) {
+      return (
+        <EmptyListMessage iconName="truck-check">
+          Muito bem! Você não tem nenhuma entrega pendente
+        </EmptyListMessage>
+      );
+    }
+    return (
+      <EmptyListMessage iconName="emoticon-sad-outline">
+        Parece que você ainda não tem nenhuma encomenda entregue!
+      </EmptyListMessage>
+    );
+  }
   useFocusEffect(
     useCallback(() => {
       async function loadDeliveries() {
+        setLoading(true);
         const response = await api.get(
           `deliveryman/${profile.id}/${
             showStartedDeliveries ? 'deliveries' : 'completed-deliveries'
           }?page=${atualPage}`
         );
         setDeliveries(response.data);
+        setLoading(false);
       }
 
       loadDeliveries();
@@ -84,6 +108,8 @@ export default function Dashboard() {
         </Options>
       </LabelContainer>
       <DeliveriesList
+        ListEmptyComponent={handleDisplayEmptyList}
+        refreshing={loading}
         data={deliveries}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item, index }) => (
