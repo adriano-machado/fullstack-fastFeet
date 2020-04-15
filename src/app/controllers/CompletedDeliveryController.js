@@ -12,7 +12,14 @@ class CompletedDeliveryController {
             where: {
                 deliveryman_id: req.params.deliverymanId,
             },
-            attributes: ['id', 'product', 'status', 'start_date', 'end_date'],
+            attributes: [
+                'id',
+                'product',
+                'status',
+                'start_date',
+                'end_date',
+                'created_at',
+            ],
             limit: 20,
             offset: (page - 1) * 20,
             include: [
