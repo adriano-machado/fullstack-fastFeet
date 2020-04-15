@@ -3,7 +3,6 @@ import { StatusBar, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { signOut } from '~/store/modules/auth/actions';
 import DeliveryItem from '~/components/DeliveryItem';
@@ -24,7 +23,7 @@ import api from '~/services/api';
 
 import noAvatarImage from '~/assets/no-avatar.jpg';
 
-export default function Dashboard({ navigation }) {
+export default function Dashboard() {
   const dispatch = useDispatch();
   const [deliveries, setDeliveries] = useState([]);
   const profile = useSelector((state) => state.user.profile);
@@ -94,9 +93,3 @@ export default function Dashboard({ navigation }) {
     </Container>
   );
 }
-
-Dashboard.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }).isRequired,
-};
