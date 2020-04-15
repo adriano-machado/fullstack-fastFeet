@@ -69,12 +69,9 @@ export default function Dashboard({ navigation }) {
           <Title>Bem vindo de volta,</Title>
           <Name>{profile.name}</Name>
         </NameContainer>
-        <Icon
-          name="exit-to-app"
-          size={24}
-          color="#E74040"
-          onPress={handleLogout}
-        />
+        <TouchableOpacity onPress={handleLogout}>
+          <Icon name="exit-to-app" size={24} color="#E74040" />
+        </TouchableOpacity>
       </Profile>
       <LabelContainer>
         <Label>Entregas</Label>

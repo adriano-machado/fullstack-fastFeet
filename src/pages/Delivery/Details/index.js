@@ -40,6 +40,35 @@ export default function Details({ route, navigation }) {
     }
     return '-- / -- / --  ';
   }, [delivery.end_date]);
+
+  function renderOptions() {
+    if (delivery.end_date) {
+      return null;
+    }
+    if (!delivery.start_date) {
+      return <ConfirmButton>Retirar entrega</ConfirmButton>;
+    }
+    return (
+      <ButtonsContainer>
+        <Button onPress={() => navigation.navigate('CreateProblem')}>
+          <Icon name="close-circle-outline" size={22} color="#E74040" />
+          <ButtonText>Informar Problema</ButtonText>
+        </Button>
+        <VerticalDivider />
+        <Button onPress={() => navigation.navigate('ViewProblem')}>
+          <Icon name="information-outline" size={22} color="#E7BA40" />
+          <ButtonText>Visualizar Problemas</ButtonText>
+        </Button>
+        <VerticalDivider />
+
+        <Button onPress={() => navigation.navigate('Confirm')}>
+          <Icon name="check-circle-outline" size={22} color="#7D40E7" />
+          <ButtonText>Confirmar Entrega</ButtonText>
+        </Button>
+      </ButtonsContainer>
+    );
+  }
+
   return (
     <Background>
       <StatusBar barStyle="light-content" backgroundColor="#7D40E7" />
@@ -75,29 +104,7 @@ export default function Details({ route, navigation }) {
             </View>
           </DatesInfoContainer>
         </InfoCard>
-        {!delivery.start_date ? (
-          // <ButtonsContainer>
-          <ConfirmButton>Retirar entrega</ConfirmButton>
-        ) : (
-          // </ButtonsContainer>
-          <ButtonsContainer>
-            <Button onPress={() => navigation.navigate('CreateProblem')}>
-              <Icon name="close-circle-outline" size={22} color="#E74040" />
-              <ButtonText>Informar Problema</ButtonText>
-            </Button>
-            <VerticalDivider />
-            <Button onPress={() => navigation.navigate('ViewProblem')}>
-              <Icon name="information-outline" size={22} color="#E7BA40" />
-              <ButtonText>Visualizar Problemas</ButtonText>
-            </Button>
-            <VerticalDivider />
-
-            <Button onPress={() => navigation.navigate('Confirm')}>
-              <Icon name="check-circle-outline" size={22} color="#7D40E7" />
-              <ButtonText>Confirmar Entrega</ButtonText>
-            </Button>
-          </ButtonsContainer>
-        )}
+        {renderOptions()}
       </Container>
     </Background>
   );
