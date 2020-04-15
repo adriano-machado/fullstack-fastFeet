@@ -11,34 +11,36 @@ import {
   Status,
   Line,
   Title,
-  Label,
+  DeliveryNumber,
   DotContainer,
-  StatusTextContainer,
-  StatusText,
+  DotItem,
+  DotText,
 } from './styles';
 
-export default function Appointment({ data, onCancel }) {
+export default function DeliveryItem({ data, onCancel }) {
   return (
     <Container>
       <Title>
-        <Icon name="truck" size={20} color="#7D40E7" />
-        <Label>Encomenda #{data}</Label>
+        <Icon name="truck" size={22} color="#7D40E7" />
+        <DeliveryNumber>Encomenda #{data}</DeliveryNumber>
       </Title>
       <Status>
         <Line />
         <DotContainer>
-          <Dot filled />
-          <Dot filled />
-          <Dot />
+          <DotItem alignLeft>
+            <Dot filled />
+            <DotText teste>Aguardando retirada</DotText>
+          </DotItem>
+          <DotItem>
+            <Dot filled />
+            <DotText>Retirada</DotText>
+          </DotItem>
+          <DotItem alignRight>
+            <Dot />
+            <DotText>Entregue</DotText>
+          </DotItem>
         </DotContainer>
       </Status>
-      <StatusTextContainer>
-        <StatusText align="center" justify>
-          Aguardando retirada
-        </StatusText>
-        <StatusText align="center">Retirada</StatusText>
-        <StatusText align="right">Entregue</StatusText>
-      </StatusTextContainer>
     </Container>
   );
 }

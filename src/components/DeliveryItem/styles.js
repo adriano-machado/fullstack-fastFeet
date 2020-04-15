@@ -3,23 +3,24 @@ import Card from '~/components/Card';
 
 export const Container = styled(Card)`
   margin: 10px 2px;
-  padding: 15px 15px;
 `;
 
-export const Status = styled.View`
-  margin: 0px 20px;
-`;
 export const Title = styled.View`
   flex-direction: row;
   align-items: center;
+  margin: 15px 0px 0px 10px;
 `;
 
-export const Label = styled.Text`
+export const DeliveryNumber = styled.Text`
   font-size: 14px;
   color: #7d40e7;
   font-weight: bold;
   margin-left: 10px;
 `;
+export const Status = styled.View`
+  margin: 0px 30px 0px 40px;
+`;
+
 export const Line = styled.View`
   height: 2px;
   background: #7d40e7;
@@ -31,9 +32,15 @@ export const Line = styled.View`
 
 export const DotContainer = styled.View`
   flex-direction: row;
-
   justify-content: space-between;
 `;
+export const DotItem = styled.View`
+  align-items: center;
+  width: 33%;
+  margin-left: ${(props) => (props.alignLeft ? '-15%' : '0px')};
+  margin-right: ${(props) => (props.alignRight ? '-15%' : '0px')};
+`;
+
 export const Dot = styled.View`
   height: 10px;
   width: 10px;
@@ -43,17 +50,9 @@ export const Dot = styled.View`
   border: 2px solid #7d40e7;
 `;
 
-export const StatusTextContainer = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  /* background: red; */
-`;
-
-export const StatusText = styled.Text`
-  font-size: 12px;
+export const DotText = styled.Text`
+  margin-top: 5px;
+  font-size: 10px;
   color: #999999;
-  width: ${(props) => (props.justify ? '35%' : '33%')};
-  text-align: ${(props) => props.align};
-  /* background: black; */
-  padding-right: ${(props) => (props.justify ? '45px' : '0px')};
+  text-align: center;
 `;
