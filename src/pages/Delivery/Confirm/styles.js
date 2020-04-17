@@ -4,29 +4,29 @@ import Button from '~/components/Button';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  margin-top: 40px;
   padding: 0 20px;
 `;
 
-export const Avatar = styled.Image`
-  width: 120px;
-  height: 120px;
-  border-radius: 60px;
-`;
-export const Name = styled.Text`
+export const SignatureImage = styled.Image`
+  width: 100%;
+  height: 440px;
+  border-radius: 4px;
   margin-top: 10px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
 `;
 
-export const Time = styled.Text`
-  margin-top: 4px;
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.6);
+export const ImageIcon = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  width: 60px;
+  border-radius: 60px;
+  align-self: center;
+  margin-top: -80px;
+  margin-bottom: 25px;
+  background: rgba(0, 0, 0, 0.3);
 `;
-
 export const SubmitButton = styled(Button)`
   align-self: stretch;
-  margin-top: 20px;
+  background: #7d40e7;
+  margin-top: 10px;
 `;
