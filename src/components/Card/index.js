@@ -21,6 +21,7 @@ export default function Card({ children, style, ...rest }) {
         },
         style,
       ]}
+      {...rest}
     >
       {children}
     </View>
