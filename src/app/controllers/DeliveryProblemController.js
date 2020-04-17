@@ -90,7 +90,7 @@ class DeliveryProblemController {
             where: {
                 delivery_id: req.params.deliveryId,
             },
-            attributes: ['id', 'description'],
+            attributes: ['id', 'description', 'created_at'],
             limit: 20,
             offset: (page - 1) * 20,
             include: [
