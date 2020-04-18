@@ -19,9 +19,9 @@ class DeliveryController {
                 'end_date',
                 'status',
             ],
-            order: ['created_at'],
-            limit: 20,
-            offset: (page - 1) * 20,
+            order: [['created_at', 'DESC']],
+            limit: 6,
+            offset: (page - 1) * 6,
             include: [
                 {
                     model: File,
@@ -178,7 +178,7 @@ class DeliveryController {
         const { page = 1 } = req.query;
 
         const delivery = await Delivery.findByPk(req.params.deliveryId, {
-            order: ['created_at'],
+            order: [['created_at', 'DESC']],
             limit: 20,
             offset: (page - 1) * 20,
             include: [

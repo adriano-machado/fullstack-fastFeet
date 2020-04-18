@@ -13,8 +13,8 @@ class DeliveryProblemController {
         const { page = 1, q } = req.query;
         const query = {
             attributes: ['id', 'description'],
-            limit: 20,
-            offset: (page - 1) * 20,
+            limit: 6,
+            offset: (page - 1) * 6,
             include: [
                 {
                     model: Delivery,

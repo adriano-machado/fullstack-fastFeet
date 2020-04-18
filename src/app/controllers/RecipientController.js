@@ -17,9 +17,9 @@ class RecipientController {
                 'complement',
                 'name',
             ],
-            order: [['created_at', 'ASC']],
-            limit: 20,
-            offset: (page - 1) * 20,
+            order: [['created_at', 'DESC']],
+            limit: 6,
+            offset: (page - 1) * 6,
         };
 
         if (q) {
@@ -42,7 +42,9 @@ class RecipientController {
             complement: Yup.string(),
             name: Yup.string().required(),
 
-            cep: Yup.string().required(),
+            cep: Yup.string()
+                .max(9)
+                .required(),
         });
 
         if (!(await schema.isValid(req.body))) {
