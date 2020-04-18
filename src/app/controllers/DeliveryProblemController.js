@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 import DeliveryProblem from '../models/DeliveryProblem';
 import Delivery from '../models/Delivery';
 import Deliveryman from '../models/Deliveryman';
@@ -9,8 +10,8 @@ import Recipient from '../models/Recipient';
 
 class DeliveryProblemController {
     async index(req, res) {
-        const { page = 1 } = req.query;
-        const problemsDelivery = await DeliveryProblem.findAll({
+        const { page = 1, q } = req.query;
+        const query = {
             attributes: ['id', 'description'],
             limit: 20,
             offset: (page - 1) * 20,
@@ -21,7 +22,16 @@ class DeliveryProblemController {
                     attributes: ['id', 'product', 'status', 'recipient_id'],
                 },
             ],
-        });
+        };
+
+        if (q) {
+            query.where = {
+                description: {
+                    [Op.iLike]: `%${q}%`,
+                },
+            };
+        }
+        const problemsDelivery = await DeliveryProblem.findAll(query);
         return res.json(problemsDelivery);
     }
 
@@ -85,14 +95,11 @@ class DeliveryProblemController {
     }
 
     async show(req, res) {
-        const { page = 1 } = req.query;
         const problemsDelivery = await DeliveryProblem.findAll({
             where: {
                 delivery_id: req.params.deliveryId,
             },
             attributes: ['id', 'description', 'created_at'],
-            limit: 20,
-            offset: (page - 1) * 20,
             include: [
                 {
                     model: Delivery,

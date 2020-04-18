@@ -65,7 +65,7 @@ class CompletedDeliveryController {
     async store(req, res) {
         const schema = Yup.object().shape({
             deliveryman_id: Yup.number().required(),
-            signature_id: Yup.date().required(),
+            signature_id: Yup.number().required(),
         });
 
         if (!(await schema.isValid(req.body))) {

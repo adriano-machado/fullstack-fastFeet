@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { startOfDay, parseISO, endOfDay } from 'date-fns';
+import { startOfDay, endOfDay } from 'date-fns';
 import { Op } from 'sequelize';
 import Delivery from '../models/Delivery';
 import Recipient from '../models/Recipient';
@@ -17,6 +17,7 @@ class ScheduleController {
                 canceled_at: null,
                 end_date: null,
             },
+            order: [['created_at', 'DESC']],
             attributes: [
                 'id',
                 'product',
