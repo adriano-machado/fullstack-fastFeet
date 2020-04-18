@@ -1,5 +1,4 @@
-import styled, { css } from 'styled-components';
-import { lighten } from 'polished';
+import styled from 'styled-components';
 
 export const Modal = styled.div`
     display: ${props => (props.visible ? 'block' : 'none')};

@@ -14,16 +14,16 @@ export default function Problems() {
     const [modalContent, setModalContent] = useState('');
 
     const [problems, setProblems] = useState([]);
-    const [idToSearch, setIdToSearch] = useState('');
-    const debouncedValue = useDebounce(idToSearch, 600);
-    const [atualPage, setPage] = useState(1);
+    const [description, setDescription] = useState('');
+    const debouncedValue = useDebounce(description, 600);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
-        async function getProblems(page, id) {
+        async function getProblems() {
             try {
-                const response = await api.get(
-                    `/delivery/problems${id && `/${id}`}?page=${page}`
-                );
+                const response = await api.get(`/delivery/problems`, {
+                    params: { page, q: debouncedValue },
+                });
 
                 setProblems(response.data);
                 return response.data;
@@ -33,8 +33,8 @@ export default function Problems() {
                 return null;
             }
         }
-        getProblems(atualPage, debouncedValue);
-    }, [atualPage, debouncedValue]);
+        getProblems();
+    }, [page, debouncedValue]);
     function toogleModal() {
         setOpen(!openModal);
     }
@@ -83,10 +83,10 @@ export default function Problems() {
                 <div>
                     <FaSearch size={16} color="#DDDDDD" />
                     <input
-                        placeholder="ID da encomenda"
-                        value={idToSearch}
+                        placeholder="Descrição"
+                        value={description}
                         onChange={e => {
-                            setIdToSearch(e.target.value);
+                            setDescription(e.target.value);
                         }}
                     />
                 </div>

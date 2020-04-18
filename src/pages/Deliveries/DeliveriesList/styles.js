@@ -36,7 +36,7 @@ export const SubHeader = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 40px 0 10px;
+    margin: 20px 0 10px;
 
     div {
         svg {
@@ -130,6 +130,22 @@ export const Badge = styled.div`
             content: '';
             border-radius: 50%;
             margin: 0 5px;
+        }
+    }
+`;
+
+export const RowIcons = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        cursor: pointer;
+        margin: 10px;
+
+        &:hover {
+            opacity: 0.7;
         }
     }
 `;

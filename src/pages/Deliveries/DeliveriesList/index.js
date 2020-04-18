@@ -1,7 +1,12 @@
 import React, { useState, Fragment, useEffect } from 'react';
 
 import { useDebounce } from 'use-lodash-debounce';
-import { FaPlus, FaSearch } from 'react-icons/fa';
+import {
+    FaPlus,
+    FaSearch,
+    FaChevronLeft,
+    FaChevronRight,
+} from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { format, parseISO } from 'date-fns';
 import api from '../../../services/api';
@@ -14,10 +19,12 @@ import {
     AvatarContainer,
     CenteredIcon,
     Badge,
+    RowIcons,
 } from './styles';
 import MenuOptions from '../../../components/MenuOptions';
 import { ROUTES } from '../../../consts';
 import Dialog from '../../../components/Dialog';
+import Loading from '../../../components/Loading';
 
 const mapObjToColor = {
     pendente: '#C1BC35',
@@ -32,6 +39,8 @@ export default function Deliveries() {
     const [openModal, setOpen] = useState(false);
     const [modalContent, setModalContent] = useState(null);
     const [atualPage, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [hasMoreContent, setHasMoreContent] = useState(true);
 
     function toogleModal() {
         setOpen(!openModal);
@@ -47,11 +56,17 @@ export default function Deliveries() {
 
     useEffect(() => {
         async function getDeliveries(page, q) {
+            setLoading(true);
             try {
-                const response = await api.get(
-                    `/deliveries?page=${page}&q=${q}`
-                );
-
+                const response = await api.get(`/deliveries?`, {
+                    params: {
+                        page,
+                        q,
+                    },
+                });
+                if (response.data.length < 6) {
+                    setHasMoreContent(false);
+                }
                 setDeliveries(
                     response.data.map(delivery => ({
                         ...delivery,
@@ -69,8 +84,10 @@ export default function Deliveries() {
                             ),
                     }))
                 );
+                setLoading(false);
                 return response.data;
             } catch (err) {
+                setLoading(false);
                 toast.error('Problemas para buscar as encomendas');
                 return null;
             }
@@ -95,6 +112,21 @@ export default function Deliveries() {
                 );
             }
         }
+    }
+
+    function handleNextPage() {
+        if (!hasMoreContent) return;
+        setPage(atualPage + 1);
+    }
+    function handlePreviusPage() {
+        if (atualPage <= 1) return;
+        setPage(atualPage - 1);
+        setHasMoreContent(true);
+    }
+    function handleInputChange({ target }) {
+        setSearchProduct(target.value);
+        setPage(1);
+        setHasMoreContent(true);
     }
     return (
         <Container>
@@ -145,9 +177,7 @@ export default function Deliveries() {
                     <input
                         placeholder="Nome do produto"
                         value={searchProduct}
-                        onChange={e => {
-                            setSearchProduct(e.target.value);
-                        }}
+                        onChange={handleInputChange}
                     />
                 </div>
 
@@ -156,91 +186,112 @@ export default function Deliveries() {
                     CADASTRAR
                 </button>
             </SubHeader>
-            <table cellSpacing="0">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Destinatário</th>
-                        <th>Produto</th>
+            {loading ? (
+                <Loading />
+            ) : (
+                <table cellSpacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Destinatário</th>
+                            <th>Produto</th>
 
-                        <th>Entregador</th>
-                        <th>Cidade</th>
-                        <th>Estado</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {deliveries.map(delivery => (
-                        <Fragment key={delivery.id}>
-                            <tr>
-                                <td>
-                                    #{delivery.id}
-                                    {/* <img src={product.image} alt={product.title} /> */}
-                                </td>
-                                <td>
-                                    <span>{delivery.recipient.name}</span>
-                                </td>
-                                <td>
-                                    <span>{delivery.product}</span>
-                                </td>
-                                <td>
-                                    <AvatarContainer>
-                                        <img
-                                            src={
-                                                (delivery.deliveryman.avatar &&
-                                                    delivery.deliveryman.avatar
-                                                        .url) ||
-                                                noAvatar
+                            <th>Entregador</th>
+                            <th>Cidade</th>
+                            <th>Estado</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {deliveries.map(delivery => (
+                            <Fragment key={delivery.id}>
+                                <tr>
+                                    <td>
+                                        #{delivery.id}
+                                        {/* <img src={product.image} alt={product.title} /> */}
+                                    </td>
+                                    <td>
+                                        <span>{delivery.recipient.name}</span>
+                                    </td>
+                                    <td>
+                                        <span>{delivery.product}</span>
+                                    </td>
+                                    <td>
+                                        <AvatarContainer>
+                                            <img
+                                                src={
+                                                    (delivery.deliveryman
+                                                        .avatar &&
+                                                        delivery.deliveryman
+                                                            .avatar.url) ||
+                                                    noAvatar
+                                                }
+                                                alt={delivery.deliveryman.name}
+                                            />
+                                            <span>
+                                                {delivery.deliveryman.name}
+                                            </span>
+                                        </AvatarContainer>
+                                    </td>
+                                    <td>
+                                        <span>{delivery.recipient.city}</span>
+                                    </td>
+                                    <td>
+                                        <span>{delivery.recipient.state}</span>
+                                    </td>
+                                    <td>
+                                        <Badge
+                                            color={
+                                                mapObjToColor[delivery.status]
                                             }
-                                            alt={delivery.deliveryman.name}
-                                        />
-                                        <span>{delivery.deliveryman.name}</span>
-                                    </AvatarContainer>
-                                </td>
-                                <td>
-                                    <span>{delivery.recipient.city}</span>
-                                </td>
-                                <td>
-                                    <span>{delivery.recipient.state}</span>
-                                </td>
-                                <td>
-                                    <Badge
-                                        color={mapObjToColor[delivery.status]}
-                                    >
-                                        <span>{delivery.status}</span>
-                                    </Badge>
-                                </td>
-                                <td>
-                                    <CenteredIcon>
-                                        <MenuOptions
-                                            deleteButtonAction={() =>
-                                                handleDeleteDelivery(
-                                                    delivery.id
-                                                )
-                                            }
-                                            visibilityAction={() =>
-                                                toogleModalAndSetContent(
-                                                    delivery
-                                                )
-                                            }
-                                            handleEditAction={() =>
-                                                history.push(
-                                                    ROUTES.DELIVERIES_EDIT.replace(
-                                                        ':deliveryId',
+                                        >
+                                            <span>{delivery.status}</span>
+                                        </Badge>
+                                    </td>
+                                    <td>
+                                        <CenteredIcon>
+                                            <MenuOptions
+                                                deleteButtonAction={() =>
+                                                    handleDeleteDelivery(
                                                         delivery.id
                                                     )
-                                                )
-                                            }
-                                        />
-                                    </CenteredIcon>
-                                </td>
-                            </tr>
-                            <br />
-                        </Fragment>
-                    ))}
-                </tbody>
-            </table>
+                                                }
+                                                visibilityAction={() =>
+                                                    toogleModalAndSetContent(
+                                                        delivery
+                                                    )
+                                                }
+                                                handleEditAction={() =>
+                                                    history.push(
+                                                        ROUTES.DELIVERIES_EDIT.replace(
+                                                            ':deliveryId',
+                                                            delivery.id
+                                                        )
+                                                    )
+                                                }
+                                            />
+                                        </CenteredIcon>
+                                    </td>
+                                </tr>
+                                <br />
+                            </Fragment>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+            <RowIcons>
+                <FaChevronLeft
+                    onClick={handlePreviusPage}
+                    color="#999999"
+                    size={40}
+                />
+                <FaChevronRight
+                    onClick={handleNextPage}
+                    color="#999999"
+                    size={40}
+                />
+            </RowIcons>
         </Container>
     );
 }
