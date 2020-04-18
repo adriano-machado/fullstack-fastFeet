@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from 'react';
-import ReactInputMask, { Props as InputProps } from 'react-input-mask';
+import ReactInputMask from 'react-input-mask';
 import { useField } from '@rocketseat/unform';
 
 const InputMask = ({ name, ...rest }) => {
     const inputRef = useRef(null);
-    const { fieldName, registerField, defaultValue, error } = useField(name);
+    const { fieldName, registerField, defaultValue } = useField(name);
     useEffect(() => {
         registerField({
             name: fieldName,

@@ -1,7 +1,6 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 
-import { Form, Input } from '@rocketseat/unform';
-import * as Yup from 'yup';
+import { Form } from '@rocketseat/unform';
 import { FaChevronLeft, FaCheck } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import SelectAsync from '../../../components/SelectAsync';
