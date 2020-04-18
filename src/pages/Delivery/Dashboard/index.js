@@ -1,12 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { StatusBar, TouchableOpacity, Text } from 'react-native';
+import { StatusBar, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { signOut } from '~/store/modules/auth/actions';
 import DeliveryItem from '~/components/DeliveryItem';
-import Loading from '~/components/Loading';
 import EmptyListMessage from '~/components/EmptyListMessage';
 import {
   Container,
@@ -32,6 +31,7 @@ export default function Dashboard() {
   const [showStartedDeliveries, setShowStartDelivery] = useState(true);
   const [atualPage, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [hasMoreDelivery, setHasMoreDelivery] = useState(true);
   function handleToggleOption(option) {
     setLoading(true);
     setShowStartDelivery(option);
@@ -43,7 +43,7 @@ export default function Dashboard() {
 
   function handleDisplayEmptyList() {
     if (loading) {
-      return <Loading />;
+      return null;
     }
     if (showStartedDeliveries) {
       return (
@@ -58,22 +58,36 @@ export default function Dashboard() {
       </EmptyListMessage>
     );
   }
+  async function loadDeliveries(page = 1) {
+    if (!hasMoreDelivery) return;
+    setLoading(true);
+
+    const response = await api.get(
+      `deliveryman/${profile.id}/${
+        showStartedDeliveries ? 'deliveries' : 'completed-deliveries'
+      }`,
+      { params: { page } }
+    );
+    if (response.data.length < 20) {
+      setHasMoreDelivery(false);
+    }
+    if (page >= 2) {
+      setDeliveries([...deliveries, ...response.data]);
+      console.tron.log([...deliveries, ...response.data]);
+    } else {
+      setDeliveries(response.data);
+    }
+    setLoading(false);
+  }
   useFocusEffect(
     useCallback(() => {
-      async function loadDeliveries() {
-        setLoading(true);
-        const response = await api.get(
-          `deliveryman/${profile.id}/${
-            showStartedDeliveries ? 'deliveries' : 'completed-deliveries'
-          }?page=${atualPage}`
-        );
-        setDeliveries(response.data);
-        setLoading(false);
-      }
-
-      loadDeliveries();
+      loadDeliveries(atualPage);
     }, [atualPage, profile.id, showStartedDeliveries])
   );
+  function refreshList() {
+    setPage(1);
+    loadDeliveries();
+  }
   return (
     <Container>
       <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
@@ -108,7 +122,16 @@ export default function Dashboard() {
         </Options>
       </LabelContainer>
       <DeliveriesList
+        getItemLayout={(data, index) => ({
+          length: 211,
+          offset: 211 * index,
+          index,
+        })}
+        initialNumToRender={5}
         ListEmptyComponent={handleDisplayEmptyList}
+        onRefresh={() => refreshList()}
+        onEndReachedThreshold={0.3}
+        onEndReached={() => setPage(atualPage + 1)}
         refreshing={loading}
         data={deliveries}
         keyExtractor={(item) => String(item.id)}

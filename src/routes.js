@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,7 +12,6 @@ import Details from './pages/Delivery/Details';
 import Confirm from './pages/Delivery/Confirm';
 import CreateProblem from './pages/Delivery/CreateProblem';
 import ViewProblem from './pages/Delivery/ViewProblem';
-import { navigationRef } from '~/services/RootNavigation';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -86,9 +85,9 @@ function DeliveryStackNavigator() {
   );
 }
 
-export default function Routes({ signed }) {
+function Routes({ signed }, ref) {
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer ref={ref}>
       {signed ? (
         <Tab.Navigator
           initialRouteName="Dashboard"
@@ -143,7 +142,7 @@ export default function Routes({ signed }) {
     </NavigationContainer>
   );
 }
-
+export default forwardRef(Routes);
 Routes.propTypes = {
   signed: PropTypes.bool.isRequired,
 };

@@ -1,14 +1,14 @@
 import styled from 'styled-components/native';
-import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled.SafeAreaView`
-  flex: 1;
   background: #fff;
-  padding: 0 30px;
+  padding: 0px 30px;
+  flex: 1;
 `;
 
 export const DeliveriesList = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
+  flexGrow: 0,
 })``;
 
 export const Profile = styled.View`
