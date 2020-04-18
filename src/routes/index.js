@@ -3,22 +3,22 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 
 import Route from './Route';
-import SignIn from '../pages/SignIn';
+import SignIn from '~/pages/SignIn';
 
-import Deliverymans from '../pages/Deliverymans/DeliverymansList';
-import DeliverymansCreate from '../pages/Deliverymans/DeliverymansCreate';
-import DeliverymansEdit from '../pages/Deliverymans/DeliverymansEdit';
+import Deliverymans from '~/pages/Deliverymans/DeliverymansList';
+import DeliverymansCreate from '~/pages/Deliverymans/DeliverymansCreate';
+import DeliverymansEdit from '~/pages/Deliverymans/DeliverymansEdit';
 
-import Deliveries from '../pages/Deliveries/DeliveriesList';
-import DeliveriesCreate from '../pages/Deliveries/DeliveriesCreate';
-import DeliveriesEdit from '../pages/Deliveries/DeliveriesEdit';
+import Deliveries from '~/pages/Deliveries/DeliveriesList';
+import DeliveriesCreate from '~/pages/Deliveries/DeliveriesCreate';
+import DeliveriesEdit from '~/pages/Deliveries/DeliveriesEdit';
 
-import Recipients from '../pages/Recipients/RecipientsList';
-import RecipientsCreate from '../pages/Recipients/RecipientsCreate';
-import RecipientsEdit from '../pages/Recipients/RecipientsEdit';
+import Recipients from '~/pages/Recipients/RecipientsList';
+import RecipientsCreate from '~/pages/Recipients/RecipientsCreate';
+import RecipientsEdit from '~/pages/Recipients/RecipientsEdit';
 
-import Problems from '../pages/Problems';
-import { ROUTES } from '../consts';
+import Problems from '~/pages/Problems';
+import { ROUTES } from '~/consts';
 
 export default function Routes() {
     return (

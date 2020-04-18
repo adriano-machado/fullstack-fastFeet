@@ -45,5 +45,12 @@ module.exports = {
         }
       }],
       "no-alert": "off"
-  }
+  },
+  settings: {
+    "import/resolver": {
+      "babel-plugin-root-import": {
+        rootPathSuffix: "src"
+      },
+    },
+  },
 };

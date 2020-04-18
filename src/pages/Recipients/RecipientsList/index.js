@@ -7,10 +7,10 @@ import {
 } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useDebounce } from 'use-lodash-debounce';
-import MenuOptions from '../../../components/MenuOptions';
-import history from '../../../services/history';
-import api from '../../../services/api';
-import Loading from '../../../components/Loading';
+import MenuOptions from '~/components/MenuOptions';
+import history from '~/services/history';
+import api from '~/services/api';
+import Loading from '~/components/Loading';
 
 import {
     Container,
@@ -19,7 +19,7 @@ import {
     LastColumn,
     RowIcons,
 } from './styles';
-import { ROUTES } from '../../../consts';
+import { ROUTES } from '~/consts';
 
 export default function Recipients() {
     const [recipients, setRecipients] = useState([]);

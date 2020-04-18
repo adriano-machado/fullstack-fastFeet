@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AsyncSelect from 'react-select/async';
 import { useDebounce } from 'use-lodash-debounce';
 import PropTypes from 'prop-types';
-import api from '../../services/api';
+import api from '~/services/api';
 
 export default function SelectAsync({
     name,

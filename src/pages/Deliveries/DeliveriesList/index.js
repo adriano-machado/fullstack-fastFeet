@@ -9,9 +9,9 @@ import {
 } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { format, parseISO } from 'date-fns';
-import api from '../../../services/api';
-import history from '../../../services/history';
-import noAvatar from '../../../assets/no-avatar.jpg';
+import api from '~/services/api';
+import history from '~/services/history';
+import noAvatar from '~/assets/no-avatar.jpg';
 
 import {
     Container,
@@ -21,10 +21,10 @@ import {
     Badge,
     RowIcons,
 } from './styles';
-import MenuOptions from '../../../components/MenuOptions';
-import { ROUTES } from '../../../consts';
-import Dialog from '../../../components/Dialog';
-import Loading from '../../../components/Loading';
+import MenuOptions from '~/components/MenuOptions';
+import { ROUTES } from '~/consts';
+import Dialog from '~/components/Dialog';
+import Loading from '~/components/Loading';
 
 const mapObjToColor = {
     pendente: '#C1BC35',

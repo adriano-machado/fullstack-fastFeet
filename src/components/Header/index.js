@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import history from '../../services/history';
-import logoPurple from '../../assets/fastfeet-logo.png';
+import history from '~/services/history';
+import logoPurple from '~/assets/fastfeet-logo.png';
 import { Container, Content, Profile, LinkHandle } from './styles';
-import { signOut } from '../../store/modules/auth/actions';
-import { ROUTES } from '../../consts';
+import { signOut } from '~/store/modules/auth/actions';
+import { ROUTES } from '~/consts';
 
 export default function Header() {
     const profile = useSelector(state => state.user.profile);

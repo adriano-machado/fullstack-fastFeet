@@ -2,9 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
-import logo from '../../assets/fastfeet-logo.png';
+import logo from '~/assets/fastfeet-logo.png';
 
-import { signInRequest } from '../../store/modules/auth/actions';
+import { signInRequest } from '~/store/modules/auth/actions';
 
 const schema = Yup.object().shape({
     email: Yup.string()

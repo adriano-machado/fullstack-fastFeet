@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Form } from '@rocketseat/unform';
 import { FaChevronLeft, FaCheck } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import SelectAsync from '../../../components/SelectAsync';
+import SelectAsync from '~/components/SelectAsync';
 import {
     FormContent,
     Header,
@@ -12,8 +12,8 @@ import {
     Row1,
     CustomInput,
 } from './styles';
-import history from '../../../services/history';
-import api from '../../../services/api';
+import history from '~/services/history';
+import api from '~/services/api';
 
 export default function DeliveriesCreate() {
     const [deliverymanOption, setDeliverymanOption] = useState(null);

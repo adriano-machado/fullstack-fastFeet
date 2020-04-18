@@ -2,11 +2,11 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { FaSearch, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useDebounce } from 'use-lodash-debounce';
 import { toast } from 'react-toastify';
-import MenuOptions from '../../components/MenuOptions';
-import Dialog from '../../components/Dialog';
-import Loading from '../../components/Loading';
+import MenuOptions from '~/components/MenuOptions';
+import Dialog from '~/components/Dialog';
+import Loading from '~/components/Loading';
 
-import api from '../../services/api';
+import api from '~/services/api';
 
 import {
     Container,
