@@ -102,3 +102,19 @@ export const RighterIcon = styled.div`
         cursor: pointer;
     }
 `;
+
+export const RowIcons = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        cursor: pointer;
+        margin: 10px;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+`;
