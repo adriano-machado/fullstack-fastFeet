@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Text, StatusBar, View } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import Background from '~/components/Background';
 import api from '~/services/api';
 
@@ -15,6 +16,8 @@ export default function CreateProblem({ navigation }) {
   const delivery_id = useSelector((state) => state.delivery.delivery.id);
 
   async function handleSubmit() {
+    if (!description) return;
+
     setLoading(true);
     await api.post(`/delivery/${delivery_id}/problems`, {
       deliveryman_id,
@@ -25,7 +28,7 @@ export default function CreateProblem({ navigation }) {
   }
 
   return (
-    <Background>
+    <Background fixed>
       <StatusBar barStyle="light-content" backgroundColor="#7D40E7" />
 
       <Container>
@@ -50,3 +53,9 @@ export default function CreateProblem({ navigation }) {
     </Background>
   );
 }
+
+CreateProblem.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

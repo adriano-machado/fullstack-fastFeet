@@ -6,7 +6,14 @@ export const Container = styled.SafeAreaView`
   flex: 1;
   padding: 0 20px;
 `;
-
+export const CameraView = styled.View`
+  align-self: center;
+  width: 100%;
+  height: 440px;
+  margin-top: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+`;
 export const SignatureImage = styled.Image`
   width: 100%;
   height: 440px;
@@ -26,7 +33,6 @@ export const ImageIcon = styled.TouchableOpacity`
   background: rgba(0, 0, 0, 0.3);
 `;
 export const SubmitButton = styled(Button)`
-  align-self: stretch;
   background: #7d40e7;
   margin-top: 10px;
 `;

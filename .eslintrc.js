@@ -12,6 +12,7 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
     __DEV__:'readonly',
+    FormData:'readonly'
   },
   parser:'babel-eslint',
   parserOptions: {

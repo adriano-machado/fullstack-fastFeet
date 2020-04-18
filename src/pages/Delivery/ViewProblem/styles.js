@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import Card from '~/components/Card';
 
-export const Container = styled.SafeAreaView`
+export const Container = styled.View`
   flex: 1;
   padding: 0 10px;
 `;
