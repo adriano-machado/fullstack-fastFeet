@@ -35,6 +35,9 @@ export default function Dashboard() {
   function handleToggleOption(option) {
     setLoading(true);
     setShowStartDelivery(option);
+    setHasMoreDelivery(true);
+    setPage(1)
+
   }
 
   function handleLogout() {
