@@ -1,5 +1,4 @@
-<div align="center">![](https://github.com/adriano-machado/demo-assets/blob/master/fastfeetDemo.gif)
-</div>
+![](https://github.com/adriano-machado/demo-assets/blob/master/fastfeetDemo.gif)
 <br>
   <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-how-to-use">How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
