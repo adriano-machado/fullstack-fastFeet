@@ -41,10 +41,10 @@ $ cd backend
 $ yarn install
 
 # Run migrations to your database
-$ yarn sequelie db:migrate
+$ yarn sequelize db:migrate
 
 # Run seed to your database (just a admin user)
-$ yarn sequelie db:seed:all
+$ yarn sequelize db:seed:all
 
 # Run the backend server
 $ yarn dev
