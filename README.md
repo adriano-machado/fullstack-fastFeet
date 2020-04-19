@@ -1,5 +1,5 @@
 ![Demo mobile](https://github.com/adriano-machado/demo-assets/blob/master/fastfeetDemo.gif)
-<img src="https://github.com/adriano-machado/demo-assets/blob/master/fastfeetDemoWeb.jpeg" alt="app web" width="400" height="700">
+<img src="https://github.com/adriano-machado/demo-assets/blob/master/fastfeetDemoWeb.jpeg" alt="app web" width="550" height="700">
 <br>
  <p align="center"> <a  href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
    <a  href="#information_source-how-to-use">How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
