@@ -71,17 +71,17 @@ export default function Deliveries() {
                     response.data.map(delivery => ({
                         ...delivery,
                         formattedEndDate:
-                            delivery.end_date &&
-                            format(
-                                parseISO(delivery.end_date),
-                                "d'/'MM'/'yyyy"
-                            ),
-                        formattedStartDate:
-                            delivery.start_date &&
-                            format(
+                            delivery.end_date ? format(
                                 parseISO(delivery.start_date),
                                 "d'/'MM'/'yyyy"
-                            ),
+                            )
+                          : '-- / -- / --',
+                            formattedStartDate: delivery.start_date
+                            ? format(
+                                  parseISO(delivery.start_date),
+                                  "d'/'MM'/'yyyy"
+                              )
+                            : '-- / -- / --',
                     }))
                 );
                 setLoading(false);
