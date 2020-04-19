@@ -62,7 +62,6 @@ export default function Dashboard() {
     );
   }
   async function loadDeliveries(page = 1) {
-    if (!hasMoreDelivery) return;
     setLoading(true);
 
     const response = await api.get(
@@ -71,7 +70,7 @@ export default function Dashboard() {
       }`,
       { params: { page } }
     );
-    if (response.data.length < 20) {
+    if (response.data.length < 20 ) {
       setHasMoreDelivery(false);
     }
     if (page >= 2) {
@@ -134,7 +133,11 @@ export default function Dashboard() {
         ListEmptyComponent={handleDisplayEmptyList}
         onRefresh={() => refreshList()}
         onEndReachedThreshold={0.3}
-        onEndReached={() => setPage(atualPage + 1)}
+        onEndReached={() => {
+          if(hasMoreDelivery) {
+            setPage(atualPage +1)
+          }
+        }}
         refreshing={loading}
         data={deliveries}
         keyExtractor={(item) => String(item.id)}
