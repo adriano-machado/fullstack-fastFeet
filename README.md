@@ -1,6 +1,4 @@
 ![Demo mobile](https://github.com/adriano-machado/demo-assets/blob/master/fastfeetDemo.gif)
-![Printscreen web](https://github.com/adriano-machado/demo-assets/blob/master/fastfeetDemoWeb.jpeg  | width=600)
-
 <img src="https://github.com/adriano-machado/demo-assets/blob/master/fastfeetDemoWeb.jpeg" alt="app web" width="600" height="700">
 <br>
  <p align="center"> <a  href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
