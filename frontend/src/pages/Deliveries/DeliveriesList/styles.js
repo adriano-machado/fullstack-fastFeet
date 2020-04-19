@@ -79,6 +79,23 @@ export const SubHeader = styled.div`
     svg {
         margin: 0 5px;
     }
+
+    label {
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+        width: 100%;
+        input {
+            transform:scale(1.5);
+            margin-left: 10px;
+        }
+        span {
+            color:#999999;
+            font-weight: bold;
+            margin-left: 10px;
+            font-size: 14px;
+        }
+    }
 `;
 
 export const AvatarContainer = styled.div`

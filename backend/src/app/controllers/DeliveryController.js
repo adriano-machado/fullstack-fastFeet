@@ -3,13 +3,14 @@ import { Op } from 'sequelize';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 import Delivery from '../models/Delivery';
+import DeliveryProblem from '../models/DeliveryProblem';
 import Recipient from '../models/Recipient';
 import NewDeliveryMail from '../jobs/NewDeliveryMail';
 import Queue from '../../lib/Queue';
 
 class DeliveryController {
     async index(req, res) {
-        const { page = 1, q } = req.query;
+        const { page = 1, q, filter } = req.query;
         const query = {
             attributes: [
                 'id',
@@ -19,7 +20,7 @@ class DeliveryController {
                 'end_date',
                 'status',
             ],
-            order: [['created_at', 'DESC']],
+            order: filter ? null : [['created_at', 'DESC']],
             limit: 6,
             offset: (page - 1) * 6,
             include: [
@@ -63,6 +64,16 @@ class DeliveryController {
                     [Op.iLike]: `%${q}%`,
                 },
             };
+        }
+
+        if (filter === 'problems') {
+            const { include } = query;
+            include.push({
+                model: DeliveryProblem,
+                as: 'problem',
+                required: true,
+            });
+            query.include = include;
         }
         const deliveries = await Delivery.findAll(query);
         return res.json(deliveries);
