@@ -19,8 +19,9 @@ class DeliveryController {
                 'canceled_at',
                 'end_date',
                 'status',
+                'created_at',
             ],
-            order: filter ? null : [['created_at', 'DESC']],
+            order: [['created_at', 'DESC']],
             limit: 6,
             offset: (page - 1) * 6,
             include: [
