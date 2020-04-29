@@ -41,7 +41,7 @@ export default function Deliveries() {
     const [atualPage, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [hasMoreContent, setHasMoreContent] = useState(true);
-    const [checked,setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
 
     function toogleModal() {
         setOpen(!openModal);
@@ -63,7 +63,7 @@ export default function Deliveries() {
                     params: {
                         page,
                         q,
-                        filter: checked? "problems" : ""
+                        filter: checked ? 'problems' : '',
                     },
                 });
                 if (response.data.length < 6) {
@@ -72,13 +72,13 @@ export default function Deliveries() {
                 setDeliveries(
                     response.data.map(delivery => ({
                         ...delivery,
-                        formattedEndDate:
-                            delivery.end_date ? format(
-                                parseISO(delivery.start_date),
-                                "d'/'MM'/'yyyy"
-                            )
-                          : '-- / -- / --',
-                            formattedStartDate: delivery.start_date
+                        formattedEndDate: delivery.end_date
+                            ? format(
+                                  parseISO(delivery.start_date),
+                                  "d'/'MM'/'yyyy"
+                              )
+                            : '-- / -- / --',
+                        formattedStartDate: delivery.start_date
                             ? format(
                                   parseISO(delivery.start_date),
                                   "d'/'MM'/'yyyy"
@@ -95,7 +95,7 @@ export default function Deliveries() {
             }
         }
         getDeliveries(atualPage, debouncedValue);
-    }, [atualPage, debouncedValue,checked]);
+    }, [atualPage, debouncedValue, checked]);
 
     async function handleDeleteDelivery(id) {
         if (
@@ -131,7 +131,7 @@ export default function Deliveries() {
         setHasMoreContent(true);
     }
     function handleFilter() {
-        setChecked(!checked)
+        setChecked(!checked);
         setPage(1);
         setHasMoreContent(true);
     }
@@ -192,11 +192,9 @@ export default function Deliveries() {
                         id="filter"
                         type="checkbox"
                         value={checked}
-                        onChange={handleFilter}></input>
-                    <span
-                    htmlFor="filter">
-                        Apenas com problemas
-                    </span>
+                        onChange={handleFilter}
+                    />
+                    <span htmlFor="filter">Apenas com problemas</span>
                 </label>
 
                 <button type="button" onClick={redirectToCreate}>
